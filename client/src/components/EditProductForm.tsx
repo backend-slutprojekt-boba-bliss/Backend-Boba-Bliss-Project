@@ -4,94 +4,68 @@ import {
   FormLabel,
   Input,
   Select,
-  SystemStyleObject,
   Text
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
-import * as Yup from "yup";
-import { Product } from "../../data";
+import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Product } from "../data";
 import { useProduct } from "../ProductContext";
+import { requiredText, schema } from "./AddProductForm";
 import { orderButtonStyle } from "./CartCard";
 
-type ProductValues = Record<keyof Product, Yup.AnySchema>;
-
-export const schema = Yup.object<ProductValues>().shape({
-  image: Yup.string().url("Invalid image URL!").required("Required"),
-
-  imageAlt: Yup.string().max(20, "Must be 20 characters or less"),
-  // .required("Required")
-  title: Yup.string()
-    .max(50, "Must be 50 characters or less")
-    .required("Required"),
-
-  description: Yup.string()
-    .max(200, "Must be 200 characters or less")
-    .required("Required"),
-
-  price: Yup.number()
-    .typeError("Must be a number")
-    .positive("Price must be positive")
-    .required("Required"),
-
-  allergens: Yup.string(),
-  // .required("Required")
-  ingredients: Yup.string(),
-  // .required("Required")
-  bgColor: Yup.string().oneOf(
-    [
-      "yellowCardCircle",
-      "fruitTeaCircle",
-      "bigMatchaCard",
-      "#8fc2e9",
-      "#bf96da",
-    ],
-    "Background color must be selected"
-  ),
-  // .required("Required")
-  category: Yup.string().oneOf(
-    ["milk", "fruit"],
-    "Category must be either 'milk' or 'fruit'"
-  ),
-  // .required("Required")
-});
-
-interface Props {
-  product?: Product;
-}
-
-export function generateUniqueId(): string {
-  const timestamp = new Date().getTime();
-  const randomValue = Math.floor(Math.random() * 1000000);
-  return `${timestamp}-${randomValue}`;
-}
-
-export function AdminForm() {
-  const { addProduct } = useProduct();
-
+export default function EditForm() {
   const navigate = useNavigate();
+  const { productList, editProduct } = useProduct();
+
+  const { id } = useParams<{ id: string }>();
+  const productToEdit = productList.find((product) => product.id === id);
 
   const formik = useFormik<Product>({
-    initialValues: {
-      id: "",
-      image: "",
-      imageAlt: "",
-      title: "",
-      description: "",
-      price: "" as any,
-      allergens: "",
-      ingredients: "",
-      bgColor: "",
-      category: "",
-    },
+    initialValues: productToEdit
+      ? {
+          ...productToEdit,
+        }
+      : {
+          id: "",
+          image: "",
+          imageAlt: "",
+          title: "",
+          description: "",
+          price: "" as any,
+          allergens: "",
+          ingredients: "",
+          bgColor: "",
+          category: "",
+        },
     validationSchema: schema,
     onSubmit: (values, actions) => {
-      const newProduct = { ...values, id: generateUniqueId() };
-      addProduct(newProduct);
+      editProduct(values);
       actions.resetForm();
       navigate("/admin");
     },
   });
+
+  useEffect(() => {
+    if (productToEdit) {
+      formik.setValues({
+        ...productToEdit,
+      });
+    } else {
+      formik.setValues({
+        id: "",
+        image: "",
+        imageAlt: "",
+        title: "",
+        description: "",
+        price: "" as any,
+        allergens: "",
+        ingredients: "",
+        bgColor: "",
+        category: "",
+      });
+    }
+  }, [id]);
 
   return (
     <form data-cy="product-form" onSubmit={formik.handleSubmit}>
@@ -234,7 +208,8 @@ export function AdminForm() {
           <Text sx={requiredText}>{formik.errors.bgColor}</Text>
         ) : null}
       </FormControl>
-      <FormControl pb="1rem">
+
+      <FormControl>
         <FormLabel>Category</FormLabel>
         <Select
           id="category"
@@ -251,13 +226,9 @@ export function AdminForm() {
           <Text sx={requiredText}>{formik.errors.category}</Text>
         ) : null}
       </FormControl>
-      <Button sx={orderButtonStyle} type="submit">
-        Add Product
+      <Button mt="1rem" sx={orderButtonStyle} type="submit">
+        Edit Product
       </Button>
     </form>
   );
 }
-
-export const requiredText: SystemStyleObject = {
-  color: "red",
-};

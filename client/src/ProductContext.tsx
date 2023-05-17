@@ -1,5 +1,5 @@
 import { createContext, PropsWithChildren, useContext } from "react";
-import { Product, products } from "../data";
+import { Product, products } from "./data";
 import { useLocalStorageState } from "./hooks/useLocalStorageState";
 
 type ProductContextType = {

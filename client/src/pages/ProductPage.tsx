@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { BigProductCard } from "../components/BigProductCard";
-import { useProduct } from "../ProductContext";
+import { useProduct } from "../../src/ProductContext";
 
 export function ProductPage() {
   const { productList } = useProduct();

@@ -1,24 +1,24 @@
 import {
-  Box,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Center,
-  Flex,
-  Heading,
-  Icon,
-  Image,
-  ListItem,
-  SystemStyleObject,
-  Text,
-  UnorderedList,
-  useBreakpointValue
+    Box,
+    Card,
+    CardBody,
+    CardFooter,
+    CardHeader,
+    Center,
+    Flex,
+    Heading,
+    Icon,
+    Image,
+    ListItem,
+    SystemStyleObject,
+    Text,
+    UnorderedList,
+    useBreakpointValue
 } from "@chakra-ui/react";
 import { BsCupStraw } from "react-icons/bs";
 import { FaTruckMoving } from "react-icons/fa";
-import { useCart } from "../CartContext";
-import { useOrder } from "../orderContext";
+import { useCart } from "../../src/CartContext";
+import { useOrder } from "../../src/orderContext";
 
 export function generateUniqueNumber(): number {
   let number = Math.floor(Math.random() * 90000) + 10000;

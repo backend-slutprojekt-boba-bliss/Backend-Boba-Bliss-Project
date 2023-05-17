@@ -18,7 +18,7 @@ import { useRef, useState } from "react";
 
 import { FaCartPlus } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { Product } from "../../data";
+import { Product } from "../data";
 import { useCart } from "../CartContext";
 
 interface BigProductCardProps {

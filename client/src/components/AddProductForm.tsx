@@ -4,68 +4,94 @@ import {
   FormLabel,
   Input,
   Select,
+  SystemStyleObject,
   Text
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Product } from "../../data";
-import { useProduct } from "../ProductContext";
-import { requiredText, schema } from "./AddProductForm";
+import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import { useProduct } from "../../src/ProductContext";
+import { Product } from "../data";
 import { orderButtonStyle } from "./CartCard";
 
-export default function EditForm() {
-  const navigate = useNavigate();
-  const { productList, editProduct } = useProduct();
+type ProductValues = Record<keyof Product, Yup.AnySchema>;
 
-  const { id } = useParams<{ id: string }>();
-  const productToEdit = productList.find((product) => product.id === id);
+export const schema = Yup.object<ProductValues>().shape({
+  image: Yup.string().url("Invalid image URL!").required("Required"),
+
+  imageAlt: Yup.string().max(20, "Must be 20 characters or less"),
+  // .required("Required")
+  title: Yup.string()
+    .max(50, "Must be 50 characters or less")
+    .required("Required"),
+
+  description: Yup.string()
+    .max(200, "Must be 200 characters or less")
+    .required("Required"),
+
+  price: Yup.number()
+    .typeError("Must be a number")
+    .positive("Price must be positive")
+    .required("Required"),
+
+  allergens: Yup.string(),
+  // .required("Required")
+  ingredients: Yup.string(),
+  // .required("Required")
+  bgColor: Yup.string().oneOf(
+    [
+      "yellowCardCircle",
+      "fruitTeaCircle",
+      "bigMatchaCard",
+      "#8fc2e9",
+      "#bf96da",
+    ],
+    "Background color must be selected"
+  ),
+  // .required("Required")
+  category: Yup.string().oneOf(
+    ["milk", "fruit"],
+    "Category must be either 'milk' or 'fruit'"
+  ),
+  // .required("Required")
+});
+
+interface Props {
+  product?: Product;
+}
+
+export function generateUniqueId(): string {
+  const timestamp = new Date().getTime();
+  const randomValue = Math.floor(Math.random() * 1000000);
+  return `${timestamp}-${randomValue}`;
+}
+
+export function AdminForm() {
+  const { addProduct } = useProduct();
+
+  const navigate = useNavigate();
 
   const formik = useFormik<Product>({
-    initialValues: productToEdit
-      ? {
-          ...productToEdit,
-        }
-      : {
-          id: "",
-          image: "",
-          imageAlt: "",
-          title: "",
-          description: "",
-          price: "" as any,
-          allergens: "",
-          ingredients: "",
-          bgColor: "",
-          category: "",
-        },
+    initialValues: {
+      id: "",
+      image: "",
+      imageAlt: "",
+      title: "",
+      description: "",
+      price: "" as any,
+      allergens: "",
+      ingredients: "",
+      bgColor: "",
+      category: "",
+    },
     validationSchema: schema,
     onSubmit: (values, actions) => {
-      editProduct(values);
+      const newProduct = { ...values, id: generateUniqueId() };
+      addProduct(newProduct);
       actions.resetForm();
       navigate("/admin");
     },
   });
-
-  useEffect(() => {
-    if (productToEdit) {
-      formik.setValues({
-        ...productToEdit,
-      });
-    } else {
-      formik.setValues({
-        id: "",
-        image: "",
-        imageAlt: "",
-        title: "",
-        description: "",
-        price: "" as any,
-        allergens: "",
-        ingredients: "",
-        bgColor: "",
-        category: "",
-      });
-    }
-  }, [id]);
 
   return (
     <form data-cy="product-form" onSubmit={formik.handleSubmit}>
@@ -208,8 +234,7 @@ export default function EditForm() {
           <Text sx={requiredText}>{formik.errors.bgColor}</Text>
         ) : null}
       </FormControl>
-
-      <FormControl>
+      <FormControl pb="1rem">
         <FormLabel>Category</FormLabel>
         <Select
           id="category"
@@ -226,9 +251,13 @@ export default function EditForm() {
           <Text sx={requiredText}>{formik.errors.category}</Text>
         ) : null}
       </FormControl>
-      <Button mt="1rem" sx={orderButtonStyle} type="submit">
-        Edit Product
+      <Button sx={orderButtonStyle} type="submit">
+        Add Product
       </Button>
     </form>
   );
 }
+
+export const requiredText: SystemStyleObject = {
+  color: "red",
+};
