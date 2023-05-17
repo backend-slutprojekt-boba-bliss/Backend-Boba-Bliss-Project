@@ -1,35 +1,5 @@
 {
-  "name": "react-webshop-ts",
-  "description": "En inlämningsuppgift där de studerande bygger en webbshop i react & ts.",
-  "version": "1.0.0",
-  "type": "module",
-  "keywords": [],
-  "author": "Plugga Tech",
-  "license": "ISC",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
-  },
   "dependencies": {
-    "@chakra-ui/icon": "^3.0.16",
-    "@chakra-ui/icons": "^2.0.17",
-    "@chakra-ui/react": "^2.6.1",
-    "@types/react-icons": "^3.0.0",
-    "formik": "^2.2.9",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^4.8.0",
-    "react-router-dom": "^6.8.2",
-    "yup": "^1.0.2"
-  },
-  "devDependencies": {
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "@vitejs/plugin-react-swc": "^3.2.0",
-    "cypress": "^12.7.0",
-    "start-server-and-test": "^2.0.0",
-    "typescript": "^4.9.5",
-    "vite": "^4.1.4"
+    "@chakra-ui/react": "^2.6.1"
   }
 }
