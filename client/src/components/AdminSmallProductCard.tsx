@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Product } from "../../client/data";
+import { Product } from "../data";
 import { useProduct } from "../ProductContext";
 
 interface SmallProductCardProps {

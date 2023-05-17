@@ -1,6 +1,6 @@
 import { createContext, PropsWithChildren, useContext } from "react";
-import { Product, products } from "../client/data";
-import { useLocalStorageState } from "../client/hooks/useLocalStorageState";
+import { Product, products } from "./data";
+import { useLocalStorageState } from "./hooks/useLocalStorageState";
 
 type ProductContextType = {
   productList: Product[];

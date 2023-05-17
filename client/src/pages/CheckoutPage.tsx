@@ -1,6 +1,6 @@
 import { Container, SystemStyleObject } from "@chakra-ui/react";
-import { CartCard } from "../../components/CartCard";
-import { CheckoutForm } from "../../components/CheckoutForm";
+import { CartCard } from "../components/CartCard";
+import { CheckoutForm } from "../components/CheckoutForm";
 
 export function CheckoutPage() {
   return (

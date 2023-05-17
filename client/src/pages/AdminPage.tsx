@@ -1,5 +1,5 @@
 import { Box, Container, Heading } from "@chakra-ui/react";
-import { AdminProducts } from "../../components/AdminProducts";
+import { AdminProducts } from "../components/AdminProducts";
 
 export function AdminPage() {
   return (

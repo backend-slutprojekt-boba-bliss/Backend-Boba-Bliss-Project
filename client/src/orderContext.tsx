@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { CartItem } from "../client/data";
+import { CartItem } from "./data";
 import { useCart } from "./CartContext";
 import { generateUniqueId } from "./components/AddProductForm";
 import { Customer } from "./components/CheckoutForm";

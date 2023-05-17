@@ -1,12 +1,12 @@
 import {
-    Button,
-    Link as ChakraLink,
-    Container,
-    Flex,
-    SystemStyleObject
+  Button,
+  Link as ChakraLink,
+  Container,
+  Flex,
+  SystemStyleObject
 } from "@chakra-ui/react";
-import { OrderConfirmationCard } from "../../components/OrderConfirmationCard";
 import { useOrder } from "../orderContext";
+import { OrderConfirmationCard } from "../components/OrderConfirmationCard";
 
 export function ConfirmationPage() {
   const { getLastOrder } = useOrder();

@@ -9,7 +9,7 @@ import {
 import { useFormik } from "formik";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Product } from "../../client/data";
+import { Product } from "../data";
 import { useProduct } from "../ProductContext";
 import { requiredText, schema } from "./AddProductForm";
 import { orderButtonStyle } from "./CartCard";
