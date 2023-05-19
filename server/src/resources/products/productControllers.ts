@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 
 export async function getAllProducts(req: Request, res: Response) {
-  console.log("get all posts");
+  console.log("get all products");
+  try 
 }
 
 export async function createProduct(req: Request, res: Response) {

@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
+import "express-async-errors";
+import { InferSchemaType, Schema, model } from "mongoose";
 
-export async function createProducts() {
+/*export async function createProducts() {
     try {
       const productSchema = new mongoose.Schema({
         imageUpload: String,
@@ -29,4 +30,19 @@ export async function createProducts() {
       console.error("Error creating products:", error);
     } finally {
     }
-  }
+  }*/
+
+const productSchema = new Schema({
+  imageUpload: { type: String, required: true },
+  imageAlt: { type: String, required: true },
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  price: { type: Number, required: true },
+  backgroundColor: { type: String, required: true },
+  quantity: { type: Number, required: false },
+  inStock: { type: Number, required: true },
+});
+
+export type Product = InferSchemaType<typeof productSchema>;
+
+export const ProductModel = model("Product", productSchema);
