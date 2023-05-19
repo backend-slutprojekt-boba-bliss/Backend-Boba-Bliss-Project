@@ -5,6 +5,8 @@ export async function createOrders() {
     street: string;
     zipCode: string;
     city: string;
+    firstName: string;
+    lastName: string;
   }
 
   try {
@@ -20,8 +22,6 @@ export async function createOrders() {
         type: AddressSchema,
         required: true,
       },
-      firstName: String,
-      lastName: String,
       createdAt: Date,
       isSent: Boolean,
     });
