@@ -1,27 +1,19 @@
-import mongoose from "mongoose";
+import { InferSchemaType, Schema, model } from "mongoose";
+import argon2 from 'argon2';
 
-export async function createUsers() {
-    try {
-      const userSchema = new mongoose.Schema({
-        email: String,
-        password: String,
-        isAdmin: Boolean,
-      });
-  
-      // Create the user model using the user schema
-      const user = mongoose.model("user", userSchema);
-  
-      // Create an array of users
-      const users = [
-        {email: "Linus.skolansmejl@gmail.com", password: "HejhejHemligtHemligt", isAdmin: false,}
-      ];
-  
-      // Create documents for each user and save them to the database
-      const createdusers = await user.create(users);
-  
-      console.log("users created successfully:", createdusers);
-    } catch (error) {
-      console.error("Error creating users:", error);
-    } finally {
-    }
-  }
+export const userSchema = new Schema({
+  username: { type: String, required: true, minlength: 3 },
+  password: { type: String, required: true, minlength: 3 },
+  isAdmin: { type: Boolean, default: false },
+});
+
+userSchema.pre("save", async function(next: () => void) {
+  this.password = await argon2.hash(this.password, {
+    timeCost: 2,
+    memoryCost: 1024
+  });
+});
+
+export type User = InferSchemaType<typeof userSchema>;
+
+export const UserModel = model("user", userSchema);
