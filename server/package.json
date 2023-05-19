@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.ts"
+    "dev": "nodemon src/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -21,5 +22,10 @@
     "nodemon": "^2.0.22",
     "typescript": "^5.0.4",
     "yup": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^20.2.1",
+    "ts-node": "^10.9.1"
   }
 }
