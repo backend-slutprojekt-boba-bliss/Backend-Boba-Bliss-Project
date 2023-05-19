@@ -11,6 +11,7 @@ async function main() {
     app.listen(3000, () => {
       console.log("Server is running: http://localhost:3000");
     });
+    
   } catch (error) {
     console.error("Error starting server:", error);
   }
