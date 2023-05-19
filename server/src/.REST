@@ -1,2 +1,17 @@
 ### GET ALL PRODUCTS
 GET http://127.0.0.1:3000/api/products
+
+### CREATE PRODUCT
+POST http://127.0.0.1:3000/api/products
+Content-Type: application/json
+
+{
+  "imageUpload":  "img source",
+  "imageAlt": "img alt",
+  "title": "test-title" ,
+  "description": "test description",
+  "price": "300",
+  "backgroundColor": "pink",
+  "quantity": "0",
+  "inStock": "100"
+}
