@@ -7,6 +7,7 @@ import {
   SystemStyleObject,
   Text,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
@@ -34,10 +35,6 @@ export const schema = Yup.object<ProductValues>().shape({
     .positive("Price must be positive")
     .required("Required"),
 
-  allergens: Yup.string(),
-  // .required("Required")
-  ingredients: Yup.string(),
-  // .required("Required")
   bgColor: Yup.string().oneOf(
     [
       "yellowCardCircle",
@@ -48,7 +45,17 @@ export const schema = Yup.object<ProductValues>().shape({
     ],
     "Background color must be selected"
   ),
-  // .required("Required")
+
+  quantity: Yup.number()
+    .typeError("Must be a number")
+    .positive("Quantity must be positive")
+    .required("Required"),
+
+  inStock: Yup.number()
+    .typeError("Must be a number")
+    .positive("In Stock must be positive")
+    .required("Required"),
+
   category: Yup.string().oneOf(
     ["milk", "fruit"],
     "Category must be either 'milk' or 'fruit'"
@@ -78,8 +85,10 @@ export function AdminForm() {
       imageAlt: "",
       title: "",
       description: "",
-      price: "" as any,
+      price: 0,
       bgColor: "",
+      quantity: 0,
+      inStock: 0,
       category: "",
     },
     validationSchema: schema,
@@ -88,7 +97,47 @@ export function AdminForm() {
       addProduct(newProduct);
       actions.resetForm();
       navigate("/admin");
+
+      axios
+        .post("http://127.0.0.1:3000/api/products", newProduct, {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        })
+        .then(function (response) {
+          console.log(response);
+          actions.resetForm();
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
     },
+
+    // ALTERNATIVE VERSION
+    // onSubmit: async (values, actions) => {
+    //   console.log(values); // Log the form values
+
+    //   try {
+    //     const newProduct = { ...values, id: generateUniqueId() };
+
+    //     const response = await axios.post(
+    //       "http://localhost:3000/api/products",
+    //       newProduct,
+    //       {
+    //         headers: { "Content-Type": "application/json" },
+    //         withCredentials: true,
+    //       }
+    //     );
+
+    //     console.log(response);
+    //     // Update local state only after successful server update
+    //     addProduct(newProduct);
+    //     actions.resetForm();
+    //     navigate("/admin");
+    //   } catch (error) {
+    //     console.error(error);
+    //     // Show some error message to the user
+    //   }
+    // },
   });
 
   return (
@@ -182,36 +231,6 @@ export function AdminForm() {
           </Text>
         ) : null}
       </FormControl>
-      {/* <FormControl>
-        <FormLabel>Allergens</FormLabel>
-        <Input
-          id="allergens"
-          name="allergens"
-          type="text"
-          placeholder="allergens"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.allergens}
-        />
-        {formik.touched.allergens && formik.errors.allergens ? (
-          <Text sx={requiredText}>{formik.errors.allergens}</Text>
-        ) : null}
-      </FormControl> */}
-      {/* <FormControl>
-        <FormLabel>Ingredients</FormLabel>
-        <Input
-          id="ingredients"
-          name="ingredients"
-          type="text"
-          placeholder="ingredients"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.ingredients}
-        />
-        {formik.touched.ingredients && formik.errors.ingredients ? (
-          <Text sx={requiredText}>{formik.errors.ingredients}</Text>
-        ) : null}
-      </FormControl> */}
       <FormControl>
         <FormLabel>BackgroundColor</FormLabel>
         <Select
@@ -230,6 +249,47 @@ export function AdminForm() {
         </Select>
         {formik.touched.bgColor && formik.errors.bgColor ? (
           <Text sx={requiredText}>{formik.errors.bgColor}</Text>
+        ) : null}
+      </FormControl>
+      <FormControl>
+        <FormLabel>Quantity</FormLabel>
+        <Input
+          data-cy="product-quantity"
+          id="quantity"
+          name="quantity"
+          type="text"
+          placeholder="quantity"
+          onChange={(e) =>
+            formik.setFieldValue("quantity", Number(e.target.value))
+          }
+          onBlur={formik.handleBlur}
+          value={formik.values.quantity}
+        />
+        {formik.touched.quantity && formik.errors.quantity ? (
+          <Text data-cy="product-quantity-error" sx={requiredText}>
+            {formik.errors.quantity}
+          </Text>
+        ) : null}
+      </FormControl>
+
+      <FormControl>
+        <FormLabel>In Stock</FormLabel>
+        <Input
+          data-cy="product-inStock"
+          id="inStock"
+          name="inStock"
+          type="text"
+          placeholder="inStock"
+          onChange={(e) =>
+            formik.setFieldValue("inStock", Number(e.target.value))
+          }
+          onBlur={formik.handleBlur}
+          value={formik.values.inStock}
+        />
+        {formik.touched.inStock && formik.errors.inStock ? (
+          <Text data-cy="product-inStock-error" sx={requiredText}>
+            {formik.errors.inStock}
+          </Text>
         ) : null}
       </FormControl>
       <FormControl pb="1rem">

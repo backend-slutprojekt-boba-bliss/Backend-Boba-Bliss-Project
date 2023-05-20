@@ -6,6 +6,8 @@ export interface Product {
   description: string;
   price: number;
   bgColor: string;
+  quantity?: number;
+  inStock?: number;
   category: string;
 }
 
