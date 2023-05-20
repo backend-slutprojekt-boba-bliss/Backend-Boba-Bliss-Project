@@ -5,7 +5,7 @@ import {
   Input,
   Select,
   SystemStyleObject,
-  Text
+  Text,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
@@ -79,8 +79,6 @@ export function AdminForm() {
       title: "",
       description: "",
       price: "" as any,
-      allergens: "",
-      ingredients: "",
       bgColor: "",
       category: "",
     },
@@ -184,7 +182,7 @@ export function AdminForm() {
           </Text>
         ) : null}
       </FormControl>
-      <FormControl>
+      {/* <FormControl>
         <FormLabel>Allergens</FormLabel>
         <Input
           id="allergens"
@@ -198,8 +196,8 @@ export function AdminForm() {
         {formik.touched.allergens && formik.errors.allergens ? (
           <Text sx={requiredText}>{formik.errors.allergens}</Text>
         ) : null}
-      </FormControl>
-      <FormControl>
+      </FormControl> */}
+      {/* <FormControl>
         <FormLabel>Ingredients</FormLabel>
         <Input
           id="ingredients"
@@ -213,7 +211,7 @@ export function AdminForm() {
         {formik.touched.ingredients && formik.errors.ingredients ? (
           <Text sx={requiredText}>{formik.errors.ingredients}</Text>
         ) : null}
-      </FormControl>
+      </FormControl> */}
       <FormControl>
         <FormLabel>BackgroundColor</FormLabel>
         <Select
