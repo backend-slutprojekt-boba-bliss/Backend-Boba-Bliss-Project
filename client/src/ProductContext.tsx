@@ -56,6 +56,7 @@ export function ProductProvider({ children }: PropsWithChildren) {
         .catch(function (error) {
           console.error(error);
         });
+        console.log(productList)
       return updatedProductList;
     });
   };
@@ -63,7 +64,7 @@ export function ProductProvider({ children }: PropsWithChildren) {
   const removeProduct = (id: string) => {
     setProductList((prevProductList) => {
       const itemIndex = prevProductList.findIndex(
-        (product) => product.id === id
+        (product) => product._id === id
       );
 
       if (itemIndex === -1) {
@@ -82,9 +83,24 @@ export function ProductProvider({ children }: PropsWithChildren) {
   };
 
   const editProduct = (editedProduct: Product) => {
+    const updatedProduct = editedProduct;
+    console.log(editedProduct);
+    axios
+      .put(`http://127.0.0.1:3000/api/products/${updatedProduct._id}`, updatedProduct, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+
+
     setProductList((prevProductList) => {
       const updatedProductList = prevProductList.map((product) =>
-        product.id === editedProduct.id ? editedProduct : product
+        product._id === editedProduct._id ? editedProduct : product
       );
       return updatedProductList;
     });

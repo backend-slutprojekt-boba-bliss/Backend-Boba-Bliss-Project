@@ -79,7 +79,7 @@ export function AdminForm() {
 
   const formik = useFormik<Product>({
     initialValues: {
-      id: "",
+      _id: "",
       image: "",
       imageAlt: "",
       title: "",

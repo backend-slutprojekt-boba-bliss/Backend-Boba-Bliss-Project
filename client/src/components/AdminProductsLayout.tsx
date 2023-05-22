@@ -15,8 +15,8 @@ export function AdminProductsLayout() {
     >
       {/* Map over the productList and render an AdminSmallProductCard component for each product */}
       {productList.map((product) => (
-        <Box sx={boxStyle} key={product.id}>
-          <AdminSmallProductCard product={product} id={product.id} />
+        <Box sx={boxStyle} key={product._id}>
+          <AdminSmallProductCard product={product} id={product._id} />
         </Box>
       ))}
     </Flex>

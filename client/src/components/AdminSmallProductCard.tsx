@@ -46,7 +46,7 @@ export function AdminSmallProductCard({ product, id }: SmallProductCardProps) {
 
   // Handle the product deletion process
   const handleDelete = () => {
-    removeProduct(product.id);
+    removeProduct(product._id);
     onClose();
   };
 
@@ -67,7 +67,7 @@ export function AdminSmallProductCard({ product, id }: SmallProductCardProps) {
         ${product.price.toFixed(2)}
       </Text>
       <Flex alignItems="center">
-        <Link to={`product/${product.id}`}>
+        <Link to={`product/${product._id}`}>
           <Button
             data-cy="admin-edit-product"
             onClick={handleEdit}
