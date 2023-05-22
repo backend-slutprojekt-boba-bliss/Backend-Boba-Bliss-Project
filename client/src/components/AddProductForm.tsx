@@ -18,56 +18,51 @@ type ProductValues = Record<keyof Product, Yup.AnySchema>;
 
 export const schema = Yup.object<ProductValues>().shape({
   image: Yup.string().url("Invalid image URL!").required("Required"),
-
   imageAlt: Yup.string().max(20, "Must be 20 characters or less"),
-  // .required("Required")
   title: Yup.string()
     .max(50, "Must be 50 characters or less")
     .required("Required"),
-
   description: Yup.string()
     .max(200, "Must be 200 characters or less")
     .required("Required"),
-
   price: Yup.number()
     .typeError("Must be a number")
     .positive("Price must be positive")
     .required("Required"),
+  bgColor: Yup.string()
+    .oneOf(
+      [
+        "yellowCardCircle",
+        "fruitTeaCircle",
+        "bigMatchaCard",
+        "#8fc2e9",
+        "#bf96da",
+      ],
+      "Background color must be selected"
+    )
+    .required("Required"),
 
-  bgColor: Yup.string().oneOf(
-    [
-      "yellowCardCircle",
-      "fruitTeaCircle",
-      "bigMatchaCard",
-      "#8fc2e9",
-      "#bf96da",
-    ],
-    "Background color must be selected"
-  ),
   inStock: Yup.number()
     .typeError("Must be a number")
     .positive("In Stock must be positive")
     .required("Required"),
-
-  category: Yup.string().oneOf(
-    ["milk", "fruit"],
-    "Category must be either 'milk' or 'fruit'"
-  ),
-  // .required("Required")
+  category: Yup.string()
+    .oneOf(["milk", "fruit"], "Category must be either 'milk' or 'fruit'")
+    .required("Required"),
 });
 
 interface Props {
   product?: Product;
 }
 export interface addProduct {
-    image: string;
-    imageAlt: string;
-    title: string;
-    description: string;
-    price: number;
-    bgColor: string;
-    inStock?: number;
-    category: string;
+  image: string;
+  imageAlt: string;
+  title: string;
+  description: string;
+  price: number;
+  bgColor: string;
+  inStock?: number;
+  category: string;
 }
 
 export function AdminForm() {
@@ -88,7 +83,7 @@ export function AdminForm() {
     },
     validationSchema: schema,
     onSubmit: (values, actions) => {
-      const newProduct = { ...values};
+      const newProduct = { ...values };
       addProduct(newProduct);
       actions.resetForm();
       navigate("/admin");
