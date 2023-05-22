@@ -17,15 +17,16 @@ Content-Type: application/json
   "price": "9",
   "bgColor": "fruitTeaCircle",
   "quantity": "10",
-  "inStock": "1"
+  "inStock": "1",
+  "category": "milk"
 }
 
 ### EDIT PRODUCT
-PUT http://localhost:3000/api/products/646b16f840f7ff36350ba7d4
+PUT http://localhost:3000/api/products/646b798373b4a7b9af691589
 Content-Type: application/json
 
 {
-  "_id": "646b16f840f7ff36350ba7d4",
+  "_id": "646b798373b4a7b9af691589",
   "image":  "img source",
   "imageAlt": "new",
   "title": "Ny" ,
@@ -34,6 +35,7 @@ Content-Type: application/json
   "bgColor": "fruitTeaCircle",
   "quantity": "10",
   "inStock": "1",
+  "category": "fruit",
   "__v": "1"
 }
 
@@ -45,4 +47,4 @@ DELETE http://localhost:3000/api/products/646b34b8292ca9ce4fe822f8
 //----------------------------------------------------------------
 
 ### GET CATEGORY
-GET http://localhost:3000/api/category/category:id
+GET http://localhost:3000/api/products/category/milk

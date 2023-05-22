@@ -1,7 +1,6 @@
 import "express-async-errors";
 import { InferSchemaType, Schema, model } from "mongoose";
 
-
 const productSchema = new Schema({
   image: { type: String, required: true },
   imageAlt: { type: String, required: true },
@@ -11,6 +10,7 @@ const productSchema = new Schema({
   bgColor: { type: String, required: true },
   quantity: { type: Number, required: false },
   inStock: { type: Number, required: true },
+  category: { type: String, required: true },
 });
 
 export type Product = InferSchemaType<typeof productSchema>;

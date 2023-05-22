@@ -4,4 +4,4 @@ import { getCategory } from "./categoryController";
 export const categoryRouter = express.Router();
 
 // GET CATEGORY
-categoryRouter.get("/", getCategory);
+categoryRouter.get("/:category", getCategory);
