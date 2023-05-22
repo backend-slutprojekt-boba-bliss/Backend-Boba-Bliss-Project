@@ -9,11 +9,11 @@ import {
 	useLocation,
 } from "react-router-dom";
 import App from "./App";
-import { CartProvider } from "./CartContext";
-import { ProductProvider } from "./ProductContext";
+import { CartProvider } from "./contexts/CartContext";
+import { ProductProvider } from "./contexts/ProductContext";
 import { NotFound } from "./components/NotFound";
 import "./main.css";
-import { OrderProvider } from "./orderContext";
+import { OrderProvider } from "./contexts/orderContext";
 import { AdminPage } from "./pages/AdminPage";
 import { CheckoutPage } from "./pages/CheckoutPage";
 import { ConfirmationPage } from "./pages/ConfirmationPage";

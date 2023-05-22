@@ -17,8 +17,8 @@ import {
 } from "@chakra-ui/react";
 import { BsCupStraw } from "react-icons/bs";
 import { FaTruckMoving } from "react-icons/fa";
-import { useCart } from "../../src/CartContext";
-import { useOrder } from "../../src/orderContext";
+import { useCart } from "../contexts/CartContext";
+import { useOrder } from "../contexts/orderContext";
 
 export function generateUniqueNumber(): number {
   let number = Math.floor(Math.random() * 90000) + 10000;
@@ -56,7 +56,7 @@ export function OrderConfirmationCard() {
         <CardBody fontSize={cardBodyFontSize} width="100%" p="0">
           <UnorderedList listStyleType="none" marginInlineStart="0">
             {lastOrder?.itemList.map((cartItem) => (
-              <ListItem key={cartItem.id}>
+              <ListItem key={cartItem._id}>
                 <Flex sx={cartItemStyle}>
                   <Text marginRight="20px">{cartItem.quantity} x</Text>
                   <Box

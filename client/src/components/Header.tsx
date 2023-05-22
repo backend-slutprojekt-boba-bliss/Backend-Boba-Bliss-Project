@@ -21,7 +21,7 @@ import { AiFillHome } from "react-icons/ai";
 import { IoMdCart } from "react-icons/io";
 import { RiAdminFill } from "react-icons/ri";
 import { Link as RouterLink } from "react-router-dom";
-import { useCart } from "../CartContext";
+import { useCart } from "../contexts/CartContext";
 
 export function Header() {
   const { totalItems, cartList } = useCart();

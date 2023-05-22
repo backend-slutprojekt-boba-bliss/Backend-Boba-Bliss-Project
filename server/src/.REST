@@ -10,8 +10,28 @@ Content-Type: application/json
   "imageAlt": "img alt",
   "title": "Ny" ,
   "description": "test description",
-  "price": "300",
-  "bgColor": "blue",
-  "quantity": "0",
-  "inStock": "5"
+  "price": "9",
+  "bgColor": "fruitTeaCircle",
+  "quantity": "10",
+  "inStock": "1"
 }
+
+### EDIT PRODUCT
+PUT http://localhost:3000/api/products/646b16f840f7ff36350ba7d4
+Content-Type: application/json
+
+{
+  "_id": "646b16f840f7ff36350ba7d4",
+  "image":  "img source",
+  "imageAlt": "new",
+  "title": "Ny" ,
+  "description": "test description",
+  "price": "200",
+  "bgColor": "fruitTeaCircle",
+  "quantity": "10",
+  "inStock": "1",
+  "__v": "1"
+}
+
+### DELETE PRODUCT
+DELETE http://localhost:3000/api/products/646b34b8292ca9ce4fe822f8

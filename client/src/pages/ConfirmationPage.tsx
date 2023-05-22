@@ -5,7 +5,7 @@ import {
   Flex,
   SystemStyleObject
 } from "@chakra-ui/react";
-import { useOrder } from "../orderContext";
+import { useOrder } from "../contexts/orderContext";
 import { OrderConfirmationCard } from "../components/OrderConfirmationCard";
 
 export function ConfirmationPage() {

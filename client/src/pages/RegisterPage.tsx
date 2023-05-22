@@ -48,7 +48,8 @@ function RegisterPage() {
     }
 
     setPasswordError(""); // Reset password error
-
+    registerUser(email, password)
+/*
     try {
       const hashedPassword = await argon2.hash(password, {
         timeCost: 2,
@@ -58,7 +59,7 @@ function RegisterPage() {
       registerUser(email, hashedPassword);
     } catch (error) {
       console.log("An error occurred:", error);
-    }
+    }*/
   };
 
   return (

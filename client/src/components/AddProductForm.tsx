@@ -10,7 +10,7 @@ import {
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { useProduct } from "../../src/ProductContext";
+import { useProduct } from "../contexts/ProductContext";
 import { Product } from "../data";
 import { orderButtonStyle } from "./CartCard";
 
@@ -44,12 +44,6 @@ export const schema = Yup.object<ProductValues>().shape({
     ],
     "Background color must be selected"
   ),
-
-  quantity: Yup.number()
-    .typeError("Must be a number")
-    .positive("Quantity must be positive")
-    .required("Required"),
-
   inStock: Yup.number()
     .typeError("Must be a number")
     .positive("In Stock must be positive")
@@ -65,11 +59,15 @@ export const schema = Yup.object<ProductValues>().shape({
 interface Props {
   product?: Product;
 }
-
-export function generateUniqueId(): string {
-  const timestamp = new Date().getTime();
-  const randomValue = Math.floor(Math.random() * 1000000);
-  return `${timestamp}-${randomValue}`;
+export interface addProduct {
+    image: string;
+    imageAlt: string;
+    title: string;
+    description: string;
+    price: number;
+    bgColor: string;
+    inStock?: number;
+    category: string;
 }
 
 export function AdminForm() {
@@ -77,22 +75,20 @@ export function AdminForm() {
 
   const navigate = useNavigate();
 
-  const formik = useFormik<Product>({
+  const formik = useFormik<addProduct>({
     initialValues: {
-      id: "",
       image: "",
       imageAlt: "",
       title: "",
       description: "",
       price: 0,
       bgColor: "",
-      quantity: 0,
       inStock: 0,
       category: "",
     },
     validationSchema: schema,
     onSubmit: (values, actions) => {
-      const newProduct = { ...values, id: generateUniqueId() };
+      const newProduct = { ...values};
       addProduct(newProduct);
       actions.resetForm();
       navigate("/admin");
@@ -210,27 +206,6 @@ export function AdminForm() {
           <Text sx={requiredText}>{formik.errors.bgColor}</Text>
         ) : null}
       </FormControl>
-      <FormControl>
-        <FormLabel>Quantity</FormLabel>
-        <Input
-          data-cy="product-quantity"
-          id="quantity"
-          name="quantity"
-          type="text"
-          placeholder="quantity"
-          onChange={(e) =>
-            formik.setFieldValue("quantity", Number(e.target.value))
-          }
-          onBlur={formik.handleBlur}
-          value={formik.values.quantity}
-        />
-        {formik.touched.quantity && formik.errors.quantity ? (
-          <Text data-cy="product-quantity-error" sx={requiredText}>
-            {formik.errors.quantity}
-          </Text>
-        ) : null}
-      </FormControl>
-
       <FormControl>
         <FormLabel>In Stock</FormLabel>
         <Input
