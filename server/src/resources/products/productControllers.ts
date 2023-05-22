@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import "express-async-errors";
+import * as yup from "yup";
 import { ProductModel } from "./productModel";
+import { ProductSchema, editProductSchema } from "./productValidationSchemas";
 
 export async function getAllProducts(req: Request, res: Response) {
   console.log("get all products");
@@ -14,6 +16,16 @@ export async function getAllProducts(req: Request, res: Response) {
 
 export async function createProduct(req: Request, res: Response) {
   console.log("Product data received:", req.body);
+
+  try {
+    await ProductSchema.validate(req.body);
+  } catch (error) {
+    if (error instanceof yup.ValidationError) {
+      res.status(400).json(`"${error.path}" not found`);
+      return;
+    }
+  }
+
   const productData = { ...req.body };
   const product = new ProductModel(productData);
 
@@ -22,8 +34,18 @@ export async function createProduct(req: Request, res: Response) {
   res.status(201).json(product);
 }
 
+
 export async function editProduct(req: Request, res: Response) {
   console.log("updating product");
+  
+  try {
+    await editProductSchema.validate(req.body);
+  } catch (error) {
+    if (error instanceof yup.ValidationError) {
+      res.status(400).json(`"${error.path}" not found`);
+      return;
+    }
+  }
 
   const product = await ProductModel.findById(req.params.id);
   if (!product) {
