@@ -1,5 +1,6 @@
 import { Button, FormControl, FormErrorMessage, FormLabel, Input } from "@chakra-ui/react";
 import { useState } from "react";
+import argon2 from 'argon2';
 
 async function registerUser(email: string, password: string) {
   try {
@@ -12,53 +13,51 @@ async function registerUser(email: string, password: string) {
     });
 
     if (response.ok) {
-      console.log("Register successful");
+      console.log("Registration successful");
     } else {
-      throw new Error("Register failed");
+      console.log("Registration failed");
     }
   } catch (error) {
-    throw new Error("An error occurred");
+    console.log("An error occurred:", error);
   }
 }
 
+function validatePassword(password: string): string | null {
+  // Validate password complexity
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  if (!passwordRegex.test(password)) {
+    return "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.";
+  }
+  return null;
+}
+
 function RegisterPage() {
-  const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [passwordTouched, setPasswordTouched] = useState(false);
-
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
-
-  const validatePassword = (password: string) => {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!passwordRegex.test(password)) {
-      return "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.";
-    }
-    return "";
-  };
-
-  const handlePasswordBlur = () => {
-    setPasswordError(validatePassword(password));
-    setPasswordTouched(true);
-  };
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const form = event.currentTarget;
     const email = form.email.value;
+    const password = form.password.value;
 
-    if (passwordError || !passwordTouched) {
-      return; // Don't proceed with registration if there is a password error or if the password field has not been touched
+    const validationError = validatePassword(password);
+    if (validationError) {
+      setPasswordError(validationError);
+      return;
     }
 
+    setPasswordError(""); // Reset password error
+
     try {
-      await registerUser(email, password);
-      // Registration successful
-      console.log("Register successful");
+      const hashedPassword = await argon2.hash(password, {
+        timeCost: 2,
+        memoryCost: 1024
+      });
+
+      registerUser(email, hashedPassword);
     } catch (error) {
-      // Registration failed
-      console.log("Register failed:", error.message);
+      console.log("An error occurred:", error);
     }
   };
 
@@ -72,15 +71,8 @@ function RegisterPage() {
 
         <FormControl isInvalid={!!passwordError}>
           <FormLabel>Password</FormLabel>
-          <Input
-            id="password"
-            name="password"
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-            onBlur={handlePasswordBlur}
-          />
-          <FormErrorMessage>{passwordError}</FormErrorMessage>
+          <Input id="password" name="password" type="password" />
+          <FormErrorMessage>{passwordError || " "}</FormErrorMessage>
         </FormControl>
 
         <Button type="submit">Register</Button>
