@@ -1,3 +1,7 @@
+//----------------------------------------------------------------
+// PRODUCT
+//----------------------------------------------------------------
+
 ### GET ALL PRODUCTS
 GET http://localhost:3000/api/products
 
@@ -35,3 +39,10 @@ Content-Type: application/json
 
 ### DELETE PRODUCT
 DELETE http://localhost:3000/api/products/646b34b8292ca9ce4fe822f8
+
+//----------------------------------------------------------------
+// CATEGORY
+//----------------------------------------------------------------
+
+### GET CATEGORY
+GET http://localhost:3000/api/category/category:id

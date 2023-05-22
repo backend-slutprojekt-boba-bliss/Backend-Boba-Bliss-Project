@@ -3,8 +3,8 @@ import {
   createProduct,
   deleteProduct,
   editProduct,
-  getAllProducts
-} from "./productControllers";
+  getAllProducts,
+} from "./productController";
 
 export const productRouter = express.Router();
 
