@@ -1,6 +1,6 @@
 import { Box, Button, Card, Image, Text } from "@chakra-ui/react";
 import { Product } from "../data";
-import { useCart } from "../CartContext";
+import { useCart } from "../contexts/CartContext";
 
 interface SmallProductCardProps {
   product: Product;

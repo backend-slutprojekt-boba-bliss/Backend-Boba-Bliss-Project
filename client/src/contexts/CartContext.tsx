@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/react";
 import { createContext, useContext, useEffect, useState } from "react";
-import { CartItem, Product } from "./data";
-import { useLocalStorageState } from "./hooks/useLocalStorageState";
+import { CartItem, Product } from "../data/index";
+import { useLocalStorageState } from "../hooks/useLocalStorageState";
 
 type CartContextType = {
   cartList: CartItem[];
@@ -48,13 +48,13 @@ export function CartProvider({ children }: Props) {
 
   const addToCart = (item: Product, quantity: number) => {
     const existingCartItem = cartList.find(
-      (cartItem) => cartItem.id === item.id
+      (cartItem) => cartItem._id === item._id
     );
 
     if (existingCartItem) {
       setCartList((prevCartList) =>
         prevCartList.map((cartItem) =>
-          cartItem.id === item.id
+          cartItem._id === item._id
             ? { ...cartItem, quantity: cartItem.quantity + quantity }
             : cartItem
         )
@@ -79,7 +79,7 @@ export function CartProvider({ children }: Props) {
   const removeFromCart = (itemId: string) => {
     setCartList((prevCartList) => {
       const itemIndex = prevCartList.findIndex(
-        (cartItem) => cartItem.id === itemId
+        (cartItem) => cartItem._id === itemId
       );
       if (itemIndex >= 0) {
         if (prevCartList[itemIndex].quantity > 1) {
@@ -90,7 +90,7 @@ export function CartProvider({ children }: Props) {
           };
           return updatedCartList;
         } else {
-          return prevCartList.filter((cartItem) => cartItem.id !== itemId);
+          return prevCartList.filter((cartItem) => cartItem._id !== itemId);
         }
       } else {
         return prevCartList;

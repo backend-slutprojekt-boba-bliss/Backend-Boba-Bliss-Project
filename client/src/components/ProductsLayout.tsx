@@ -1,6 +1,6 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { useProduct } from "../ProductContext";
+import { useProduct } from "../contexts/ProductContext";
 import { SmallProductCard } from "./SmallProductCard";
 
 // Three categories: fruit, milk or null (all)
@@ -26,9 +26,9 @@ export function ProductsLayout({ filterCategory }: ProductsLayoutProps) {
     >
       {/* Iterate through the filtered product list and render SmallProductCard components */}
       {filteredProductList.map((product) => (
-        <Box sx={boxStyle} key={product.id}>
+        <Box sx={boxStyle} key={product._id}>
           {/* Wrap each SmallProductCard with a link for navigation */}
-          <Link key={product.id} to={`/product/${product.id}`}>
+          <Link key={product._id} to={`/product/${product._id}`}>
             <SmallProductCard product={product} />
           </Link>
         </Box>

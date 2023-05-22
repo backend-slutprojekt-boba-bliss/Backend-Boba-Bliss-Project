@@ -1,13 +1,13 @@
 import { Box } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { BigProductCard } from "../components/BigProductCard";
-import { useProduct } from "../../src/ProductContext";
+import { useProduct } from "../contexts/ProductContext";
 
 export function ProductPage() {
   const { productList } = useProduct();
 
   const params = useParams();
-  const product = productList.find((p) => p.id === params.id);
+  const product = productList.find((p) => p._id === params.id);
 
   if (!product) {
     return <p>Produkten hittades inte...</p>;
