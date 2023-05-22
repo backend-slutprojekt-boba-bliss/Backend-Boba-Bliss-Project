@@ -1,18 +1,43 @@
 import { Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { useState } from "react";
 
-type LoginType = "user" | "admin";
+async function loginUser(email: string, password: string) {
+  try {
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (response.ok) {
+      // Successful login logic
+      console.log("Login successful");
+    } else {
+      // Handle login error
+      console.log("Login failed");
+    }
+  } catch (error) {
+    console.log("An error occurred:", error);
+  }
+}
 
 function LoginPage() {
-  const [loginType, setLoginType] = useState<LoginType>("user");
+  const [loginType, setLoginType] = useState("user");
 
-  const handleLoginChange = (type: LoginType) => {
+  const handleLoginChange = (type: string) => {
     setLoginType(type);
   };
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Add your login logic here
+
+    const form = event.currentTarget;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    loginUser(email, password);
   };
 
   return (
