@@ -6,8 +6,8 @@ import {
   useEffect,
   useState,
 } from "react";
-import { addProduct } from "./components/AddProductForm";
-import { Product } from "./data";
+import { addProduct } from "../components/AddProductForm";
+import { Product } from "../data";
 
 type ProductContextType = {
   productList: Product[];

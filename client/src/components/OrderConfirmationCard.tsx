@@ -17,8 +17,8 @@ import {
 } from "@chakra-ui/react";
 import { BsCupStraw } from "react-icons/bs";
 import { FaTruckMoving } from "react-icons/fa";
-import { useCart } from "../../src/CartContext";
-import { useOrder } from "../../src/orderContext";
+import { useCart } from "../contexts/CartContext";
+import { useOrder } from "../contexts/orderContext";
 
 export function generateUniqueNumber(): number {
   let number = Math.floor(Math.random() * 90000) + 10000;

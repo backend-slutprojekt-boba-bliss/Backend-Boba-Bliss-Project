@@ -1,8 +1,8 @@
 import { createContext, useContext } from "react";
-import { CartItem } from "./data";
 import { useCart } from "./CartContext";
-import { Customer } from "./components/CheckoutForm";
-import { useLocalStorageState } from "./hooks/useLocalStorageState";
+import { Customer } from "../components/CheckoutForm";
+import { CartItem } from "../data";
+import { useLocalStorageState } from "../hooks/useLocalStorageState";
 
 type Order = {
   itemList: CartItem[];

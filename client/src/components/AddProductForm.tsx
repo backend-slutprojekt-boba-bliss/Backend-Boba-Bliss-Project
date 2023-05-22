@@ -10,7 +10,7 @@ import {
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { useProduct } from "../../src/ProductContext";
+import { useProduct } from "../contexts/ProductContext";
 import { Product } from "../data";
 import { orderButtonStyle } from "./CartCard";
 

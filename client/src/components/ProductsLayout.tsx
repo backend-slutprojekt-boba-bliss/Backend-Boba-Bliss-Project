@@ -1,6 +1,6 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { useProduct } from "../ProductContext";
+import { useProduct } from "../contexts/ProductContext";
 import { SmallProductCard } from "./SmallProductCard";
 
 // Three categories: fruit, milk or null (all)

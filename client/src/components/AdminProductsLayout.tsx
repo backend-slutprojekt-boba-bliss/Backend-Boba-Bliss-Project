@@ -1,5 +1,5 @@
 import { Box, Flex } from "@chakra-ui/react";
-import { useProduct } from "../ProductContext";
+import { useProduct } from "../contexts/ProductContext";
 import { AdminSmallProductCard } from "./AdminSmallProductCard";
 
 export function AdminProductsLayout() {

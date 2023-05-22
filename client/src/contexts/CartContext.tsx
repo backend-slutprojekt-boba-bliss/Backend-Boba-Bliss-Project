@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/react";
 import { createContext, useContext, useEffect, useState } from "react";
-import { CartItem, Product } from "./data";
-import { useLocalStorageState } from "./hooks/useLocalStorageState";
+import { CartItem, Product } from "../data/index";
+import { useLocalStorageState } from "../hooks/useLocalStorageState";
 
 type CartContextType = {
   cartList: CartItem[];

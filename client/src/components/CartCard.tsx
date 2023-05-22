@@ -19,7 +19,7 @@ import {
     useBreakpointValue
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import { useCart } from "../../src/CartContext";
+import { useCart } from "../contexts/CartContext";
 
 export function CartCard({ checkOutPage = true }) {
   const { addToCart, removeFromCart, cartList, clearCart } = useCart();
