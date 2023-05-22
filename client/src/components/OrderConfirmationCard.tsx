@@ -56,7 +56,7 @@ export function OrderConfirmationCard() {
         <CardBody fontSize={cardBodyFontSize} width="100%" p="0">
           <UnorderedList listStyleType="none" marginInlineStart="0">
             {lastOrder?.itemList.map((cartItem) => (
-              <ListItem key={cartItem.id}>
+              <ListItem key={cartItem._id}>
                 <Flex sx={cartItemStyle}>
                   <Text marginRight="20px">{cartItem.quantity} x</Text>
                   <Box

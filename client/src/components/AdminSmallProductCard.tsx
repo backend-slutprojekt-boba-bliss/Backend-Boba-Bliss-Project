@@ -1,22 +1,22 @@
 import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
-  Box,
-  Button,
-  Card,
-  Flex,
-  Image,
-  Text,
-  useDisclosure
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogContent,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogOverlay,
+    Box,
+    Button,
+    Card,
+    Flex,
+    Image,
+    Text,
+    useDisclosure
 } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Product } from "../data";
 import { useProduct } from "../ProductContext";
+import { Product } from "../data";
 
 interface SmallProductCardProps {
   product: Product;
@@ -29,8 +29,8 @@ export function AdminSmallProductCard({ product, id }: SmallProductCardProps) {
   // Cancel button reference in the AlertDialog
   const cancelRef = React.useRef<HTMLButtonElement>(null);
 
-  // Get the removeProduct and editProduct functions from the ProductContext
-  const { removeProduct, editProduct } = useProduct();
+  // Get the deleteProduct and editProduct functions from the ProductContext
+  const { deleteProduct, editProduct } = useProduct();
 
   const roundBG = {
     backgroundColor: product.bgColor,
@@ -46,7 +46,7 @@ export function AdminSmallProductCard({ product, id }: SmallProductCardProps) {
 
   // Handle the product deletion process
   const handleDelete = () => {
-    removeProduct(product._id);
+    deleteProduct(product._id);
     onClose();
   };
 

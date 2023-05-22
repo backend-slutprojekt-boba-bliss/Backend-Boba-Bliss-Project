@@ -12,14 +12,14 @@ import { Product } from "./data";
 type ProductContextType = {
   productList: Product[];
   addProduct: (product: addProduct) => void;
-  removeProduct: (id: string) => void;
+  deleteProduct: (id: string) => void;
   editProduct: (product: Product) => void;
 };
 
 const ProductContext = createContext<ProductContextType>({
   productList: [],
   addProduct: (product: addProduct) => {},
-  removeProduct: (id: string) => {},
+  deleteProduct: (id: string) => {},
   editProduct: (product: Product) => {},
 });
 
@@ -60,27 +60,25 @@ export function ProductProvider({ children }: PropsWithChildren) {
       });
   };
 
-  const removeProduct = (id: string) => {
-    setProductList((prevProductList) => {
-      const itemIndex = prevProductList.findIndex(
-        (product) => product._id === id
-      );
-
-      if (itemIndex === -1) {
-        // Product not found
-        return prevProductList;
-      }
-
-      // Create a new array without the product to be removed
-      const updatedProductList = [
-        ...prevProductList.slice(0, itemIndex),
-        ...prevProductList.slice(itemIndex + 1),
-      ];
-
-      return updatedProductList;
-    });
-  };
-
+  const deleteProduct = (id: string) => {
+    axios
+      .delete(`http://127.0.0.1:3000/api/products/${id}`, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true
+      })
+      .then(function (response) {
+        console.log(response);
+        setProductList((prevProductList) => {
+          // Create a new array without the deleted product
+          const updatedProductList = prevProductList.filter((product) => product._id !== id);
+          return updatedProductList;
+        });
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+    };
+  
   const editProduct = (editedProduct: Product) => {
     const updatedProduct = editedProduct;
     console.log(editedProduct);
@@ -107,7 +105,7 @@ export function ProductProvider({ children }: PropsWithChildren) {
 
   return (
     <ProductContext.Provider
-      value={{ productList, addProduct, removeProduct, editProduct }}
+      value={{ productList, addProduct, deleteProduct, editProduct }}
     >
       {children}
     </ProductContext.Provider>

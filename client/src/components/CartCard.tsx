@@ -48,7 +48,7 @@ export function CartCard({ checkOutPage = true }) {
           {cartList.length > 0 ? (
             <UnorderedList listStyleType="none" marginInlineStart="0">
               {cartList.map((cartItem) => (
-                <ListItem data-cy="cart-item" key={cartItem.id}>
+                <ListItem data-cy="cart-item" key={cartItem._id}>
                   <Flex sx={cartItemStyle}>
                     {checkOutPage && (
                       <Image
@@ -61,7 +61,7 @@ export function CartCard({ checkOutPage = true }) {
                       <Button
                         data-cy="decrease-quantity-button"
                         sx={incrementButtonStyle}
-                        onClick={() => removeFromCart(cartItem.id)}
+                        onClick={() => removeFromCart(cartItem._id)}
                       >
                         -
                       </Button>
