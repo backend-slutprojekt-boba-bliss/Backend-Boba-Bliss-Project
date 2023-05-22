@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { ProductModel } from "./productModel";
 import "express-async-errors";
+import { ProductModel } from "./productModel";
 
 export async function getAllProducts(req: Request, res: Response) {
   console.log("get all products");
@@ -13,11 +13,12 @@ export async function getAllProducts(req: Request, res: Response) {
 }
 
 export async function createProduct(req: Request, res: Response) {
-  console.log("hello from createProduct");
+  console.log("Product data received:", req.body);
   const productData = { ...req.body };
   const product = new ProductModel(productData);
 
   await product.save();
+  console.log("Product saved:", product);
   res.status(201).json(product);
 }
 

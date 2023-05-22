@@ -33,12 +33,12 @@ import { InferSchemaType, Schema, model } from "mongoose";
   }*/
 
 const productSchema = new Schema({
-  imageUpload: { type: String, required: true },
+  image: { type: String, required: true },
   imageAlt: { type: String, required: true },
   title: { type: String, required: true },
   description: { type: String, required: true },
   price: { type: Number, required: true },
-  backgroundColor: { type: String, required: true },
+  bgColor: { type: String, required: true },
   quantity: { type: Number, required: false },
   inStock: { type: Number, required: true },
 });

@@ -1,7 +1,10 @@
+import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import { productRouter } from "./resources/products/productRouter";
 
 export const app = express();
+app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+
 app.use(express.json());
 
 app.use("/api/products", productRouter);
