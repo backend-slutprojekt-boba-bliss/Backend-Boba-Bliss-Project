@@ -34,7 +34,6 @@ export default function EditForm() {
         description: "",
         price: 0,
         bgColor: "",
-        quantity: 0,
         inStock: 0,
         category: "",
         },
@@ -60,7 +59,6 @@ export default function EditForm() {
         description: "",
         price: 0,
         bgColor: "",
-        quantity: 0,
         inStock: 0,
         category: "",
       });
@@ -155,26 +153,6 @@ export default function EditForm() {
         {formik.touched.price && formik.errors.price ? (
           <Text data-cy="product-price-error" sx={requiredText}>
             {formik.errors.price}
-          </Text>
-        ) : null}
-      </FormControl>
-      <FormControl>
-        <FormLabel>Quantity</FormLabel>
-        <Input
-          data-cy="product-quantity"
-          id="quantity"
-          name="quantity"
-          type="text"
-          placeholder="quantity"
-          onChange={(e) =>
-            formik.setFieldValue("quantity", Number(e.target.value))
-          }
-          onBlur={formik.handleBlur}
-          value={formik.values.quantity}
-        />
-        {formik.touched.quantity && formik.errors.quantity ? (
-          <Text data-cy="product-quantity-error" sx={requiredText}>
-            {formik.errors.quantity}
           </Text>
         ) : null}
       </FormControl>

@@ -44,12 +44,6 @@ export const schema = Yup.object<ProductValues>().shape({
     ],
     "Background color must be selected"
   ),
-
-  quantity: Yup.number()
-    .typeError("Must be a number")
-    .positive("Quantity must be positive")
-    .required("Required"),
-
   inStock: Yup.number()
     .typeError("Must be a number")
     .positive("In Stock must be positive")
@@ -86,7 +80,6 @@ export function AdminForm() {
       description: "",
       price: 0,
       bgColor: "",
-      quantity: 0,
       inStock: 0,
       category: "",
     },
@@ -210,27 +203,6 @@ export function AdminForm() {
           <Text sx={requiredText}>{formik.errors.bgColor}</Text>
         ) : null}
       </FormControl>
-      <FormControl>
-        <FormLabel>Quantity</FormLabel>
-        <Input
-          data-cy="product-quantity"
-          id="quantity"
-          name="quantity"
-          type="text"
-          placeholder="quantity"
-          onChange={(e) =>
-            formik.setFieldValue("quantity", Number(e.target.value))
-          }
-          onBlur={formik.handleBlur}
-          value={formik.values.quantity}
-        />
-        {formik.touched.quantity && formik.errors.quantity ? (
-          <Text data-cy="product-quantity-error" sx={requiredText}>
-            {formik.errors.quantity}
-          </Text>
-        ) : null}
-      </FormControl>
-
       <FormControl>
         <FormLabel>In Stock</FormLabel>
         <Input
