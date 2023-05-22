@@ -17,7 +17,7 @@ Content-Type: application/json
 }
 
 ### EDIT PRODUCT
-PUT http://localhost:3000/api/products/646b16f840f7ff36350ba7d
+PUT http://localhost:3000/api/products/646b16f840f7ff36350ba7d4
 Content-Type: application/json
 
 {
@@ -32,3 +32,6 @@ Content-Type: application/json
   "inStock": "1",
   "__v": "1"
 }
+
+### DELETE PRODUCT
+DELETE http://localhost:3000/api/products/646b34b7292ca9ce4fe822f6

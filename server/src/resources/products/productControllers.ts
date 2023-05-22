@@ -4,6 +4,9 @@ import * as yup from "yup";
 import { ProductModel } from "./productModel";
 import { ProductSchema, editProductSchema } from "./productValidationSchemas";
 
+
+
+// GET PRODUCTS
 export async function getAllProducts(req: Request, res: Response) {
   console.log("get all products");
   try {
@@ -14,6 +17,7 @@ export async function getAllProducts(req: Request, res: Response) {
   }
 }
 
+// CREATE PRODUCT
 export async function createProduct(req: Request, res: Response) {
   console.log("Product data received:", req.body);
 
@@ -34,7 +38,7 @@ export async function createProduct(req: Request, res: Response) {
   res.status(201).json(product);
 }
 
-
+// EDIT PRODUCT
 export async function editProduct(req: Request, res: Response) {
   console.log("updating product");
   
@@ -73,8 +77,20 @@ export async function editProduct(req: Request, res: Response) {
   }
 }
 
-
-
+// DELETE PRODUCT
 export async function deleteProduct(req: Request, res: Response) {
   console.log("deleting product");
+
+  try {
+    const product = await ProductModel.findById(req.params.id);
+    if(!product) {
+      res.status(404).json({ message: "Product not found" });
+      return
+    }
+    await ProductModel.findByIdAndDelete(req.params.id);
+    res.status(204).send('Product is deleted');
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting product" });
+  }
+
 }
