@@ -10,7 +10,7 @@ import { useFormik } from "formik";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Product } from "../data";
-import { useProduct } from "../ProductContext";
+import { useProduct } from "../contexts/ProductContext";
 import { requiredText, schema } from "./AddProductForm";
 import { orderButtonStyle } from "./CartCard";
 
@@ -19,7 +19,7 @@ export default function EditForm() {
   const { productList, editProduct } = useProduct();
 
   const { id } = useParams<{ id: string }>();
-  const productToEdit = productList.find((product) => product.id === id);
+  const productToEdit = productList.find((product) => product._id === id);
 
   const formik = useFormik<Product>({
     initialValues: productToEdit
@@ -27,16 +27,15 @@ export default function EditForm() {
           ...productToEdit,
         }
       : {
-          id: "",
-          image: "",
-          imageAlt: "",
-          title: "",
-          description: "",
-          price: "" as any,
-          allergens: "",
-          ingredients: "",
-          bgColor: "",
-          category: "",
+        _id: "",
+        image: "",
+        imageAlt: "",
+        title: "",
+        description: "",
+        price: 0,
+        bgColor: "",
+        inStock: 0,
+        category: "",
         },
     validationSchema: schema,
     onSubmit: (values, actions) => {
@@ -53,15 +52,14 @@ export default function EditForm() {
       });
     } else {
       formik.setValues({
-        id: "",
+        _id: "",
         image: "",
         imageAlt: "",
         title: "",
         description: "",
-        price: "" as any,
-        allergens: "",
-        ingredients: "",
+        price: 0,
         bgColor: "",
+        inStock: 0,
         category: "",
       });
     }
@@ -159,33 +157,23 @@ export default function EditForm() {
         ) : null}
       </FormControl>
       <FormControl>
-        <FormLabel>Allergens</FormLabel>
+        <FormLabel>In Stock</FormLabel>
         <Input
-          id="allergens"
-          name="allergens"
+          data-cy="product-inStock"
+          id="inStock"
+          name="inStock"
           type="text"
-          placeholder="allergens"
-          onChange={formik.handleChange}
+          placeholder="inStock"
+          onChange={(e) =>
+            formik.setFieldValue("inStock", Number(e.target.value))
+          }
           onBlur={formik.handleBlur}
-          value={formik.values.allergens}
+          value={formik.values.inStock}
         />
-        {formik.touched.allergens && formik.errors.allergens ? (
-          <Text sx={requiredText}>{formik.errors.allergens}</Text>
-        ) : null}
-      </FormControl>
-      <FormControl>
-        <FormLabel>Ingredients</FormLabel>
-        <Input
-          id="ingredients"
-          name="ingredients"
-          type="text"
-          placeholder="ingredients"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.ingredients}
-        />
-        {formik.touched.ingredients && formik.errors.ingredients ? (
-          <Text sx={requiredText}>{formik.errors.ingredients}</Text>
+        {formik.touched.inStock && formik.errors.inStock ? (
+          <Text data-cy="product-inStock-error" sx={requiredText}>
+            {formik.errors.inStock}
+          </Text>
         ) : null}
       </FormControl>
       <FormControl>

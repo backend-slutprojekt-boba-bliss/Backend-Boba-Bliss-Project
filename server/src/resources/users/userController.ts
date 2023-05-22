@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
+import { Session } from "express-session";
 const argon2 = require("argon2");
 const { userSchema, UserModel } = require("./userModel");
-import { Session } from "express-session";
 
 interface CustomRequest extends Request {
   session: Session & { userId?: string }; // Add the userId property to the session type
@@ -40,20 +40,16 @@ export const registerUser = async (
   res: Response
 ): Promise<void> => {
   try {
-    // Take in parameters from the registration form
-    const { email, password } = req.body;
-    // Hash the password and create a new user from the schema
+    // Tar in parametrar från form i registerform
+    const { username, email, password } = req.body;
     const hashedPassword = await argon2.hash(password, {
       timeCost: 2,
-      memoryCost: 1024,
+      memoryCost: 1024
     });
-    const user = new UserModel({
-      email,
-      password: hashedPassword,
-      isAdmin: false,
-    });
+    // Hashar lösenord och skapar ny user från vår schema
+    const user = new UserModel({ username, email, password: hashedPassword });
 
-    // Save the user to the database
+    // Sparar användaren till databasen
     await user.save();
 
     res.status(201).send({ message: "User registered successfully" });

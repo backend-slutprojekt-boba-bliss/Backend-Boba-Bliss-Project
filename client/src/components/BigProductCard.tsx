@@ -19,7 +19,7 @@ import { useRef, useState } from "react";
 import { FaCartPlus } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { Product } from "../data";
-import { useCart } from "../CartContext";
+import { useCart } from "../contexts/CartContext";
 
 interface BigProductCardProps {
   product: Product;

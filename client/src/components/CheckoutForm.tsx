@@ -13,7 +13,7 @@ import {
   Text
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { useOrder } from "../orderContext";
+import { useOrder } from "../contexts/orderContext";
 import { requiredText } from "./AddProductForm";
 
 const phoneRegExp = /^[0-9]{10}$/;

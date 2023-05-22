@@ -2,7 +2,8 @@ import express from "express";
 import {
   createProduct,
   deleteProduct,
-  getAllProducts,
+  editProduct,
+  getAllProducts
 } from "./productControllers";
 
 export const productRouter = express.Router();
@@ -11,12 +12,13 @@ export const productRouter = express.Router();
 productRouter.get("/", getAllProducts);
 
 //GET PRODUCT BY ID
-
 // productRouter.get("/:id", getProductById);
 
 // CREATE PRODUCT
 productRouter.post("/", createProduct);
 
-// productRouter.put("/:id", updateProduct);
+// EDIT PRODUCT
+productRouter.put("/:id", editProduct);
 
+// DELETE PRODUCT
 productRouter.delete("/:id", deleteProduct);
