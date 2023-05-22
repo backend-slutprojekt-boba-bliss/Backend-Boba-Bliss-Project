@@ -43,8 +43,15 @@ export const registerUser = async (
     // Take in parameters from the registration form
     const { email, password } = req.body;
     // Hash the password and create a new user from the schema
-    const hashedPassword = await argon2.hash(password);
-    const user = new UserModel({ email, password: hashedPassword, isAdmin: false });
+    const hashedPassword = await argon2.hash(password, {
+      timeCost: 2,
+      memoryCost: 1024,
+    });
+    const user = new UserModel({
+      email,
+      password: hashedPassword,
+      isAdmin: false,
+    });
 
     // Save the user to the database
     await user.save();

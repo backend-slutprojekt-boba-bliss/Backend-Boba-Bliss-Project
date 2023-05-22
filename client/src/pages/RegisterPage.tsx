@@ -1,6 +1,11 @@
-import { Button, FormControl, FormErrorMessage, FormLabel, Input } from "@chakra-ui/react";
+import {
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+} from "@chakra-ui/react";
 import { useState } from "react";
-import argon2 from 'argon2';
 
 async function registerUser(email: string, password: string) {
   try {
@@ -24,7 +29,8 @@ async function registerUser(email: string, password: string) {
 
 function validatePassword(password: string): string | null {
   // Validate password complexity
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   if (!passwordRegex.test(password)) {
     return "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.";
   }
@@ -48,17 +54,7 @@ function RegisterPage() {
     }
 
     setPasswordError(""); // Reset password error
-
-    try {
-      const hashedPassword = await argon2.hash(password, {
-        timeCost: 2,
-        memoryCost: 1024
-      });
-
-      registerUser(email, hashedPassword);
-    } catch (error) {
-      console.log("An error occurred:", error);
-    }
+    registerUser(email, password);
   };
 
   return (
