@@ -59,11 +59,15 @@ export const schema = Yup.object<ProductValues>().shape({
 interface Props {
   product?: Product;
 }
-
-export function generateUniqueId(): string {
-  const timestamp = new Date().getTime();
-  const randomValue = Math.floor(Math.random() * 1000000);
-  return `${timestamp}-${randomValue}`;
+export interface addProduct {
+    image: string;
+    imageAlt: string;
+    title: string;
+    description: string;
+    price: number;
+    bgColor: string;
+    inStock?: number;
+    category: string;
 }
 
 export function AdminForm() {
@@ -71,9 +75,8 @@ export function AdminForm() {
 
   const navigate = useNavigate();
 
-  const formik = useFormik<Product>({
+  const formik = useFormik<addProduct>({
     initialValues: {
-      _id: "",
       image: "",
       imageAlt: "",
       title: "",
@@ -85,7 +88,7 @@ export function AdminForm() {
     },
     validationSchema: schema,
     onSubmit: (values, actions) => {
-      const newProduct = { ...values, id: generateUniqueId() };
+      const newProduct = { ...values};
       addProduct(newProduct);
       actions.resetForm();
       navigate("/admin");

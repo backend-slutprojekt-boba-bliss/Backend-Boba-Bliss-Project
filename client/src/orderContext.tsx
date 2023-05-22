@@ -1,7 +1,6 @@
 import { createContext, useContext } from "react";
 import { CartItem } from "./data";
 import { useCart } from "./CartContext";
-import { generateUniqueId } from "./components/AddProductForm";
 import { Customer } from "./components/CheckoutForm";
 import { useLocalStorageState } from "./hooks/useLocalStorageState";
 
@@ -60,7 +59,7 @@ export function OrderProvider({ children }: Props) {
       return total + item.quantity * item.price;
     }, 0);
 
-    const orderId = generateUniqueId();
+    const orderId = "123"
     const contactInformation = customer;
     const newOrder = { itemList, contactInformation, orderId, totalPrice };
     addOrder(newOrder); // add new order to orderList

@@ -6,18 +6,19 @@ import {
   useEffect,
   useState,
 } from "react";
+import { addProduct } from "./components/AddProductForm";
 import { Product } from "./data";
 
 type ProductContextType = {
   productList: Product[];
-  addProduct: (product: Product) => void;
+  addProduct: (product: addProduct) => void;
   removeProduct: (id: string) => void;
   editProduct: (product: Product) => void;
 };
 
 const ProductContext = createContext<ProductContextType>({
   productList: [],
-  addProduct: (product: Product) => {},
+  addProduct: (product: addProduct) => {},
   removeProduct: (id: string) => {},
   editProduct: (product: Product) => {},
 });
@@ -41,24 +42,22 @@ export function ProductProvider({ children }: PropsWithChildren) {
       });
   }, []);
 
-  const addProduct = (product: Product) => {
-    setProductList((prevProductList) => {
-      const updatedProductList = [...prevProductList, product];
-      const newProduct = product;
-      axios
-        .post("http://127.0.0.1:3000/api/products", newProduct, {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.error(error);
+  const addProduct = (product: addProduct) => {
+    axios
+      .post("http://127.0.0.1:3000/api/products", product, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
+      .then(function (response) {
+        console.log(response);
+        setProductList((prevProductList) => {
+          const updatedProductList = [...prevProductList, response.data];
+          return updatedProductList;
         });
-        console.log(productList)
-      return updatedProductList;
-    });
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
   };
 
   const removeProduct = (id: string) => {
