@@ -19,7 +19,7 @@ export interface CartItem extends Product {
 // /images/pinkboba.png"
 // /images/greenboba.png"
 
-export const products: Product[] = [
+/*export const products: Product[] = [
   {
     id: "1",
     image: "/images/productImages/brown-sugar-tea.png",
@@ -129,4 +129,4 @@ export const products: Product[] = [
     bgColor: "bigMatchaCard",
     category: "milk",
   },
-];
+];*/

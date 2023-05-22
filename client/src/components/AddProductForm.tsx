@@ -7,7 +7,6 @@ import {
   SystemStyleObject,
   Text,
 } from "@chakra-ui/react";
-import axios from "axios";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
@@ -97,47 +96,7 @@ export function AdminForm() {
       addProduct(newProduct);
       actions.resetForm();
       navigate("/admin");
-
-      axios
-        .post("http://127.0.0.1:3000/api/products", newProduct, {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        })
-        .then(function (response) {
-          console.log(response);
-          actions.resetForm();
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
     },
-
-    // ALTERNATIVE VERSION
-    // onSubmit: async (values, actions) => {
-    //   console.log(values); // Log the form values
-
-    //   try {
-    //     const newProduct = { ...values, id: generateUniqueId() };
-
-    //     const response = await axios.post(
-    //       "http://localhost:3000/api/products",
-    //       newProduct,
-    //       {
-    //         headers: { "Content-Type": "application/json" },
-    //         withCredentials: true,
-    //       }
-    //     );
-
-    //     console.log(response);
-    //     // Update local state only after successful server update
-    //     addProduct(newProduct);
-    //     actions.resetForm();
-    //     navigate("/admin");
-    //   } catch (error) {
-    //     console.error(error);
-    //     // Show some error message to the user
-    //   }
-    // },
   });
 
   return (

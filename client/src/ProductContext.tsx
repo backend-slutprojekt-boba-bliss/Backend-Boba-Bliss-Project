@@ -1,6 +1,12 @@
-import { createContext, PropsWithChildren, useContext } from "react";
-import { Product, products } from "./data";
-import { useLocalStorageState } from "./hooks/useLocalStorageState";
+import axios from "axios";
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { Product } from "./data";
 
 type ProductContextType = {
   productList: Product[];
@@ -21,14 +27,35 @@ export function useProduct() {
 }
 
 export function ProductProvider({ children }: PropsWithChildren) {
-  const [productList, setProductList] = useLocalStorageState<Product[]>(
-    products,
-    "products"
-  );
+  const [productList, setProductList] = useState<Product[]>([]);
+
+  useEffect(() => {
+    axios
+      .get("/api/products")
+      .then((response) => {
+        const products = response.data;
+        setProductList(products);
+      })
+      .catch((error) => {
+        console.log("An error occurred while fetching the products:", error);
+      });
+  }, []);
 
   const addProduct = (product: Product) => {
     setProductList((prevProductList) => {
       const updatedProductList = [...prevProductList, product];
+      const newProduct = product;
+      axios
+        .post("http://127.0.0.1:3000/api/products", newProduct, {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
       return updatedProductList;
     });
   };
