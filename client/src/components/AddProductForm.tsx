@@ -94,13 +94,14 @@ export function AdminForm() {
 
   const formik = useFormik<addProduct>({
     initialValues: {
-      image: "",
-      imageAlt: "",
-      title: "",
-      description: "",
-      price: 0,
-      bgColor: "",
-      inStock: 0,
+      image:
+        "https://assets.icanet.se/e_sharpen:80,q_auto,dpr_1.25,w_718,h_718,c_lfill/imagevaultfiles/id_241061/cf_259/boba_tea.jpg",
+      imageAlt: "mm",
+      title: "TEST BOBA",
+      description: "Tasty",
+      price: 10,
+      bgColor: "#bf96da",
+      inStock: 20,
       categories: [],
     },
     validationSchema: schema,

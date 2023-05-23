@@ -10,7 +10,7 @@ const productSchema = new Schema({
   bgColor: { type: String, required: true },
   quantity: { type: Number, required: false },
   inStock: { type: Number, required: true },
-  category: { type: String, required: true },
+  categories: { type: Array, required: true },
 });
 
 export type Product = InferSchemaType<typeof productSchema>;

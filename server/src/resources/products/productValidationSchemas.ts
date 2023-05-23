@@ -9,7 +9,7 @@ export const ProductSchema = yup.object({
   bgColor: yup.string().required(),
   quantity: yup.number(),
   inStock: yup.number().required(),
-  category: yup.string().required(),
+  categories: yup.array().required(),
 });
 
 export const editProductSchema = yup.object({
@@ -22,6 +22,6 @@ export const editProductSchema = yup.object({
   bgColor: yup.string().required(),
   quantity: yup.number(),
   inStock: yup.number().required(),
-  category: yup.string().required(),
+  categories: yup.array().required(),
   __v: yup.number().required(),
 });
