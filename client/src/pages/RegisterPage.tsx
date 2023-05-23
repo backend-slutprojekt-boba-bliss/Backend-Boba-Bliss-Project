@@ -4,7 +4,7 @@ import argon2 from 'argon2';
 
 async function registerUser(email: string, password: string) {
   try {
-    const response = await fetch("/api/register", {
+    const response = await fetch("/api/users/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
