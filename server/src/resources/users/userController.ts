@@ -30,7 +30,7 @@ export const getSession = async (
     res.status(201).send({ message: "User session restored" });
   } catch (error) {
     console.error(error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send('Internal Server Error ${error.message}');
   }
 };
 
@@ -76,13 +76,20 @@ export const loginUser = async (
       res.status(401).send("Invalid email or password");
       return;
     }
-    //req.session.userId = user._id;
+    req.session.userId = user._id
+
     res.status(201).send({ message: "User logged in successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send("Internal Server Error ${error.message}");
   }
 };
+
+// Helper function to generate a session ID
+function generateSessionId() {
+  return Math.random().toString(36).substr(2, 10);
+}
+
 // DELETE api/users/logout
 export const logoutUser = async (
   req: Request,
