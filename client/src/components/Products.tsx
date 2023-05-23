@@ -5,16 +5,34 @@ import {
   Heading,
   Tab,
   TabList,
-  Tabs
+  Tabs,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { CartCard } from "./CartCard";
 import { ProductsLayout } from "./ProductsLayout";
 
+export interface Category {
+  _id: string;
+  name: string;
+}
+
 export function Products() {
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  // OLD LOGIC
   const [selectedCategory, setSelectedCategory] = useState<
     "fruit" | "milk" | null
   >(null);
+
+  useEffect(() => {
+    axios
+      .get("/api/products/category")
+      .then((res) => {
+        setCategories(res.data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
   return (
     <Container maxWidth="container.xl" my=".3rem">
@@ -43,20 +61,19 @@ export function Products() {
           >
             ALL TEAS
           </Tab>
-          <Tab
-            fontSize={[".8rem", ".9rem", "1rem"]}
-            borderRadius=".6rem"
-            _selected={{ color: "white", bg: "pinkCardButton" }}
-          >
-            FRUIT TEA
-          </Tab>
-          <Tab
-            fontSize={[".8rem", ".9rem", "1rem"]}
-            borderRadius=".6rem"
-            _selected={{ color: "white", bg: "pinkCardButton" }}
-          >
-            MILK TEA
-          </Tab>
+          {categories.map((category) => (
+            <Tab
+              fontSize={[".8rem", ".9rem", "1rem"]}
+              borderRadius=".6rem"
+              _selected={{ color: "white", bg: "pinkCardButton" }}
+              textTransform="uppercase"
+              name="categories"
+              key={category._id}
+              value={category._id}
+            >
+              {category.name}
+            </Tab>
+          ))}
         </TabList>
       </Tabs>
       <Flex
