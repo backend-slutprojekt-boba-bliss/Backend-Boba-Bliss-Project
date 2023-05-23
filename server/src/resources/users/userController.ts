@@ -58,7 +58,6 @@ export const registerUser = async (
     res.status(500).send("Internal Server Error");
   }
 };
-
 // POST api/users/login
 export const loginUser = async (
   req: CustomRequest,
@@ -82,10 +81,7 @@ export const loginUser = async (
     console.error(error);
     res.status(500).send("Internal Server Error");
   }
-
-  res.status(201).send({ message: "User logged in successfully" });
 };
-
 // DELETE api/users/logout
 export const logoutUser = async (
   req: Request,
