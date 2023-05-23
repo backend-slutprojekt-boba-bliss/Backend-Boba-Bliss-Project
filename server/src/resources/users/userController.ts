@@ -70,6 +70,7 @@ export const loginUser = async (
 
     // Kontrollerar om user finns i databasen
     const user = await UserModel.findOne({ email });
+    console.log(user)
 
     // Kontrollerar om lösenord är korrekt, eller om ingen användare finns. Returnerar error
     if (!user || !(await argon2.verify(user.password, password))) {

@@ -74,3 +74,12 @@ Content-Type: application/json
   "password":  "smurf",
   "isAdmin": "false"
 }
+###
+
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+
+{
+  "email": "smurf@gmail.com",
+  "password":  "smurf"
+}
