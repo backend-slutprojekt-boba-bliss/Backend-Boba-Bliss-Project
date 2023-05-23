@@ -38,25 +38,28 @@ DELETE http://localhost:3000/api/products/646b34b8292ca9ce4fe822f8
 
 ### GET ALL Orders
 GET http://localhost:3000/api/products
+###
 
-POST http://localhost:3000/orders
+POST http://localhost:3000/api/orders
 Content-Type: application/json
 
 {
-  "products": [
-  image: required: true },
-  imageAlt: { type: String, required: true },
-  title: { type: String, required: true },
-  description: { type: String, required: true },
-  price: { type: Number, required: true },
-  bgColor: { type: String, required: true },
-  quantity: { type: Number, required: false },
-  inStock: { type: Number, required: true },
-});],
-  "user": "user_id",
+  "products": [{
+  "_id": "646b16f840f7ff36350ba7d4",
+  "image":  "img source",
+  "imageAlt": "new",
+  "title": "Ny" ,
+  "description": "test description",
+  "price": "200",
+  "bgColor": "fruitTeaCircle",
+  "quantity": "10",
+  "inStock": "1",
+  "__v": "1"
+}],
+  "user": "646c9b9424ce62f58f51515a",
   "deliveryAddress": {
-    "firstName": "John",
-    "lastName": "Doe",
+    "firstName": "Mimmi",
+    "lastName": "Collin",
     "street": "123 Main St",
     "zipCode": 12345,
     "city": "Example City"
