@@ -4,13 +4,14 @@ import {
   FormLabel,
   Input,
   Select,
-  Text
+  Text,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { useFormik } from "formik";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Product } from "../data";
 import { useProduct } from "../contexts/ProductContext";
+import { Product } from "../data";
 import { requiredText, schema } from "./AddProductForm";
 import { orderButtonStyle } from "./CartCard";
 
@@ -21,21 +22,37 @@ export default function EditForm() {
   const { id } = useParams<{ id: string }>();
   const productToEdit = productList.find((product) => product._id === id);
 
+  const [categories, setCategories] = useState([]);
+  const categoriesRef = useRef<string[]>([]);
+
+  useEffect(() => {
+    axios
+      .get("/api/products/category")
+      .then((res) => {
+        const fetchedCategories = res.data.map(
+          (cat: { name: string }) => cat.name
+        );
+        setCategories(fetchedCategories);
+        categoriesRef.current = fetchedCategories;
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
   const formik = useFormik<Product>({
     initialValues: productToEdit
       ? {
           ...productToEdit,
         }
       : {
-        _id: "",
-        image: "",
-        imageAlt: "",
-        title: "",
-        description: "",
-        price: 0,
-        bgColor: "",
-        inStock: 0,
-        category: "",
+          _id: "",
+          image: "",
+          imageAlt: "",
+          title: "",
+          description: "",
+          price: 0,
+          bgColor: "",
+          inStock: 0,
+          category: "",
         },
     validationSchema: schema,
     onSubmit: (values, actions) => {
@@ -207,8 +224,11 @@ export default function EditForm() {
           value={formik.values.category}
           placeholder="Select a category"
         >
-          <option value="milk">Milk</option>
-          <option value="fruit">Fruit</option>
+          {categories.map((category, index) => (
+            <option key={index} value={category}>
+              {category}
+            </option>
+          ))}
         </Select>
         {formik.touched.category && formik.errors.category ? (
           <Text sx={requiredText}>{formik.errors.category}</Text>
