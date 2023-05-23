@@ -10,15 +10,15 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "image":  "img source",
+  "image":  "https://assets.icanet.se/e_sharpen:80,q_auto,dpr_1.25,w_718,h_718,c_lfill/imagevaultfiles/id_241061/cf_259/boba_tea.jpg",
   "imageAlt": "img alt",
-  "title": "Ny" ,
+  "title": "Test REST" ,
   "description": "test description",
   "price": "9",
   "bgColor": "fruitTeaCircle",
   "quantity": "10",
   "inStock": "1",
-  "category": "milk"
+  "categories": ["646c7b96bd0a27074657a7f1"]
 }
 
 ### EDIT PRODUCT
@@ -47,7 +47,10 @@ DELETE http://localhost:3000/api/products/646b34b8292ca9ce4fe822f8
 //----------------------------------------------------------------
 
 ### GET CATEGORY
-GET http://localhost:3000/api/products/category/fruit
+GET http://localhost:3000/api/products/category/646c7ba0bd0a27074657a7f5
+
+### GET CATEGORIES
+GET http://localhost:3000/api/products/category
 
 ### CREATE CATEGORY
 POST http://localhost:3000/api/products/category

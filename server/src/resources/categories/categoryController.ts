@@ -5,7 +5,9 @@ import { ProductModel } from "../products/productModel";
 // GET CATEGORY
 export async function getCategory(req: Request, res: Response) {
   const category = req.params.category;
-  const products = await ProductModel.find({ category: category });
+  console.log(req.params.category);
+  const products = await ProductModel.find({ categories: category });
+  console.log(products);
   res.json(products);
 }
 

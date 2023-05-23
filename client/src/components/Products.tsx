@@ -18,8 +18,6 @@ export interface Category {
   name: string;
 }
 
-// Assuming your Product type looks something like this:
-
 export function Products() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
