@@ -39,15 +39,16 @@ export const registerUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  console.log(req.body)
   try {
     // Tar in parametrar från form i registerform
-    const { username, email, password } = req.body;
+    const { email, password } = req.body;
     const hashedPassword = await argon2.hash(password, {
       timeCost: 2,
       memoryCost: 1024
     });
     // Hashar lösenord och skapar ny user från vår schema
-    const user = new UserModel({ username, email, password: hashedPassword });
+    const user = new UserModel({ email, password: hashedPassword });
 
     // Sparar användaren till databasen
     await user.save();
