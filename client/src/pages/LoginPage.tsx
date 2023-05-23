@@ -25,13 +25,6 @@ async function loginUser(email: string, password: string) {
 }
 
 function LoginPage() {
-	const handleNavigateToRegisterForm = (
-		event: React.MouseEvent<HTMLButtonElement>
-	) => {
-		const navigate = useNavigate();
-		navigate("registerPage");
-	};
-
 	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
