@@ -1,44 +1,46 @@
-import mongoose from "mongoose";
+import { Address } from "cluster";
+import "express-async-errors";
+import mongoose, { InferSchemaType, Schema, SchemaTypes, model } from "mongoose";
+import { Product } from "../products/productModel";
 
-export async function createOrders() {
-  interface Address {
-    street: string;
-    zipCode: string;
-    city: string;
-    firstName: string;
-    lastName: string;
-  }
+interface AddressInterface {
+  firstName: string;
+  lastName: string;
+  street: string;
+  zipCode: number;
+  city: string;
+}
 
-  try {
-    const AddressSchema = new mongoose.Schema<Address>({
-      street: String,
-      zipCode: String,
-      city: String,
-    });
+const addressSchema = new mongoose.Schema<AddressInterface>({
+  firstName: String,
+  lastName: String,
+  street: String,
+  zipCode: Number,
+  city: String,
+});
+const Address = mongoose.model('Address', addressSchema)
 
-    const OrderSchema = new mongoose.Schema({
-      products: [],
+interface OrderInterface  {
+  products: Product[],
+  user: Number,
+  deliveryAddress: Address,
+  createdAt: Date,
+  isSent: Boolean
+
+}
+
+const orderSchema = new Schema({
+      products: { type: [{ type: SchemaTypes.ObjectId, ref: 'Product' }], required: true },
+      user: { type: SchemaTypes.ObjectId, ref: 'user' },
       deliveryAddress: {
-        type: AddressSchema,
+        type: Address,
         required: true,
       },
-      createdAt: Date,
-      isSent: Boolean,
+      createdAt: {type:Date, required:true},
+      isSent: {type:Boolean, required:true},
     });
 
-    // Create the Order model using the Order schema
-    const Order = mongoose.model("Order", OrderSchema);
 
-    // Create an array of Orders
-    const Orders = [
-      {},
-    ];
+export type Order = InferSchemaType<typeof orderSchema>;
 
-    // Create documents for each Order and save them to the database
-    const createdOrders = await Order.create(Orders);
-
-    console.log("Orders created successfully:", createdOrders);
-  } catch (error) {
-    console.error("Error creating Orders:", error);
-  }
-}
+export const OrderModel = model("Order", orderSchema);
