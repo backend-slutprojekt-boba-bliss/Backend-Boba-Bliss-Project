@@ -77,7 +77,7 @@ export const loginUser = async (
       res.status(401).send("Invalid email or password");
       return;
     }
-    req.session.userId = user._id;
+    //req.session.userId = user._id;
     res.status(201).send({ message: "User logged in successfully" });
   } catch (error) {
     console.error(error);
