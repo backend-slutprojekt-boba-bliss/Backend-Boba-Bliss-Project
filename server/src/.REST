@@ -35,3 +35,42 @@ Content-Type: application/json
 
 ### DELETE PRODUCT
 DELETE http://localhost:3000/api/products/646b34b8292ca9ce4fe822f8
+
+### GET ALL Orders
+GET http://localhost:3000/api/products
+
+POST http://localhost:3000/orders
+Content-Type: application/json
+
+{
+  "products": [
+  image: required: true },
+  imageAlt: { type: String, required: true },
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  price: { type: Number, required: true },
+  bgColor: { type: String, required: true },
+  quantity: { type: Number, required: false },
+  inStock: { type: Number, required: true },
+});],
+  "user": "user_id",
+  "deliveryAddress": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "street": "123 Main St",
+    "zipCode": 12345,
+    "city": "Example City"
+  },
+  "createdAt": "2023-05-23T12:00:00Z",
+  "isSent": true
+}
+
+### 
+POST http://localhost:3000/api/users/register
+Content-Type: application/json
+
+{
+  "email": "smurf@gmail.com",
+  "password":  "smurf",
+  "isAdmin": "false"
+}

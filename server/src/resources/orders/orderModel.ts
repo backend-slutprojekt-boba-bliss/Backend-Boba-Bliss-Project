@@ -20,10 +20,10 @@ const addressSchema = new mongoose.Schema<AddressInterface>({
 });
 const Address = mongoose.model('Address', addressSchema)
 
-interface OrderInterface  {
+export interface OrderInterface  {
   products: Product[],
   user: Number,
-  deliveryAddress: Address,
+  deliveryAddress: AddressInterface,
   createdAt: Date,
   isSent: Boolean
 
@@ -33,7 +33,8 @@ const orderSchema = new Schema({
       products: { type: [{ type: SchemaTypes.ObjectId, ref: 'Product' }], required: true },
       user: { type: SchemaTypes.ObjectId, ref: 'user' },
       deliveryAddress: {
-        type: Address,
+        type: SchemaTypes.ObjectId,
+        ref: 'Address', 
         required: true,
       },
       createdAt: {type:Date, required:true},

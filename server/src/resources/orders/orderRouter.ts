@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllOrders } from "./orderController";
+import { createOrder, getAllOrders } from "./orderController";
 
 export const orderRouter = express.Router();
 
@@ -10,7 +10,7 @@ orderRouter.get("/", getAllOrders);
 // orderRouter.get("/:id", getOrderById);
 
 // CREATE order
-//orderRouter.post("/", createOrder);
+orderRouter.post("/", createOrder);
 
 // DELETE order
 //orderRouter.delete("/:id", deleteOrder);
