@@ -7,7 +7,9 @@ import {
   SystemStyleObject,
   Text,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { useFormik } from "formik";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useProduct } from "../contexts/ProductContext";
@@ -46,9 +48,7 @@ export const schema = Yup.object<ProductValues>().shape({
     .typeError("Must be a number")
     .positive("In Stock must be positive")
     .required("Required"),
-  category: Yup.string()
-    .oneOf(["milk", "fruit"], "Category must be either 'milk' or 'fruit'")
-    .required("Required"),
+  category: Yup.string().required("Required"),
 });
 
 interface Props {
@@ -70,6 +70,22 @@ export function AdminForm() {
 
   const navigate = useNavigate();
 
+  const [categories, setCategories] = useState<string[]>([]);
+  const categoriesRef = useRef<string[]>([]);
+
+  useEffect(() => {
+    axios
+      .get("/api/products/category")
+      .then((res) => {
+        const fetchedCategories = res.data.map(
+          (cat: { name: string }) => cat.name
+        );
+        setCategories(fetchedCategories);
+        categoriesRef.current = fetchedCategories;
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
   const formik = useFormik<addProduct>({
     initialValues: {
       image: "",
@@ -83,12 +99,25 @@ export function AdminForm() {
     },
     validationSchema: schema,
     onSubmit: (values, actions) => {
+      if (!categoriesRef.current.includes(values.category)) {
+        formik.setErrors({
+          category: `Category must be one of ${categoriesRef.current.join(
+            ", "
+          )}`,
+        });
+        return;
+      }
+
       const newProduct = { ...values };
       addProduct(newProduct);
       actions.resetForm();
       navigate("/admin");
     },
   });
+
+  const handleCategoryChange = (selectedCategories: string[]) => {
+    formik.setFieldValue("category", selectedCategories);
+  };
 
   return (
     <form data-cy="product-form" onSubmit={formik.handleSubmit}>
@@ -223,7 +252,47 @@ export function AdminForm() {
       </FormControl>
       <FormControl pb="1rem">
         <FormLabel>Category</FormLabel>
+        {/* <CheckboxGroup
+          colorScheme="green"
+          value={formik.values.category}
+          onChange={handleCategoryChange}
+        >
+          <Stack spacing={5} direction="row">
+            <Checkbox value="milk">Milk</Checkbox>
+            <Checkbox value="fruit">Fruit</Checkbox>
+            {/* <Checkbox value="healthy">Healthy</Checkbox>
+            <Checkbox value="vegan">Vegan</Checkbox> */}
+        {/* </Stack>
+        </CheckboxGroup> */}
+
         <Select
+          id="category"
+          name="category"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.category}
+          placeholder="Select a category"
+        >
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </Select>
+
+        {formik.touched.category && formik.errors.category ? (
+          <Text sx={requiredText}>{formik.errors.category}</Text>
+        ) : null}
+      </FormControl>
+      <Button sx={orderButtonStyle} type="submit">
+        Add Product
+      </Button>
+    </form>
+  );
+}
+
+{
+  /* <Select
           id="category"
           name="category"
           onChange={formik.handleChange}
@@ -236,13 +305,7 @@ export function AdminForm() {
         </Select>
         {formik.touched.category && formik.errors.category ? (
           <Text sx={requiredText}>{formik.errors.category}</Text>
-        ) : null}
-      </FormControl>
-      <Button sx={orderButtonStyle} type="submit">
-        Add Product
-      </Button>
-    </form>
-  );
+        ) : null} */
 }
 
 export const requiredText: SystemStyleObject = {

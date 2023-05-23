@@ -48,3 +48,11 @@ DELETE http://localhost:3000/api/products/646b34b8292ca9ce4fe822f8
 
 ### GET CATEGORY
 GET http://localhost:3000/api/products/category/fruit
+
+### CREATE CATEGORY
+POST http://localhost:3000/api/products/category
+Content-Type: application/json
+
+{
+  "name": "Premium"
+}
