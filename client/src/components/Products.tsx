@@ -20,7 +20,9 @@ export interface Category {
 
 export function Products() {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    "all"
+  );
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
 
   // Fetch categories
@@ -36,8 +38,12 @@ export function Products() {
   // Fetch products of selected category when selectedCategory changes
   useEffect(() => {
     if (selectedCategory) {
+      const url =
+        selectedCategory === "all"
+          ? "/api/products"
+          : `/api/products/category/${selectedCategory}`;
       axios
-        .get(`/api/products/category/${selectedCategory}`)
+        .get(url)
         .then((res) => {
           setSelectedProducts(res.data);
         })
@@ -61,7 +67,9 @@ export function Products() {
         width={["100%", "100%", "98%", "62.5%"]}
         isFitted
         onChange={(index) => {
-          setSelectedCategory(categories[index]?._id || null);
+          setSelectedCategory(
+            index === 0 ? "all" : categories[index - 1]?._id || null
+          );
         }}
       >
         <TabList>
