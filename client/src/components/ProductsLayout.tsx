@@ -1,20 +1,20 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { useProduct } from "../contexts/ProductContext";
+import { Product } from "../data";
 import { SmallProductCard } from "./SmallProductCard";
 
 // Three categories: fruit, milk or null (all)
 interface ProductsLayoutProps {
-  filterCategory: "fruit" | "milk" | null;
+  products: Product[];
 }
 
-export function ProductsLayout({ filterCategory }: ProductsLayoutProps) {
-  // Get the product list from the product context
-  const { productList } = useProduct();
-  // Filter the product list based on the filterCategory prop
-  const filteredProductList = filterCategory
-    ? productList.filter((product) => product.categories === filterCategory)
-    : productList;
+export function ProductsLayout({ products }: ProductsLayoutProps) {
+  // // Get the product list from the product context
+  // const { productList } = useProduct();
+  // // Filter the product list based on the filterCategory prop
+  // const filteredProductList = filterCategory
+  //   ? productList.filter((product) => product.categories === filterCategory)
+  //   : productList;
 
   return (
     <Flex
@@ -24,8 +24,8 @@ export function ProductsLayout({ filterCategory }: ProductsLayoutProps) {
       wrap={"wrap"}
       width={["100%", "100%", "100%", "70%"]}
     >
-      {/* Iterate through the filtered product list and render SmallProductCard components */}
-      {filteredProductList.map((product) => (
+      {/* Iterate through the products and render SmallProductCard components */}
+      {products.map((product) => (
         <Box sx={boxStyle} key={product._id}>
           {/* Wrap each SmallProductCard with a link for navigation */}
           <Link key={product._id} to={`/product/${product._id}`}>

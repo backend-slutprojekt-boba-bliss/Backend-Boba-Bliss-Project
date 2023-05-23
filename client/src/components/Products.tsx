@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Product } from "../data";
 import { CartCard } from "./CartCard";
 import { ProductsLayout } from "./ProductsLayout";
 
@@ -17,14 +18,14 @@ export interface Category {
   name: string;
 }
 
+// Assuming your Product type looks something like this:
+
 export function Products() {
   const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
 
-  // OLD LOGIC
-  const [selectedCategory, setSelectedCategory] = useState<
-    "fruit" | "milk" | null
-  >(null);
-
+  // Fetch categories
   useEffect(() => {
     axios
       .get("/api/products/category")
@@ -33,6 +34,20 @@ export function Products() {
       })
       .catch((error) => console.error(error));
   }, []);
+
+  // Fetch products of selected category when selectedCategory changes
+  useEffect(() => {
+    if (selectedCategory) {
+      axios
+        .get(`/api/products/category/${selectedCategory}`)
+        .then((res) => {
+          setSelectedProducts(res.data);
+        })
+        .catch((error) => console.error(error));
+    } else {
+      setSelectedProducts([]);
+    }
+  }, [selectedCategory]);
 
   return (
     <Container maxWidth="container.xl" my=".3rem">
@@ -48,9 +63,7 @@ export function Products() {
         width={["100%", "100%", "98%", "62.5%"]}
         isFitted
         onChange={(index) => {
-          if (index === 0) setSelectedCategory(null);
-          if (index === 1) setSelectedCategory("fruit");
-          if (index === 2) setSelectedCategory("milk");
+          setSelectedCategory(categories[index]?._id || null);
         }}
       >
         <TabList>
@@ -81,7 +94,7 @@ export function Products() {
         justify={["center", "center", "center", "space-between"]}
         gap={1}
       >
-        <ProductsLayout filterCategory={selectedCategory} />
+        <ProductsLayout products={selectedProducts} />
 
         <Box
           as="aside"
