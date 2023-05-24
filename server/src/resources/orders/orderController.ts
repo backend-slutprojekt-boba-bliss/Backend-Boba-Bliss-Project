@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { ProductModel } from "../products/productModel";
 import { OrderModel } from "./orderModel";
+import { createOrderSchema } from "./orderYupValidationScema";
 
 export async function getAllOrders(req: Request, res: Response) {
     console.log("get all Orders");
@@ -15,10 +16,16 @@ export async function getAllOrders(req: Request, res: Response) {
 export async function createOrder(req: Request, res: Response) {
   console.log("Active session is:", req.session);
 
-  //valdidate order info
-
+  //Kollar att du är inloggad
   if (!req.session || !req.session.user) {
     res.status(401).json("You must log in to create an order!");
+    return;
+  }
+  //Validera inkommande order data
+  try {
+    await createOrderSchema.validate(req.body);
+  } catch (error) {
+    res.status(400).json(error.message);
     return;
   }
 
@@ -29,38 +36,36 @@ export async function createOrder(req: Request, res: Response) {
     const productDetails = await Promise.all(
       products.map(async (product: any) => {
         const productData = await ProductModel.findById(product._id);
-        
-        // Check if product is in stock
+        // Kollar om produkten finns i lagret
         if (!productData) {
           res.status(404).json("Product data not found!");
           return;
         }
+        // Kollar om lagerstatus är tillräcklig
         if (product.quantity > productData.inStock) {
           res.status(400).json("Quantity of product exceeds stock!");
           return;
         }
-        
-        // Reduce stock quantity
+        // minskar produktens lager med quantity och uppdaterar i databasen
         productData.inStock -= product.quantity;
         await productData.save();
-        
         return {
           ...productData.toObject(),
-          quantity: product.quantity
+          quantity: product.quantity,
         };
       })
     );
-
-    console.log("Product Details:", productDetails);
 
     // Set user of order to user
     const { _id } = req.session.user;
     const user = { _id };
     console.log("User:", user);
 
+    //Sätter orderdatum till nuvarande datum
     const createdAt = new Date();
     console.log("Created At:", createdAt);
 
+    //Sätter orderstatus till false
     const isSent = false;
 
     const orderData = {
@@ -68,7 +73,7 @@ export async function createOrder(req: Request, res: Response) {
       user,
       createdAt,
       isSent,
-      products: productDetails
+      products: productDetails,
     };
 
     const order = new OrderModel(orderData);
