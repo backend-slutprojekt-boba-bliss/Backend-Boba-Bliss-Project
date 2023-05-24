@@ -1,5 +1,5 @@
-import { UserModel } from "../users/userModel";
 import { Request, Response } from "express";
+import { ProductModel } from "../products/productModel";
 import { OrderModel } from "./orderModel";
 
 export async function getAllOrders(req: Request, res: Response) {
@@ -20,10 +20,44 @@ export async function createOrder(req: Request, res: Response) {
     return;
   }
 
-  const { _id, email } = req.session.user;
-  const user = { _id, email };
-  console.log(user);
+  const products = req.body.products;
+  console.log("Product IDs:", products);
 
-  const orderData = { ...req.body };
-  res.status(200).json(orderData);
+  // Retrieve product details from the database
+  try {
+    const productDetails = await Promise.all(
+      products.map(async (product: any) => {
+        const productData = await ProductModel.findById(product._id);
+        return {
+          ...productData?.toObject(),
+          quantity: product.quantity
+        };
+      })
+    );
+
+    console.log("Product Details:", productDetails);
+
+    // Set user of order to user
+    const { _id, email } = req.session.user;
+    const user = { _id, email };
+    console.log("User:", user);
+
+    const createdAt = new Date();
+    console.log("Created At:", createdAt);
+
+    const isSent = false;
+
+    const orderData = {
+      ...req.body,
+      user,
+      createdAt,
+      isSent,
+      products: productDetails
+    };
+
+    res.status(200).json(orderData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Internal Server Error");
+  }
 }

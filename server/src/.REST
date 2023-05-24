@@ -43,9 +43,23 @@ POST http://localhost:3000/api/orders
 Content-Type: application/json
 
 {
-  "product": "boba",
-  "price":  "4"
+  "products": [{
+    "_id": "646cfc0622ff17cd7e4877e9",
+    "quantity": "2"
+  }, {
+    "_id": "646d036922ff17cd7e487825",
+    "quantity": "1"
+  }
+  ],
+  "deliveryAddress": {
+    "firstName": "Mimmi",
+    "lastName": "Collin",
+    "street": "123 Main St",
+    "zipCode": 12345,
+    "city": "Example City"
+  }
 }
+
 
 
 ### 
@@ -53,8 +67,8 @@ POST http://localhost:3000/api/users/register
 Content-Type: application/json
 
 {
-  "email": "qqq@gmail.com",
-  "password":  "qqq"
+  "email": "admin@gmail.com",
+  "password":  "admin"
 }
 ###
 
