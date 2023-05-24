@@ -94,27 +94,17 @@ export function AdminForm() {
 
   const formik = useFormik<addProduct>({
     initialValues: {
-      image:
-        "https://assets.icanet.se/e_sharpen:80,q_auto,dpr_1.25,w_718,h_718,c_lfill/imagevaultfiles/id_241061/cf_259/boba_tea.jpg",
-      imageAlt: "mm",
-      title: "TEST BOBA",
-      description: "Tasty",
-      price: 10,
-      bgColor: "#bf96da",
-      inStock: 20,
+      image: "",
+      imageAlt: "",
+      title: "",
+      description: "",
+      price: 0,
+      bgColor: "",
+      inStock: 0,
       categories: [],
     },
     validationSchema: schema,
     onSubmit: (values, actions) => {
-      // if (!categoriesRef.current.includes(values.category)) {
-      //   formik.setErrors({
-      //     category: `Category must be one of ${categoriesRef.current.join(
-      //       ", "
-      //     )}`,
-      //   });
-      //   return;
-      // }
-
       const newProduct = { ...values };
       addProduct(newProduct);
       actions.resetForm();
@@ -290,23 +280,6 @@ export function AdminForm() {
       </Button>
     </form>
   );
-}
-
-{
-  /* <Select
-         id="category"
-         name="category"
-         onChange={formik.handleChange}
-         onBlur={formik.handleBlur}
-         value={formik.values.category}
-         placeholder="Select a category"
-       >
-         <option value="milk">Milk</option>
-         <option value="fruit">Fruit</option>
-       </Select>
-       {formik.touched.category && formik.errors.category ? (
-         <Text sx={requiredText}>{formik.errors.category}</Text>
-       ) : null} */
 }
 
 export const requiredText: SystemStyleObject = {

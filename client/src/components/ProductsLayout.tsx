@@ -9,13 +9,6 @@ interface ProductsLayoutProps {
 }
 
 export function ProductsLayout({ products }: ProductsLayoutProps) {
-  // // Get the product list from the product context
-  // const { productList } = useProduct();
-  // // Filter the product list based on the filterCategory prop
-  // const filteredProductList = filterCategory
-  //   ? productList.filter((product) => product.categories === filterCategory)
-  //   : productList;
-
   return (
     <Flex
       gap={[2, 2, 3, 4]}
