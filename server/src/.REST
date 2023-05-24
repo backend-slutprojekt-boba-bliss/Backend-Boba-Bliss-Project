@@ -47,7 +47,7 @@ Content-Type: application/json
   "products": [{
   "_id": "646b16f840f7ff36350ba7d4",
 }],
-  "user": "646c9b9424ce62f58f51515a",
+  "user": "",
   "deliveryAddress": {
     "firstName": "Mimmi",
     "lastName": "Collin",
