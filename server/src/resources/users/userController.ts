@@ -85,11 +85,6 @@ export const loginUser = async (
   }
 };
 
-// Helper function to generate a session ID
-function generateSessionId() {
-  return Math.random().toString(36).substr(2, 10);
-}
-
 // DELETE api/users/logout
 export const logoutUser = async (
   req: Request,

@@ -12,15 +12,19 @@ export async function getAllOrders(req: Request, res: Response) {
 }
 
 export async function createOrder(req: Request, res: Response) {
+  try {
+    const sessionResponse = await fetch("/api/session");
+    if (sessionResponse.ok) {
+      const { user } = await sessionResponse.json();
+      const orderData = {...req.body, user };
+      // ... Gör vad du vill med userDatan härifrån, den är hämtad och sparad i userobjektet....
 
-  const orderData = {...req.body, user: req.session.user,}
-  //const orderData: Order = { ...req.body };
-
-
- // vilka produkter är i korgen? hämtar dom här från db
-  
-  //const order = new OrderModel(orderData);
-  //order.user = req.session.id
-  //await order.save();
-  //res.status(201).json(order);
+      res.status(201).json(orderData);
+    } else {
+      res.status(401).send("No active session");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(`Internal Server Error ${error.message}`);
+  }
 }
