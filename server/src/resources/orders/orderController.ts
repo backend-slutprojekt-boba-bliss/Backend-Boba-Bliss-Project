@@ -15,21 +15,37 @@ export async function getAllOrders(req: Request, res: Response) {
 export async function createOrder(req: Request, res: Response) {
   console.log("Active session is:", req.session);
 
+  //valdidate order info
+
   if (!req.session || !req.session.user) {
     res.status(401).json("You must log in to create an order!");
     return;
   }
 
   const products = req.body.products;
-  console.log("Product IDs:", products);
 
-  // Retrieve product details from the database
+  // Hämtar produktinfo från databasen
   try {
     const productDetails = await Promise.all(
       products.map(async (product: any) => {
         const productData = await ProductModel.findById(product._id);
+        
+        // Check if product is in stock
+        if (!productData) {
+          res.status(404).json("Product data not found!");
+          return;
+        }
+        if (product.quantity > productData.inStock) {
+          res.status(400).json("Quantity of product exceeds stock!");
+          return;
+        }
+        
+        // Reduce stock quantity
+        productData.inStock -= product.quantity;
+        await productData.save();
+        
         return {
-          ...productData?.toObject(),
+          ...productData.toObject(),
           quantity: product.quantity
         };
       })
@@ -38,8 +54,8 @@ export async function createOrder(req: Request, res: Response) {
     console.log("Product Details:", productDetails);
 
     // Set user of order to user
-    const { _id, email } = req.session.user;
-    const user = { _id, email };
+    const { _id } = req.session.user;
+    const user = { _id };
     console.log("User:", user);
 
     const createdAt = new Date();
