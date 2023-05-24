@@ -1,8 +1,7 @@
 import { Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-async function loginUser(email: string, password: string) {
+async function loginUser(email: string, password: string, navigate: Function) {
 	try {
 		const response = await fetch("/api/users/login", {
 			method: "POST",
@@ -15,6 +14,7 @@ async function loginUser(email: string, password: string) {
 		if (response.ok) {
 			// Successful login logic
 			console.log("Login successful");
+			navigate("/");
 		} else {
 			// Handle login error
 			console.log("Login failed");
@@ -25,6 +25,7 @@ async function loginUser(email: string, password: string) {
 }
 
 function LoginPage() {
+	const navigate = useNavigate();
 	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
@@ -32,7 +33,7 @@ function LoginPage() {
 		const email = form.email.value;
 		const password = form.password.value;
 
-		loginUser(email, password);
+		loginUser(email, password, navigate);
 	};
 
 	return (
