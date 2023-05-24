@@ -14,11 +14,9 @@ export async function getAllOrders(req: Request, res: Response) {
 }
 
 export async function createOrder(req: Request, res: Response) {
-  console.log("Active session is:", req.session);
-
   //Kollar att du är inloggad
   if (!req.session || !req.session.user) {
-    res.status(401).json("You must log in to create an order!");
+    res.status(401).json({ error: "You must log in to create an order!" });
     return;
   }
   //Validera inkommande order data
@@ -31,20 +29,18 @@ export async function createOrder(req: Request, res: Response) {
 
   const products = req.body.products;
 
-  // Hämtar produktinfo från databasen
+  // Hämtar produktinfo för varje produkt från databasen
   try {
     const productDetails = await Promise.all(
       products.map(async (product: any) => {
         const productData = await ProductModel.findById(product._id);
         // Kollar om produkten finns i lagret
         if (!productData) {
-          res.status(404).json("Product data not found!");
-          return;
+          return res.status(404).json({ error: "Product data not found!" });
         }
         // Kollar om lagerstatus är tillräcklig
         if (product.quantity > productData.inStock) {
-          res.status(400).json("Quantity of product exceeds stock!");
-          return;
+          return res.status(400).json({ error: "Quantity of product exceeds stock!" });
         }
         // minskar produktens lager med quantity och uppdaterar i databasen
         productData.inStock -= product.quantity;
@@ -59,11 +55,9 @@ export async function createOrder(req: Request, res: Response) {
     // Set user of order to user
     const { _id } = req.session.user;
     const user = { _id };
-    console.log("User:", user);
 
     //Sätter orderdatum till nuvarande datum
     const createdAt = new Date();
-    console.log("Created At:", createdAt);
 
     //Sätter orderstatus till false
     const isSent = false;
