@@ -8,9 +8,8 @@ export interface Product {
   bgColor: string;
   quantity?: number;
   inStock?: number;
-  category: string;
+  categories: string[];
 }
-
 
 export interface CartItem extends Product {
   quantity: number;
