@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import { Order, OrderInterface, OrderModel } from "./orderModel";
+import { ProductModel } from "../products/productModel";
+import { OrderModel } from "./orderModel";
 
 export async function getAllOrders(req: Request, res: Response) {
     console.log("get all Orders");
@@ -12,24 +13,53 @@ export async function getAllOrders(req: Request, res: Response) {
 }
 
 export async function createOrder(req: Request, res: Response) {
-    try {
-      // Extract the necessary data from the request body
-      const { products, user, deliveryAddress, createdAt, isSent }: OrderInterface = req.body;
-  
-      // Create a new order using the OrderModel
-      const newOrder: Order = await OrderModel.create({
-        products,
-        user,
-        deliveryAddress,
-        createdAt,
-        isSent,
-      });
-  
-      // Return the created order in the response
-      return res.status(201).json(newOrder);
-    } catch (error) {
-      // Handle any errors that occur during the creation process
-      console.error('Error creating order:', error);
-      return res.status(500).json({ error: 'Failed to create order' });
-    }
+  console.log("Active session is:", req.session);
+
+  if (!req.session || !req.session.user) {
+    res.status(401).json("You must log in to create an order!");
+    return;
   }
+
+  const products = req.body.products;
+  console.log("Product IDs:", products);
+
+  // Retrieve product details from the database
+  try {
+    const productDetails = await Promise.all(
+      products.map(async (product: any) => {
+        const productData = await ProductModel.findById(product._id);
+        return {
+          ...productData?.toObject(),
+          quantity: product.quantity
+        };
+      })
+    );
+
+    console.log("Product Details:", productDetails);
+
+    // Set user of order to user
+    const { _id, email } = req.session.user;
+    const user = { _id, email };
+    console.log("User:", user);
+
+    const createdAt = new Date();
+    console.log("Created At:", createdAt);
+
+    const isSent = false;
+
+    const orderData = {
+      ...req.body,
+      user,
+      createdAt,
+      isSent,
+      products: productDetails
+    };
+
+    const order = new OrderModel(orderData);
+    await order.save();
+    res.status(200).json(order);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Internal Server Error");
+  }
+}
