@@ -5,16 +5,53 @@ import {
   Heading,
   Tab,
   TabList,
-  Tabs
+  Tabs,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Product } from "../data";
 import { CartCard } from "./CartCard";
 import { ProductsLayout } from "./ProductsLayout";
 
+export interface Category {
+  _id: string;
+  name: string;
+}
+
 export function Products() {
-  const [selectedCategory, setSelectedCategory] = useState<
-    "fruit" | "milk" | null
-  >(null);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    "all"
+  );
+  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
+
+  // Fetch categories
+  useEffect(() => {
+    axios
+      .get("/api/products/category")
+      .then((res) => {
+        setCategories(res.data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
+  // Fetch products of selected category when selectedCategory changes
+  useEffect(() => {
+    if (selectedCategory) {
+      const url =
+        selectedCategory === "all"
+          ? "/api/products"
+          : `/api/products/category/${selectedCategory}`;
+      axios
+        .get(url)
+        .then((res) => {
+          setSelectedProducts(res.data);
+        })
+        .catch((error) => console.error(error));
+    } else {
+      setSelectedProducts([]);
+    }
+  }, [selectedCategory]);
 
   return (
     <Container maxWidth="container.xl" my=".3rem">
@@ -30,9 +67,9 @@ export function Products() {
         width={["100%", "100%", "98%", "62.5%"]}
         isFitted
         onChange={(index) => {
-          if (index === 0) setSelectedCategory(null);
-          if (index === 1) setSelectedCategory("fruit");
-          if (index === 2) setSelectedCategory("milk");
+          setSelectedCategory(
+            index === 0 ? "all" : categories[index - 1]?._id || null
+          );
         }}
       >
         <TabList>
@@ -43,20 +80,19 @@ export function Products() {
           >
             ALL TEAS
           </Tab>
-          <Tab
-            fontSize={[".8rem", ".9rem", "1rem"]}
-            borderRadius=".6rem"
-            _selected={{ color: "white", bg: "pinkCardButton" }}
-          >
-            FRUIT TEA
-          </Tab>
-          <Tab
-            fontSize={[".8rem", ".9rem", "1rem"]}
-            borderRadius=".6rem"
-            _selected={{ color: "white", bg: "pinkCardButton" }}
-          >
-            MILK TEA
-          </Tab>
+          {categories.map((category) => (
+            <Tab
+              fontSize={[".8rem", ".9rem", "1rem"]}
+              borderRadius=".6rem"
+              _selected={{ color: "white", bg: "pinkCardButton" }}
+              textTransform="uppercase"
+              name="categories"
+              key={category._id}
+              value={category._id}
+            >
+              {category.name}
+            </Tab>
+          ))}
         </TabList>
       </Tabs>
       <Flex
@@ -64,7 +100,7 @@ export function Products() {
         justify={["center", "center", "center", "space-between"]}
         gap={1}
       >
-        <ProductsLayout filterCategory={selectedCategory} />
+        <ProductsLayout products={selectedProducts} />
 
         <Box
           as="aside"

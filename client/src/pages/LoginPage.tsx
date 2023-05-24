@@ -1,92 +1,69 @@
-import { Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
-import { useState } from "react";
+import { Button, FormControl, FormErrorMessage, FormLabel, Input } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-async function loginUser(email: string, password: string) {
-	try {
-		const response = await fetch("/api/login", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ email, password }),
-		});
+async function loginUser(email: string, password: string, navigate: Function) {
+  try {
+    const response = await fetch("/api/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
-		if (response.ok) {
-			// Successful login logic
-			console.log("Login successful");
-		} else {
-			// Handle login error
-			console.log("Login failed");
-		}
-	} catch (error) {
-		console.log("An error occurred:", error);
-	}
+    if (response.ok) {
+      // Successful login logic
+      console.log("Login successful");
+      navigate("/");
+    } else {
+      // Handle login error
+      console.log("Login failed");
+      throw new Error("Wrong password or Email");
+    }
+  } catch (error) {
+    console.log("An error occurred:", error);
+    throw error; // Rethrow the error to be caught by the catch block in handleFormSubmit
+  }
 }
 
 function LoginPage() {
-	const [loginType, setLoginType] = useState("user");
+  const navigate = useNavigate();
+  const [loginError, setLoginError] = useState<string | null>(null);
 
-	const handleLoginChange = (type: string) => {
-		setLoginType(type);
-	};
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-	const handleNavigateToRegisterForm = (
-		event: React.MouseEvent<HTMLButtonElement>
-	) => {
-		const navigate = useNavigate();
-		navigate("registerPage");
-	};
+    const form = event.currentTarget;
+    const email = form.email.value;
+    const password = form.password.value;
 
-	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
+    try {
+      await loginUser(email, password, navigate);
+      setLoginError(null); // Reset the login error if login succeeds
+    } catch (error) {
+      setLoginError("Wrong password or Email");
+    }
+  };
 
-		const form = event.currentTarget;
-		const email = form.email.value;
-		const password = form.password.value;
+  return (
+    <>
+      <form onSubmit={handleFormSubmit}>
+        <FormControl>
+          <FormLabel>Email</FormLabel>
+          <Input id="email" name="email" type="text" />
+        </FormControl>
 
-		loginUser(email, password);
-	};
+        <FormControl isInvalid={!!loginError}>
+          <FormLabel>Password</FormLabel>
+          <Input id="password" name="password" type="password" />
+          <FormErrorMessage>{loginError || " "}</FormErrorMessage>
+        </FormControl>
 
-	return (
-		<>
-			<form onSubmit={handleFormSubmit}>
-				<div>
-					<label>
-						<Input
-							type="radio"
-							value="user"
-							checked={loginType === "user"}
-							onChange={() => handleLoginChange("user")}
-						/>
-						User
-					</label>
-					<label>
-						<Input
-							type="radio"
-							value="admin"
-							checked={loginType === "admin"}
-							onChange={() => handleLoginChange("admin")}
-						/>
-						Admin
-					</label>
-				</div>
-				<FormControl>
-					<FormLabel>Email</FormLabel>
-					<Input id="email" name="email" type="text" />
-				</FormControl>
-
-				<FormControl>
-					<FormLabel>Password</FormLabel>
-					<Input id="password" name="password" type="password" />
-				</FormControl>
-				{loginType === "user" && (
-					<Button onClick={handleNavigateToRegisterForm}>Register </Button>
-				)}
-				<Button type="submit">Log In</Button>
-			</form>
-		</>
-	);
+        <Button type="submit">Log In</Button>
+      </form>
+    </>
+  );
 }
 
 export default LoginPage;

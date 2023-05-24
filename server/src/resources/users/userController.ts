@@ -30,7 +30,7 @@ export const getSession = async (
     res.status(201).send({ message: "User session restored" });
   } catch (error) {
     console.error(error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send('Internal Server Error ${error.message}');
   }
 };
 
@@ -39,6 +39,7 @@ export const registerUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  console.log(req.body)
   try {
     // Tar in parametrar från form i registerform
     const { email, password } = req.body;
@@ -58,7 +59,6 @@ export const registerUser = async (
     res.status(500).send("Internal Server Error");
   }
 };
-
 // POST api/users/login
 export const loginUser = async (
   req: CustomRequest,
@@ -76,15 +76,19 @@ export const loginUser = async (
       res.status(401).send("Invalid email or password");
       return;
     }
-    req.session.userId = user._id;
+    req.session.userId = user._id
+
     res.status(201).send({ message: "User logged in successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send("Internal Server Error ${error.message}");
   }
-
-  res.status(201).send({ message: "User logged in successfully" });
 };
+
+// Helper function to generate a session ID
+function generateSessionId() {
+  return Math.random().toString(36).substr(2, 10);
+}
 
 // DELETE api/users/logout
 export const logoutUser = async (

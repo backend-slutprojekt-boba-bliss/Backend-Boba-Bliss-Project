@@ -1,10 +1,11 @@
 import { Button, FormControl, FormErrorMessage, FormLabel, Input } from "@chakra-ui/react";
 import { useState } from "react";
-import argon2 from 'argon2';
 
-async function registerUser(email: string, password: string) {
+import { useNavigate } from "react-router-dom";
+
+async function registerUser(email: string, password: string, navigate: Function) {
   try {
-    const response = await fetch("/api/register", {
+    const response = await fetch("/api/users/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -12,8 +13,10 @@ async function registerUser(email: string, password: string) {
       body: JSON.stringify({ email, password }),
     });
 
-    if (response.ok) {
+    if (response.status === 201) {
       console.log("Registration successful");
+      // Redirect the user to the login page
+      navigate("/loginPage");
     } else {
       console.log("Registration failed");
     }
@@ -32,6 +35,7 @@ function validatePassword(password: string): string | null {
 }
 
 function RegisterPage() {
+  const navigate = useNavigate();
   const [passwordError, setPasswordError] = useState("");
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -48,18 +52,7 @@ function RegisterPage() {
     }
 
     setPasswordError(""); // Reset password error
-    registerUser(email, password)
-/*
-    try {
-      const hashedPassword = await argon2.hash(password, {
-        timeCost: 2,
-        memoryCost: 1024
-      });
-
-      registerUser(email, hashedPassword);
-    } catch (error) {
-      console.log("An error occurred:", error);
-    }*/
+    registerUser(email, password, navigate)
   };
 
   return (

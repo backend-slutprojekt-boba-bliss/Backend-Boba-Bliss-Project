@@ -1,17 +1,21 @@
 import express from 'express';
-const UserRouter = express.Router();
-import { getSession, registerUser, loginUser, logoutUser } from "./userController";
+import { getSession, loginUser, logoutUser, registerUser } from "./userController";
+
+
+export const userRouter = express.Router();
 
 // GET api/users/session
-UserRouter.get('/api/session', getSession);
+
+userRouter.get('/session', getSession);
 
 // POST api/users/register
-UserRouter.post('/api/register', registerUser);
+userRouter.post('/register', registerUser);
 
 // POST api/users/login
-UserRouter.post('/api/login', loginUser);
+userRouter.post('/login', loginUser);
 
 // DELETE api/users/logout
-UserRouter.delete('api//logout', logoutUser);
+userRouter.delete('/logout', logoutUser);
 
-module.exports = UserRouter;
+
+

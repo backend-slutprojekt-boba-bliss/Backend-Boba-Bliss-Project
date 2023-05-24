@@ -6,7 +6,7 @@ export const userSchema = new Schema({
     type: String,
     required: true,
     minlength: 8, // Minimum längd är nu 8 karaktärer
-    match: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/, // Vanligt mönster för lösenordssäkerhet
+    //match: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/, // Vanligt mönster för lösenordssäkerhet
   },
   isAdmin: { type: Boolean, default: false },
 });
