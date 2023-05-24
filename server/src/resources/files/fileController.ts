@@ -19,7 +19,7 @@ export async function uploadFile(req: Request, res: Response) {
         res.status(201).json(data._id);
       });
 
-    // Finns många olika alterniativ i sharp-biblioteket, ex grayscale
+    // Finns många olika alternativ i sharp-biblioteket, ex grayscale
     const resizer = sharp().resize(240).png({ quality: 90 });
 
     file.pipe(resizer).pipe(uploadStream);
@@ -35,8 +35,6 @@ export async function getFileById(req: Request, res: Response) {
   }
 
   res.setHeader("Content-Type", file.contentType);
-  // Laddar hem filen från webbläsaren:
-  //   res.setHeader("Content-Disposition", `attachment; filename=${file.filename}`);
 
   const downloadStream = fileBucket.openDownloadStream(_id);
   downloadStream.pipe(res);
