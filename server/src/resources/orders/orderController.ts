@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Order, OrderModel } from "./orderModel";
+import { OrderModel } from "./orderModel";
 
 export async function getAllOrders(req: Request, res: Response) {
     console.log("get all Orders");
@@ -12,12 +12,15 @@ export async function getAllOrders(req: Request, res: Response) {
 }
 
 export async function createOrder(req: Request, res: Response) {
-  const orderData: Order = { ...req.body };
+
+  const orderData = {...req.body, user: req.session.user,}
+  //const orderData: Order = { ...req.body };
+
 
  // vilka produkter är i korgen? hämtar dom här från db
   
-  const order = new OrderModel(orderData);
+  //const order = new OrderModel(orderData);
   //order.user = req.session.id
-  await order.save();
-  res.status(201).json(order);
+  //await order.save();
+  //res.status(201).json(order);
 }
