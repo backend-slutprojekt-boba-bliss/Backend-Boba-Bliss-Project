@@ -22,7 +22,7 @@ import { orderButtonStyle } from "./CartCard";
 type ProductValues = Record<keyof Product, Yup.AnySchema>;
 
 export const schema = Yup.object<ProductValues>().shape({
-  image: Yup.string().url("Invalid image URL!").required("Required"),
+  image: Yup.string().required("Required"),
   imageAlt: Yup.string().max(20, "Must be 20 characters or less"),
   title: Yup.string()
     .max(50, "Must be 50 characters or less")
@@ -94,14 +94,15 @@ export function AdminForm() {
 
   const formik = useFormik<addProduct>({
     initialValues: {
-      image: "",
-      imageAlt: "",
-      title: "",
-      description: "",
-      price: 0,
-      bgColor: "",
-      inStock: 0,
-      categories: [],
+      image:
+        "https://ichef.bbci.co.uk/news/976/cpsprodpb/15951/production/_117310488_16.jpg.webp",
+      imageAlt: "bild",
+      title: "Test Upload",
+      description: "test",
+      price: 30,
+      bgColor: "#bf96da",
+      inStock: 10,
+      categories: ["646c7ba0bd0a27074657a7f5"],
     },
     validationSchema: schema,
     onSubmit: (values, actions) => {
