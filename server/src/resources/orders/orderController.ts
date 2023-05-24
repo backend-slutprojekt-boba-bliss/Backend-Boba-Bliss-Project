@@ -13,19 +13,17 @@ export async function getAllOrders(req: Request, res: Response) {
 }
 
 export async function createOrder(req: Request, res: Response) {
-  try {
-    const sessionResponse = await fetch("/api/session");
-    if (sessionResponse.ok) {
-      const { user } = await sessionResponse.json();
-      const orderData = {...req.body, user };
-      // ... Gör vad du vill med userDatan härifrån, den är hämtad och sparad i userobjektet....
+  console.log("Active session is:", req.session);
 
-      res.status(201).json(orderData);
-    } else {
-      res.status(401).send("No active session");
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send(`Internal Server Error ${error.message}`);
+  if (!req.session || !req.session.user) {
+    res.status(401).json("You must log in to create an order!");
+    return;
   }
+
+  const { _id, email } = req.session.user;
+  const user = { _id, email };
+  console.log(user);
+
+  const orderData = { ...req.body };
+  res.status(200).json(orderData);
 }

@@ -1,6 +1,6 @@
 import cors from "cors";
+import cookieSession from "cookie-session";
 import express, { NextFunction, Request, Response } from "express";
-import session from "express-session";
 import { categoryRouter } from "./resources/categories/categoryRouter";
 import { orderRouter } from "./resources/orders/orderRouter";
 import { productRouter } from "./resources/products/productRouter";
@@ -10,11 +10,12 @@ import { userRouter } from "./resources/users/userRouter";
 export const app = express();
 
 app.use(
-  session({
-    secret: "secret-key", //replace with your own secret key
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false }, // true if you want to use https
+  cookieSession({
+    name: "login",
+    secure: false,
+    httpOnly: true,
+    secret: "as98d7asyudbahs8d97a6digas78d866u",
+    maxAge: 1000 * 60000,
   })
 );
 

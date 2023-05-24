@@ -39,34 +39,22 @@ DELETE http://localhost:3000/api/products/646b34b8292ca9ce4fe822f8
 ### GET ALL Orders
 GET http://localhost:3000/api/products
 ###
-
 POST http://localhost:3000/api/orders
 Content-Type: application/json
 
 {
-  "products": [{
-  "_id": "646b16f840f7ff36350ba7d4",
-}],
-  "user": "",
-  "deliveryAddress": {
-    "firstName": "Mimmi",
-    "lastName": "Collin",
-    "street": "123 Main St",
-    "zipCode": 12345,
-    "city": "Example City"
-  },
-  "createdAt": "2023-05-23T12:00:00Z",
-  "isSent": true
+  "product": "boba",
+  "price":  "4"
 }
+
 
 ### 
 POST http://localhost:3000/api/users/register
 Content-Type: application/json
 
 {
-  "email": "smurf@gmail.com",
-  "password":  "smurf",
-  "isAdmin": "false"
+  "email": "qqq@gmail.com",
+  "password":  "qqq"
 }
 ###
 
@@ -74,6 +62,14 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-  "email": "smurf@gmail.com",
-  "password":  "smurf"
+  "email": "qqq@gmail.com",
+  "password":  "qqq"
 }
+
+###
+
+DELETE http://localhost:3000/api/users/logout
+
+
+### GET ALL Orders
+GET http://localhost:3000/api/users/session
