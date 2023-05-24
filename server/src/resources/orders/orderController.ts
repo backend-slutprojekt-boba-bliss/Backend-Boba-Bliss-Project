@@ -55,7 +55,9 @@ export async function createOrder(req: Request, res: Response) {
       products: productDetails
     };
 
-    res.status(200).json(orderData);
+    const order = new OrderModel(orderData);
+    await order.save();
+    res.status(200).json(order);
   } catch (error) {
     console.error(error);
     res.status(500).json("Internal Server Error");
