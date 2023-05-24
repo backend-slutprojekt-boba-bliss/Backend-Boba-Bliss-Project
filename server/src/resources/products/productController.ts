@@ -4,8 +4,6 @@ import * as yup from "yup";
 import { ProductModel } from "./productModel";
 import { ProductSchema, editProductSchema } from "./productValidationSchemas";
 
-
-
 // GET PRODUCTS
 export async function getAllProducts(req: Request, res: Response) {
   console.log("get all products");
@@ -41,7 +39,7 @@ export async function createProduct(req: Request, res: Response) {
 // EDIT PRODUCT
 export async function editProduct(req: Request, res: Response) {
   console.log("updating product");
-  
+
   try {
     await editProductSchema.validate(req.body);
   } catch (error) {
@@ -58,10 +56,14 @@ export async function editProduct(req: Request, res: Response) {
   }
 
   try {
-    const updatedProduct = await ProductModel.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    const updatedProduct = await ProductModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
 
     if (!updatedProduct) {
       // If the product is not found, return a 404 response
@@ -83,14 +85,13 @@ export async function deleteProduct(req: Request, res: Response) {
 
   try {
     const product = await ProductModel.findById(req.params.id);
-    if(!product) {
+    if (!product) {
       res.status(404).json({ message: "Product not found" });
-      return
+      return;
     }
     await ProductModel.findByIdAndDelete(req.params.id);
-    res.status(204).send('Product is deleted');
+    res.status(204).send("Product is deleted");
   } catch (error) {
     res.status(500).json({ message: "Error deleting product" });
   }
-
 }
