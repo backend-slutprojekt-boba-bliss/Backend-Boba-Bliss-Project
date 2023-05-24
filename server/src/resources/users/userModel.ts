@@ -1,12 +1,12 @@
 import { InferSchemaType, Schema, model } from "mongoose";
 
 export const userSchema = new Schema({
-  username: { type: String, required: true, minlength: 3 },
+  email: { type: String, required: true, minlength: 3 },
   password: {
     type: String,
     required: true,
     minlength: 8, // Minimum längd är nu 8 karaktärer
-    match: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/, // Vanligt mönster för lösenordssäkerhet
+    //match: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/, // Vanligt mönster för lösenordssäkerhet
   },
   isAdmin: { type: Boolean, default: false },
 });

@@ -1,13 +1,18 @@
 import {
   Button,
+  Checkbox,
+  CheckboxGroup,
   FormControl,
   FormLabel,
   Input,
   Select,
+  Stack,
   SystemStyleObject,
   Text,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { useFormik } from "formik";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useProduct } from "../contexts/ProductContext";
@@ -18,62 +23,74 @@ type ProductValues = Record<keyof Product, Yup.AnySchema>;
 
 export const schema = Yup.object<ProductValues>().shape({
   image: Yup.string().url("Invalid image URL!").required("Required"),
-
   imageAlt: Yup.string().max(20, "Must be 20 characters or less"),
-  // .required("Required")
   title: Yup.string()
     .max(50, "Must be 50 characters or less")
     .required("Required"),
-
   description: Yup.string()
     .max(200, "Must be 200 characters or less")
     .required("Required"),
-
   price: Yup.number()
     .typeError("Must be a number")
     .positive("Price must be positive")
     .required("Required"),
+  bgColor: Yup.string()
+    .oneOf(
+      [
+        "yellowCardCircle",
+        "fruitTeaCircle",
+        "bigMatchaCard",
+        "#8fc2e9",
+        "#bf96da",
+      ],
+      "Background color must be selected"
+    )
+    .required("Required"),
 
-  bgColor: Yup.string().oneOf(
-    [
-      "yellowCardCircle",
-      "fruitTeaCircle",
-      "bigMatchaCard",
-      "#8fc2e9",
-      "#bf96da",
-    ],
-    "Background color must be selected"
-  ),
   inStock: Yup.number()
     .typeError("Must be a number")
     .positive("In Stock must be positive")
     .required("Required"),
-
-  category: Yup.string().oneOf(
-    ["milk", "fruit"],
-    "Category must be either 'milk' or 'fruit'"
-  ),
-  // .required("Required")
+  categories: Yup.array()
+    .of(Yup.string())
+    .min(1, "At least one category is required")
+    .required("Required"),
 });
 
 interface Props {
   product?: Product;
 }
 export interface addProduct {
-    image: string;
-    imageAlt: string;
-    title: string;
-    description: string;
-    price: number;
-    bgColor: string;
-    inStock?: number;
-    category: string;
+  image: string;
+  imageAlt: string;
+  title: string;
+  description: string;
+  price: number;
+  bgColor: string;
+  inStock?: number;
+  categories: string[];
+}
+
+export interface Category {
+  _id: string;
+  name: string;
 }
 
 export function AdminForm() {
   const { addProduct } = useProduct();
 
   const navigate = useNavigate();
+
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    axios
+      .get("/api/products/category")
+      .then((res) => {
+        setCategories(res.data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
   const formik = useFormik<addProduct>({
     initialValues: {
@@ -84,16 +101,20 @@ export function AdminForm() {
       price: 0,
       bgColor: "",
       inStock: 0,
-      category: "",
+      categories: [],
     },
     validationSchema: schema,
     onSubmit: (values, actions) => {
-      const newProduct = { ...values};
+      const newProduct = { ...values };
       addProduct(newProduct);
       actions.resetForm();
       navigate("/admin");
     },
   });
+
+  const handleCategoryChange = (selectedCategories: string[]) => {
+    formik.setFieldValue("category", selectedCategories);
+  };
 
   return (
     <form data-cy="product-form" onSubmit={formik.handleSubmit}>
@@ -228,19 +249,30 @@ export function AdminForm() {
       </FormControl>
       <FormControl pb="1rem">
         <FormLabel>Category</FormLabel>
-        <Select
-          id="category"
-          name="category"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.category}
-          placeholder="Select a category"
+        <CheckboxGroup
+          colorScheme="green"
+          value={formik.values.categories}
+          onChange={(values) => {
+            console.log(values);
+            formik.setFieldValue("categories", values);
+            formik.setFieldTouched("categories", true);
+          }}
         >
-          <option value="milk">Milk</option>
-          <option value="fruit">Fruit</option>
-        </Select>
-        {formik.touched.category && formik.errors.category ? (
-          <Text sx={requiredText}>{formik.errors.category}</Text>
+          <Stack spacing={5} direction="row">
+            {categories.map((category) => (
+              <Checkbox
+                name="categories"
+                key={category._id}
+                value={category._id}
+              >
+                {category.name}
+              </Checkbox>
+            ))}
+          </Stack>
+        </CheckboxGroup>
+
+        {formik.touched.categories && formik.errors.categories ? (
+          <Text sx={requiredText}>{formik.errors.categories}</Text>
         ) : null}
       </FormControl>
       <Button sx={orderButtonStyle} type="submit">

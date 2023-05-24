@@ -1,18 +1,27 @@
 import {
   Button,
+  Checkbox,
+  CheckboxGroup,
   FormControl,
   FormLabel,
   Input,
   Select,
-  Text
+  Stack,
+  Text,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { useFormik } from "formik";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Product } from "../data";
 import { useProduct } from "../contexts/ProductContext";
+import { Product } from "../data";
 import { requiredText, schema } from "./AddProductForm";
 import { orderButtonStyle } from "./CartCard";
+
+export interface Category {
+  _id: string;
+  name: string;
+}
 
 export default function EditForm() {
   const navigate = useNavigate();
@@ -20,6 +29,16 @@ export default function EditForm() {
 
   const { id } = useParams<{ id: string }>();
   const productToEdit = productList.find((product) => product._id === id);
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    axios
+      .get("/api/products/category")
+      .then((res) => {
+        setCategories(res.data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
   const formik = useFormik<Product>({
     initialValues: productToEdit
@@ -27,15 +46,15 @@ export default function EditForm() {
           ...productToEdit,
         }
       : {
-        _id: "",
-        image: "",
-        imageAlt: "",
-        title: "",
-        description: "",
-        price: 0,
-        bgColor: "",
-        inStock: 0,
-        category: "",
+          _id: "",
+          image: "",
+          imageAlt: "",
+          title: "",
+          description: "",
+          price: 0,
+          bgColor: "",
+          inStock: 0,
+          categories: [],
         },
     validationSchema: schema,
     onSubmit: (values, actions) => {
@@ -60,7 +79,7 @@ export default function EditForm() {
         price: 0,
         bgColor: "",
         inStock: 0,
-        category: "",
+        categories: [],
       });
     }
   }, [id]);
@@ -197,21 +216,32 @@ export default function EditForm() {
         ) : null}
       </FormControl>
 
-      <FormControl>
+      <FormControl pb="1rem">
         <FormLabel>Category</FormLabel>
-        <Select
-          id="category"
-          name="category"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.category}
-          placeholder="Select a category"
+        <CheckboxGroup
+          colorScheme="green"
+          value={formik.values.categories}
+          onChange={(values) => {
+            console.log(values);
+            formik.setFieldValue("categories", values);
+            formik.setFieldTouched("categories", true);
+          }}
         >
-          <option value="milk">Milk</option>
-          <option value="fruit">Fruit</option>
-        </Select>
-        {formik.touched.category && formik.errors.category ? (
-          <Text sx={requiredText}>{formik.errors.category}</Text>
+          <Stack spacing={5} direction="row">
+            {categories.map((category) => (
+              <Checkbox
+                name="categories"
+                key={category._id}
+                value={category._id}
+              >
+                {category.name}
+              </Checkbox>
+            ))}
+          </Stack>
+        </CheckboxGroup>
+
+        {formik.touched.categories && formik.errors.categories ? (
+          <Text sx={requiredText}>{formik.errors.categories}</Text>
         ) : null}
       </FormControl>
       <Button mt="1rem" sx={orderButtonStyle} type="submit">
