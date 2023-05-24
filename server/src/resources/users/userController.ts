@@ -70,12 +70,14 @@ export const loginUser = async (
 
     // Kontrollerar om user finns i databasen
     const user = await UserModel.findOne({ email });
+    
 
     // Kontrollerar om lösenord är korrekt, eller om ingen användare finns. Returnerar error
     if (!user || !(await argon2.verify(user.password, password))) {
       res.status(401).send("Invalid email or password");
       return;
     }
+
     req.session.userId = user._id
 
     res.status(201).send({ message: "User logged in successfully" });

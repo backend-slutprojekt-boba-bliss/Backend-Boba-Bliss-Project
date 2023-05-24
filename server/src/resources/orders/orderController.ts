@@ -1,3 +1,4 @@
+import { UserModel } from "../users/userModel";
 import { Request, Response } from "express";
 import { OrderModel } from "./orderModel";
 
