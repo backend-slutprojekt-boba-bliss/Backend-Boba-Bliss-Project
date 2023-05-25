@@ -33,8 +33,9 @@ export async function createOrder(req: Request, res: Response) {
   try {
     await createOrderSchema.validate(req.body);
   } catch (error) {
-    res.status(400).json(error.message);
-    return;
+    if(error instanceof Error){
+      res.status(400).json(error.message);
+    return;}
   }
 
   const products = req.body.products;
