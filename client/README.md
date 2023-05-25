@@ -50,18 +50,20 @@ Ni ska vid presentationstillfället hålla i en muntlig presentation för klasse
 
  ## Kravspecifikation på projektet:
 
- [] Alla sidor skall vara responsiva. (G) 
- [] Arbetet ska implementeras med en React frontend och en Express backend. 
- [] Express backenden ska ha validering på samtliga endpoints. (G) 
- [] Skapa ett ER diagram och koddiagram, detta ska lämnas in vid idégodkännandet (G) 
- [] Beskriv er företagsidé i en kort textuell presentation, detta ska lämnas in vid idégodkännandet (G)
- [] All data som programmet utnyttjar ska vara sparat i en Mongo-databas (produkter, beställningar, konton mm) (G)
- [] Man ska kunna logga in som administratör i systemet (G)
- [] Inga Lösenord får sparas i klartext i databasen (G)
+ [x] Alla sidor skall vara responsiva. (G) - Vi uppfyllde kravet genom att låta de delar av applikationen som redan var responsiva vara, samt iterera över de komponenter vi skapade tills de uppfyllde kravspecen.
+ [x] Arbetet ska implementeras med en React frontend och en Express backend. - Vi initialiserade projektet med React, och använde oss av en express app.
+ [x] Express backenden ska ha validering på samtliga endpoints. (G) - Validering kan betyda många olika saker. Vi uppnådde kravet genom att lägga upp validering av lösenord och epost, samt middlewares där det behövdes för autentisering eller kontroll av information skickad till endpoints.
+ [x] Skapa ett ER diagram och koddiagram, detta ska lämnas in vid idégodkännandet (G) 
+ [x] Beskriv er företagsidé i en kort textuell presentation, detta ska lämnas in vid idégodkännandet (G)
+ [x] All data som programmet utnyttjar ska vara sparat i en Mongo-databas (produkter, beställningar, konton mm) (G) - Vi uppnådde det genom att skapa controllers och routers, som i sin tur skriver till MongoDB-databasen vid behov. Vid skapande av users,
+ produkter, eller ordrar samt vid uppdatering skriver vi till databasen. Vi hämtar också information direkt från databasen, så att vi inte arbetar med client-side variabler.
+ [x] Man ska kunna logga in som administratör i systemet (G) - All inloggning sker via inloggningskomponenten. Både users och Admins kan logga in via interfacen där. Det är databasen och komponenterna samt en middleware som håller koll på om du är Admin
+ och därmed autentiserar dig och/eller visar dig de relevanta delarna en administratör ska ha tillgång till på sidan.
+ [x] Inga Lösenord får sparas i klartext i databasen (G) - Vi ville klara detta mål genom att hasha lösenordet direkt när det skrivs in i Client. Men Argon2 kraschar hela projektet om det ligger i Client. Så vi hashar lösenordet så fort det skickas till servern, och sparar den hashade versionen på databasen. Vi kontrollerar lösenordet genom en Verify.
  [] En besökare ska kunna beställa produkter från sidan, detta ska uppdatera lagersaldot i databasen (G)
  [] Administratörer ska kunna uppdatera antalet produkter i lager från admin delen av sidan (G)
  [] Administratörer ska kunna se en lista på alla gjorda beställningar (G)
- [] Sidans produkter ska delas upp i kategorier, en produkt ska tillhöra minst en kategori, men kan tillhöra flera [] Från hemsidan ska man kunna se en lista över alla produkter, och man ska kunna lista bara dom produkter som tillhör en kategori (G)
- [] Besökare ska kunna lägga produkterna i en kundkorg, som är sparad i local-storage på klienten (G)
+ [x] Sidans produkter ska delas upp i kategorier, en produkt ska tillhöra minst en kategori, men kan tillhöra flera [] Från hemsidan ska man kunna se en lista över alla produkter, och man ska kunna lista bara dom produkter som tillhör en kategori (G)
+ [x] Besökare ska kunna lägga produkterna i en kundkorg, som är sparad i local-storage på klienten (G) - Repot hade redan denna logiken i början av projektet. 
  
  

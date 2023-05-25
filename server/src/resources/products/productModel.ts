@@ -1,6 +1,7 @@
 import "express-async-errors";
 import { InferSchemaType, Schema, SchemaTypes, model } from "mongoose";
 
+
 const productSchema = new Schema({
   image: { type: SchemaTypes.ObjectId, required: true },
   imageAlt: { type: String, required: true },

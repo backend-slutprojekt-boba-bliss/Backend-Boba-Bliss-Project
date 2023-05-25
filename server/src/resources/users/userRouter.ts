@@ -5,6 +5,7 @@ import { getSession, loginUser, logoutUser, registerUser } from "./userControlle
 export const userRouter = express.Router();
 
 // GET api/users/session
+
 userRouter.get('/session', getSession);
 
 // POST api/users/register

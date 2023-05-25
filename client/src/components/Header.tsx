@@ -16,7 +16,7 @@ import {
   Text,
   useDisclosure
 } from "@chakra-ui/react";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { AiFillHome } from "react-icons/ai";
 import { IoMdCart } from "react-icons/io";
 import { RiAdminFill } from "react-icons/ri";
@@ -28,6 +28,7 @@ export function Header() {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isMobileView, setIsMobileView] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false); //isAdmin state
 
   const handleResize = () => {
     if (window.innerWidth <= 768) {
@@ -55,6 +56,22 @@ export function Header() {
   const handleLinkClick = () => {
     onClose();
   };
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      try {
+        const response = await fetch("/api/users/session");
+        const data = await response.json();
+        if (data.user && data.user.isAdmin) {
+          setIsAdmin(true);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchSession();
+  }, []);
 
   return (
     <Container as="header" sx={containerStyle}>
@@ -87,7 +104,8 @@ export function Header() {
                   _hover={{ color: "#c8a59b" }}
                 />
               </ChakraLink>
-              <ChakraLink data-cy="admin-link" as={RouterLink} to="/admin">
+              {isAdmin && (
+                <ChakraLink data-cy="admin-link" as={RouterLink} to="/admin">
                 <Icon
                   verticalAlign="sub"
                   width="1.8em"
@@ -96,6 +114,8 @@ export function Header() {
                   _hover={{ color: "#c8a59b" }}
                 />
               </ChakraLink>
+              )}
+              
               <ChakraLink
                 data-cy="cart-link"
                 as={RouterLink}

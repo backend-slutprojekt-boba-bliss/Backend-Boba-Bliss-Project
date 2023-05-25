@@ -1,39 +1,36 @@
+import argon2 from 'argon2';
 import { Request, Response } from "express";
-import { Session } from "express-session";
-const argon2 = require("argon2");
-const { userSchema, UserModel } = require("./userModel");
+import { UserModel } from "./userModel";
 
-interface CustomRequest extends Request {
-  session: Session & { userId?: string }; // Add the userId property to the session type
-}
+
 
 // GET api/users/session
 export const getSession = async (
-  req: CustomRequest,
+  req: Request,
   res: Response
 ): Promise<void> => {
+  console.log("Active session is user:", req.session);
   try {
-    if (req.session.userId) {
-      // Om en användare är inloggad, hämta deras session
-      const user = await UserModel.findById(req.session.userId);
+    if (req.session && req.session.user) {
+      // If a user is logged in, retrieve their session
+      const user = await UserModel.findById(req.session.user._id);
 
       if (user) {
-        // Skickar sessions-informationen om den hittas
-        res.send({ user });
+        // Send the session information if found
+        const userData = user.toObject() as any;
+        delete userData.password;
+        res.send({ user: userData });
       } else {
         res.status(404).send("User not found");
       }
     } else {
-      // Om ingen session hittas, så returnerar error.
       res.status(401).send("No active session");
     }
-    res.status(201).send({ message: "User session restored" });
   } catch (error) {
     console.error(error);
-    res.status(500).send('Internal Server Error ${error.message}');
+    res.status(500).send(`Internal Server Error ${error.message}`);
   }
 };
-
 // POST api/users/register
 export const registerUser = async (
   req: Request,
@@ -61,52 +58,34 @@ export const registerUser = async (
 };
 // POST api/users/login
 export const loginUser = async (
-  req: CustomRequest,
-  res: Response
-): Promise<void> => {
-  try {
-    // Hämtar information från form
-    const { email, password } = req.body;
-
-    // Kontrollerar om user finns i databasen
-    const user = await UserModel.findOne({ email });
-
-    // Kontrollerar om lösenord är korrekt, eller om ingen användare finns. Returnerar error
-    if (!user || !(await argon2.verify(user.password, password))) {
-      res.status(401).send("Invalid email or password");
-      return;
-    }
-    req.session.userId = user._id
-
-    res.status(201).send({ message: "User logged in successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error ${error.message}");
-  }
-};
-
-// Helper function to generate a session ID
-function generateSessionId() {
-  return Math.random().toString(36).substr(2, 10);
-}
-
-// DELETE api/users/logout
-export const logoutUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  try {
-    req.session.destroy((err: any) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Internal Server Error");
-        return;
-      }
+  console.log(req.body)
 
-      res.status(201).send({ message: "User logged out succesfully" });
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
+  const user = await UserModel.findOne({ email: req.body.email});
+  if (user) {
+    console.log(user)
+    const isAuth = await argon2.verify(user.password, req.body.password);
+    if (isAuth) {
+      req.session!.user = user
+      
+
+      const userData = user.toObject() as any;
+      delete userData.password;
+      console.log(req.session )
+      res.status(201).send({ message: "User login successfully" });
+    } else {
+      res.status(401).json({ error: "Wrong password"});
+    }
+  } else {
+    res.status(401).json({ error: "Wrong username"});
   }
+
 };
+
+// DELETE api/users/logout
+export async function logoutUser(req: Request, res: Response) {
+  req.session = null;
+  res.status(204).json(null);
+}

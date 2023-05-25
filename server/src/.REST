@@ -1,7 +1,3 @@
-//----------------------------------------------------------------
-// PRODUCT
-//----------------------------------------------------------------
-
 ### GET ALL PRODUCTS
 GET http://localhost:3000/api/products
 
@@ -10,23 +6,23 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "image":  "https://assets.icanet.se/e_sharpen:80,q_auto,dpr_1.25,w_718,h_718,c_lfill/imagevaultfiles/id_241061/cf_259/boba_tea.jpg",
+  "image":  "https://drinkoteket.se/wp-content/uploads/p3-1-860x860.jpg",
   "imageAlt": "img alt",
-  "title": "Test REST" ,
+  "title": "Ny" ,
   "description": "test description",
   "price": "9",
   "bgColor": "fruitTeaCircle",
   "quantity": "10",
   "inStock": "1",
-  "categories": ["646c7b96bd0a27074657a7f1"]
+  "categories": ["milk", "fruit"]
 }
 
 ### EDIT PRODUCT
-PUT http://localhost:3000/api/products/646b798373b4a7b9af691589
+PUT http://localhost:3000/api/products/646b16f840f7ff36350ba7d4
 Content-Type: application/json
 
 {
-  "_id": "646b798373b4a7b9af691589",
+  "_id": "646b16f840f7ff36350ba7d4",
   "image":  "img source",
   "imageAlt": "new",
   "title": "Ny" ,
@@ -35,33 +31,64 @@ Content-Type: application/json
   "bgColor": "fruitTeaCircle",
   "quantity": "10",
   "inStock": "1",
-  "category": "fruit",
   "__v": "1"
 }
 
 ### DELETE PRODUCT
 DELETE http://localhost:3000/api/products/646b34b8292ca9ce4fe822f8
 
-//----------------------------------------------------------------
-// CATEGORY
-//----------------------------------------------------------------
+### GET ALL Orders
+GET http://localhost:3000/api/orders
 
-### GET CATEGORY
-GET http://localhost:3000/api/products/category/646c7ba0bd0a27074657a7f5
+###
+GET http://localhost:3000/api/orders/646f430e4042e20b8993e8c4
 
-### GET CATEGORIES
-GET http://localhost:3000/api/products/category
+###
+PUT http://localhost:3000/api/orders/646f430e4042e20b8993e8c4
 
-### CREATE CATEGORY
-POST http://localhost:3000/api/products/category
+###
+DELETE http://localhost:3000/api/orders/646f430e4042e20b8993e8c4
+
+
+###
+POST http://localhost:3000/api/orders
 Content-Type: application/json
 
 {
+  "products": [{
+    "_id": "646cfc0622ff17cd7e4877e9",
+    "quantity": "1"
+  }
+  ],
+  "deliveryAddress": {
+    "firstName": "Mimmi",
+    "lastName": "Collin",
+    "street": "123 Main St",
+    "zipCode": 12345,
+    "city": "Example City"
+  }
+}
+
+
+
+### 
+POST http://localhost:3000/api/users/register
+Content-Type: application/json
+
+{
+  "email": "order@gmail.com",
+  "password":  "order"
+}
+###
+
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+
+{
+
   "name": "Berries"
 }
-//----------------------------------------------------------------
-// FILE
-//----------------------------------------------------------------
+
 
 ### POST FILE
 POST http://localhost:3000/api/file
@@ -77,3 +104,13 @@ Content-Type: image/png
 
 ### GET FILE
 GET http://localhost:3000/api/file/646ddaae355075eeab45d05e
+
+  "email": "admin@gmail.com",
+  "password":  "admin"
+}
+
+###
+
+DELETE http://localhost:3000/api/users/logout
+
+
