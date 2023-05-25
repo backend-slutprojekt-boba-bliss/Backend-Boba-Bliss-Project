@@ -74,7 +74,7 @@ export const loginUser = async (
       const userData = user.toObject() as any;
       delete userData.password;
       console.log(req.session )
-      res.status(200).json(userData);
+      res.status(201).send({ message: "User login successfully" });
     } else {
       res.status(401).json({ error: "Wrong password"});
     }
