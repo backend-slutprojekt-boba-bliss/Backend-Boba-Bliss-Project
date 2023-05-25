@@ -31,6 +31,8 @@ export default function EditForm() {
   const productToEdit = productList.find((product) => product._id === id);
   const [categories, setCategories] = useState<Category[]>([]);
 
+  const [imageId, setImageId] = useState<string>("");
+
   useEffect(() => {
     axios
       .get("/api/products/category")
@@ -84,6 +86,36 @@ export default function EditForm() {
     }
   }, [id]);
 
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    try {
+      const file = event.target.files?.[0];
+
+      if (file) {
+        const formData = new FormData();
+        formData.append("image", file);
+
+        const response = await axios.post(
+          "http://localhost:3000/api/file",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        const uploadedImageId = response.data;
+        setImageId(uploadedImageId);
+
+        formik.setFieldValue("image", uploadedImageId);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <form data-cy="product-form" onSubmit={formik.handleSubmit}>
       <FormControl>
@@ -92,11 +124,11 @@ export default function EditForm() {
           data-cy="product-image"
           id="image"
           name="image"
-          type="text"
+          type="file"
+          accept="image/*"
           placeholder="Image URL"
-          onChange={formik.handleChange}
+          onChange={handleImageChange}
           onBlur={formik.handleBlur}
-          value={formik.values.image}
         />
         {formik.touched.image && formik.errors.image ? (
           <Text data-cy="product-image-error" sx={requiredText}>

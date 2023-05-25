@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import "express-async-errors";
 import * as yup from "yup";
 import { ProductModel } from "./productModel";
-import { ProductSchema, editProductSchema } from "./productValidationSchemas";
+import { ProductSchema, editProductSchema } from "./productValidation";
 
 // GET PRODUCTS
 export async function getAllProducts(req: Request, res: Response) {

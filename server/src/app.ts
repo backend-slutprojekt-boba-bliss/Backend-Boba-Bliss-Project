@@ -2,6 +2,8 @@ import cors from "cors";
 import cookieSession from "cookie-session";
 import express, { NextFunction, Request, Response } from "express";
 import { categoryRouter } from "./resources/categories/categoryRouter";
+// import { filesRouter } from "./resources/files/filesRouter";
+import { fileRouter } from "./resources/files/fileRouter";
 import { orderRouter } from "./resources/orders/orderRouter";
 import { productRouter } from "./resources/products/productRouter";
 import { userRouter } from "./resources/users/userRouter";
@@ -28,6 +30,7 @@ app.use("/api/products", productRouter);
 app.use("/api/products/category", categoryRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/users", userRouter);
+app.use("/api/file", fileRouter);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   res.sendStatus(500);
