@@ -143,7 +143,7 @@ export function AdminForm() {
         const uploadedImageId = response.data;
         setImageId(uploadedImageId);
 
-        // formik.setFieldValue("image", uploadedImageId);
+        formik.setFieldValue("image", uploadedImageId);
       }
     } catch (error) {
       console.error(error);
@@ -163,7 +163,6 @@ export function AdminForm() {
           placeholder="Image URL"
           onChange={handleImageChange}
           onBlur={formik.handleBlur}
-          value={formik.values.image}
         />
         {formik.touched.image && formik.errors.image ? (
           <Text data-cy="product-image-error" sx={requiredText}>
@@ -180,7 +179,6 @@ export function AdminForm() {
           placeholder="Image Alt"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          // value={formik.values.imageAlt}
         />
         {formik.touched.imageAlt && formik.errors.imageAlt ? (
           <Text sx={requiredText}>{formik.errors.imageAlt}</Text>
