@@ -6,14 +6,15 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "image":  "img source",
+  "image":  "https://drinkoteket.se/wp-content/uploads/p3-1-860x860.jpg",
   "imageAlt": "img alt",
   "title": "Ny" ,
   "description": "test description",
   "price": "9",
   "bgColor": "fruitTeaCircle",
   "quantity": "10",
-  "inStock": "1"
+  "inStock": "1",
+  "categories": ["milk", "fruit"]
 }
 
 ### EDIT PRODUCT
@@ -40,7 +41,13 @@ DELETE http://localhost:3000/api/products/646b34b8292ca9ce4fe822f8
 GET http://localhost:3000/api/orders
 
 ###
-GET http://localhost:3000/api/orders/646e0c726faaa01a3781764a
+GET http://localhost:3000/api/orders/646f430e4042e20b8993e8c4
+
+###
+PUT http://localhost:3000/api/orders/646f430e4042e20b8993e8c4
+
+###
+DELETE http://localhost:3000/api/orders/646f430e4042e20b8993e8c4
 
 
 ###
@@ -85,8 +92,8 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-  "email": "order@gmail.com",
-  "password":  "order"
+  "email": "admin@gmail.com",
+  "password":  "admin"
 }
 
 ###

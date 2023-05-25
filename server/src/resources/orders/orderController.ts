@@ -28,11 +28,7 @@ export async function getOrderById(req: Request, res: Response) {
 }
 
 export async function createOrder(req: Request, res: Response) {
-  //Kollar att du är inloggad
-  if (!req.session || !req.session.user) {
-    res.status(401).json({ error: "You must log in to create an order!" });
-    return;
-  }
+
   //Validera inkommande order data
   try {
     await createOrderSchema.validate(req.body);
@@ -67,7 +63,7 @@ export async function createOrder(req: Request, res: Response) {
     );
 
     // Set user of order to user
-    const { _id } = req.session.user;
+    const { _id } = req.session!.user;
     const user = { _id };
 
     //Sätter orderdatum till nuvarande datum
@@ -86,9 +82,48 @@ export async function createOrder(req: Request, res: Response) {
 
     const order = new OrderModel(orderData);
     await order.save();
-    res.status(200).json(order);
+    res.status(201).json(order);
   } catch (error) {
     console.error(error);
     res.status(500).json("Internal Server Error");
   }
+}
+
+export async function toggleIsSent(req: Request, res: Response) {
+  console.log("updating isSent");
+  const order = await OrderModel.findById(req.params.id); 
+  try {
+    if(!order) {
+      res.status(404).json(`Order ${req.params.id} not found`)
+      return
+    }
+     order.isSent = !order.isSent;
+     await order.save()
+      res.status(200).json(order);
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching order" });
+    }
+}
+
+export async function deleteOrder(req: Request, res: Response) {
+
+  try {
+    // Find the post by ID
+    const order = await OrderModel.findById(req.params.id);
+
+    // Check if the post exists
+    if (!order) {
+      res.status(404).json({ message: "order not found" });
+      return;
+    }
+
+    // Delete the post
+    await OrderModel.findByIdAndDelete(req.params.id);
+
+    // Return 204 status code - no content
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting order" });
+  }
+  
 }

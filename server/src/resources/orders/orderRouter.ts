@@ -1,19 +1,20 @@
 import express from "express";
-import { createOrder, getAllOrders, getOrderById } from "./orderController";
+import { isAdmin, isLoggedin } from "../middlewares/middlewares";
+import { createOrder, deleteOrder, getAllOrders, getOrderById, toggleIsSent } from "./orderController";
 
 export const orderRouter = express.Router();
 
-// GET ALL PRODUCTS
-orderRouter.get("/", getAllOrders);
+// GET ALL orders
+orderRouter.get("/", isAdmin, getAllOrders);
 
-
+//Get order by ID
 orderRouter.get("/:id", getOrderById);
 
 // CREATE order
-orderRouter.post("/", createOrder);
+orderRouter.post("/", isLoggedin, createOrder);
+
+// Toggle isSent
+orderRouter.put("/:id", isAdmin, toggleIsSent);
 
 // DELETE order
-//orderRouter.delete("/:id", deleteOrder);
-
-// EDIT order
-//orderRouter.put("/:id", order);
+orderRouter.delete("/:id", isAdmin, deleteOrder);
