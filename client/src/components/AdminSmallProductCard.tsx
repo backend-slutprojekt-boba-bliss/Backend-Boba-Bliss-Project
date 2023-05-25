@@ -1,17 +1,17 @@
 import {
-    AlertDialog,
-    AlertDialogBody,
-    AlertDialogContent,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogOverlay,
-    Box,
-    Button,
-    Card,
-    Flex,
-    Image,
-    Text,
-    useDisclosure
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  Box,
+  Button,
+  Card,
+  Flex,
+  Image,
+  Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -58,7 +58,11 @@ export function AdminSmallProductCard({ product, id }: SmallProductCardProps) {
     <Card data-cy="product" align="center" sx={cardStyle}>
       <Text data-cy="product-id">{id}</Text>
       <Box sx={roundBG}>
-        <Image sx={imageStyle} src={product.image} alt={product.imageAlt} />
+        <Image
+          sx={imageStyle}
+          src={"/api/file/" + product.image}
+          alt={product.imageAlt}
+        />
       </Box>
       <Text data-cy="product-title" sx={headerStyle}>
         {product.title}
