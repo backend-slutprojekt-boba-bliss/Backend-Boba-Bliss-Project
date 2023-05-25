@@ -37,7 +37,12 @@ Content-Type: application/json
 DELETE http://localhost:3000/api/products/646b34b8292ca9ce4fe822f8
 
 ### GET ALL Orders
-GET http://localhost:3000/api/products
+GET http://localhost:3000/api/orders
+
+###
+GET http://localhost:3000/api/orders/646e0c726faaa01a3781764a
+
+
 ###
 POST http://localhost:3000/api/orders
 Content-Type: application/json
@@ -56,6 +61,13 @@ Content-Type: application/json
     "city": "Example City"
   }
 }
+
+
+
+
+
+
+
 
 
 
@@ -82,5 +94,3 @@ Content-Type: application/json
 DELETE http://localhost:3000/api/users/logout
 
 
-### GET ALL Orders
-GET http://localhost:3000/api/users/session

@@ -1,13 +1,13 @@
 import express from "express";
-import { createOrder, getAllOrders } from "./orderController";
+import { createOrder, getAllOrders, getOrderById } from "./orderController";
 
 export const orderRouter = express.Router();
 
 // GET ALL PRODUCTS
 orderRouter.get("/", getAllOrders);
 
-//GET order BY ID
-// orderRouter.get("/:id", getOrderById);
+
+orderRouter.get("/:id", getOrderById);
 
 // CREATE order
 orderRouter.post("/", createOrder);

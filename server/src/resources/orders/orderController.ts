@@ -13,6 +13,20 @@ export async function getAllOrders(req: Request, res: Response) {
       }
 }
 
+export async function getOrderById(req: Request, res: Response) {
+  console.log("get all Order by ID");
+  try {
+    const orderId = req.params.id
+    const order = await OrderModel.findById(orderId); 
+    if(!order) {
+      res.status(404).json(`Order ${orderId} not found`)
+    }
+      res.status(200).json(order);
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching order" });
+    }
+}
+
 export async function createOrder(req: Request, res: Response) {
   //Kollar att du är inloggad
   if (!req.session || !req.session.user) {
