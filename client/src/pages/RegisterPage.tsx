@@ -1,7 +1,16 @@
-import { Button, FormControl, FormErrorMessage, FormLabel, Input } from "@chakra-ui/react";
-import { useState } from "react";
+import {
+  Box,
+  Button,
+  Center,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Heading,
+  Input,
+  color,
+} from "@chakra-ui/react";import { useState } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 
 async function registerUser(email: string, password: string, navigate: Function) {
   try {
@@ -47,7 +56,7 @@ function RegisterPage() {
 
     const validationError = validatePassword(password);
     if (validationError) {
-      setPasswordError(validationError);
+      setPasswordError("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.");
       return;
     }
 
@@ -56,8 +65,12 @@ function RegisterPage() {
   };
 
   return (
-    <>
-      <form onSubmit={handleFormSubmit}>
+    <Center minHeight="80vh" minWidth="100vw" bgColor="inherit">
+      <Form onSubmit={handleFormSubmit}>
+        <Heading as="h1" size="lg">
+          Register
+        </Heading>
+
         <FormControl>
           <FormLabel>Email</FormLabel>
           <Input id="email" name="email" type="text" />
@@ -69,10 +82,22 @@ function RegisterPage() {
           <FormErrorMessage>{passwordError || " "}</FormErrorMessage>
         </FormControl>
 
-        <Button type="submit">Register</Button>
-      </form>
-    </>
+        <Box display={"Flex"} flexDirection={"column"}>
+          <Button width="full" type="submit" marginTop={"1em"}>
+            Register
+          </Button>
+          <Box display={"block"}> 
+      <h2>
+      Already have an account? <Link to="/loginPage" >Login</Link>
+      </h2>
+      </Box>
+        </Box>
+      </Form>
+     
+     
+     
+    </Center>
+    
   );
 }
-
 export default RegisterPage;
