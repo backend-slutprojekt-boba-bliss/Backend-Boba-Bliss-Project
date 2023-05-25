@@ -1,5 +1,16 @@
-import { Button, FormControl, FormErrorMessage, FormLabel, Input } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Heading,
+  Input,
+  VStack,
+} from "@chakra-ui/react";
+import { Form, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 async function loginUser(email: string, password: string, navigate: Function) {
@@ -27,9 +38,14 @@ async function loginUser(email: string, password: string, navigate: Function) {
   }
 }
 
+
 function LoginPage() {
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState<string | null>(null);
+
+  function navigateToRegister(){
+    navigate("/registerPage");
+  }
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -47,8 +63,12 @@ function LoginPage() {
   };
 
   return (
-    <>
-      <form onSubmit={handleFormSubmit}>
+    <Center minHeight="80vh" minWidth="100vw" bgColor="inherit">
+      <Form onSubmit={handleFormSubmit}>
+        <Heading as="h1" size="lg">
+          Log In
+        </Heading>
+
         <FormControl>
           <FormLabel>Email</FormLabel>
           <Input id="email" name="email" type="text" />
@@ -60,9 +80,16 @@ function LoginPage() {
           <FormErrorMessage>{loginError || " "}</FormErrorMessage>
         </FormControl>
 
-        <Button type="submit">Log In</Button>
-      </form>
-    </>
+        <Box display={"Flex"} justifyContent={"space-evenly"}>
+          <Button width="half" type="submit" marginTop={"1em"}>
+            Log In
+          </Button>
+          <Button width="half" onClick={navigateToRegister} marginTop={"1em"}>
+            Register
+          </Button>
+        </Box>
+      </Form>
+    </Center>
   );
 }
 
