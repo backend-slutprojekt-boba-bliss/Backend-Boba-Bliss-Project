@@ -106,7 +106,6 @@ export async function toggleIsSent(req: Request, res: Response) {
 }
 
 export async function deleteOrder(req: Request, res: Response) {
-
   try {
     // Find the post by ID
     const order = await OrderModel.findById(req.params.id);
