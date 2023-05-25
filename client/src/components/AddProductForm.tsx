@@ -83,9 +83,6 @@ export function AdminForm() {
 
   const [categories, setCategories] = useState<Category[]>([]);
 
-  //New state added
-  const [imageId, setImageId] = useState<string>("");
-
   useEffect(() => {
     axios
       .get("/api/products/category")
@@ -141,7 +138,6 @@ export function AdminForm() {
         );
 
         const uploadedImageId = response.data;
-        setImageId(uploadedImageId);
 
         formik.setFieldValue("image", uploadedImageId);
       }
