@@ -56,16 +56,16 @@ Content-Type: application/json
 
 {
   "products": [{
-    "_id": "646cfc0622ff17cd7e4877e9",
+    "_id": "646f42e7a24299f8a726242a",
     "quantity": "1"
   }
   ],
   "deliveryAddress": {
-    "firstName": "Mimmi",
-    "lastName": "Collin",
-    "street": "123 Main St",
+    "firstName": "Adam",
+    "lastName": "Svensson",
+    "street": "hejvägen",
     "zipCode": 12345,
-    "city": "Example City"
+    "city": "hejstaden"
   }
 }
 
@@ -83,8 +83,8 @@ POST http://localhost:3000/api/users/register
 Content-Type: application/json
 
 {
-  "email": "order@gmail.com",
-  "password":  "order"
+  "email": "test@gmail.com",
+  "password":  "test"
 }
 ###
 
@@ -92,12 +92,15 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-  "email": "admin@gmail.com",
-  "password":  "admin"
+  "email": "test@gmail.com",
+  "password":  "test"
 }
 
 ###
 
 DELETE http://localhost:3000/api/users/logout
+
+###
+GET http://localhost:3000/api/orders/user
 
 
