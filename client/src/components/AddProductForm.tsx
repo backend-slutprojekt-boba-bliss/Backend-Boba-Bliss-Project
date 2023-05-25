@@ -83,6 +83,9 @@ export function AdminForm() {
 
   const [categories, setCategories] = useState<Category[]>([]);
 
+  //New state added
+  const [imageId, setImageId] = useState<string>("");
+
   useEffect(() => {
     axios
       .get("/api/products/category")
@@ -94,8 +97,7 @@ export function AdminForm() {
 
   const formik = useFormik<addProduct>({
     initialValues: {
-      image:
-        "https://ichef.bbci.co.uk/news/976/cpsprodpb/15951/production/_117310488_16.jpg.webp",
+      image: "",
       imageAlt: "bild",
       title: "Test Upload",
       description: "test",
@@ -117,6 +119,37 @@ export function AdminForm() {
     formik.setFieldValue("category", selectedCategories);
   };
 
+  // Added - uploads the image to DB
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    try {
+      const file = event.target.files?.[0];
+
+      if (file) {
+        const formData = new FormData();
+        formData.append("image", file);
+
+        const response = await axios.post(
+          "http://localhost:3000/api/file",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        const uploadedImageId = response.data;
+        setImageId(uploadedImageId);
+
+        // formik.setFieldValue("image", uploadedImageId);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <form data-cy="product-form" onSubmit={formik.handleSubmit}>
       <FormControl>
@@ -125,9 +158,10 @@ export function AdminForm() {
           data-cy="product-image"
           id="image"
           name="image"
-          type="text"
+          type="file"
+          accept="image/*"
           placeholder="Image URL"
-          onChange={formik.handleChange}
+          onChange={handleImageChange}
           onBlur={formik.handleBlur}
           value={formik.values.image}
         />
@@ -146,7 +180,7 @@ export function AdminForm() {
           placeholder="Image Alt"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          value={formik.values.imageAlt}
+          // value={formik.values.imageAlt}
         />
         {formik.touched.imageAlt && formik.errors.imageAlt ? (
           <Text sx={requiredText}>{formik.errors.imageAlt}</Text>
