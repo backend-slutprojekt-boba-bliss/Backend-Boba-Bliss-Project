@@ -27,6 +27,23 @@ export async function getOrderById(req: Request, res: Response) {
     }
 }
 
+export async function getLoggedInUserOrders(req: Request, res: Response) {
+  console.log("Get all orders by logged-in user");
+  const userID = req.session!.user._id;
+
+  try {
+    const orders = await OrderModel.find({ user: userID });
+    if (orders.length === 0) {
+      res.status(200).json({ message: "You have made no orders yet!" });
+    } else {
+      res.status(200).json(orders);
+    }
+  } catch (error) {
+    console.error("Error retrieving user orders:", error);
+    res.status(500).json({ error: "Failed to retrieve user orders" });
+  }
+}
+
 export async function createOrder(req: Request, res: Response) {
 
   //Validera inkommande order data
