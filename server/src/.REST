@@ -71,13 +71,6 @@ Content-Type: application/json
 
 
 
-
-
-
-
-
-
-
 ### 
 POST http://localhost:3000/api/users/register
 Content-Type: application/json
@@ -95,6 +88,23 @@ Content-Type: application/json
   "email": "test@gmail.com",
   "password":  "test"
 }
+
+
+### POST FILE
+POST http://localhost:3000/api/file
+Content-Type: multipart/form-data; boundary=FormDataRow
+
+
+--FormDataRow
+Content-Disposition: form-data; name="image"; filename="btd-logo.png"
+Content-Type: image/png
+
+< ./btd-logo.png
+--FormDataRow--
+
+### GET FILE
+GET http://localhost:3000/api/file/646ddaae355075eeab45d05e
+
 
 ###
 

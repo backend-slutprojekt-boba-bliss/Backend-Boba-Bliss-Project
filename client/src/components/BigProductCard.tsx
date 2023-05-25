@@ -12,14 +12,14 @@ import {
   Image,
   Text,
   useBreakpointValue,
-  useOutsideClick
+  useOutsideClick,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 
 import { FaCartPlus } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { Product } from "../data";
 import { useCart } from "../contexts/CartContext";
+import { Product } from "../data";
 
 interface BigProductCardProps {
   product: Product;
@@ -227,7 +227,7 @@ export function BigProductCard({
               <Box as="div" sx={imageStyleBackground(backgroundUrl)}></Box>
               <Image
                 sx={imageStyle}
-                src={product.image}
+                src={"/api/file/" + product.image}
                 alt={product.imageAlt}
               />
             </Box>
@@ -281,7 +281,6 @@ const quantityStyling = {
   minHeight: "1.5rem",
   mx: "1rem",
 };
-
 
 // Styled object for -decrease +increase buttons
 const buttonStyle = {

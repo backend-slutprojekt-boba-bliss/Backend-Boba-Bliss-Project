@@ -1,6 +1,6 @@
 import { Box, Button, Card, Image, Text } from "@chakra-ui/react";
-import { Product } from "../data";
 import { useCart } from "../contexts/CartContext";
+import { Product } from "../data";
 
 interface SmallProductCardProps {
   product: Product;
@@ -32,7 +32,11 @@ export function SmallProductCard({ product }: SmallProductCardProps) {
   return (
     <Card data-cy="product" align="center" sx={cardStyle}>
       <Box sx={roundBG}>
-        <Image sx={imageStyle} src={product.image} alt={product.imageAlt} />
+        <Image
+          sx={imageStyle}
+          src={"/api/file/" + product.image}
+          alt={product.imageAlt}
+        />
       </Box>
       <Text data-cy="product-title" as="h6" sx={headerStyle}>
         {product.title}

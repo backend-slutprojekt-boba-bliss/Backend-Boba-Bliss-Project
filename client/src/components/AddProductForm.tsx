@@ -22,7 +22,7 @@ import { orderButtonStyle } from "./CartCard";
 type ProductValues = Record<keyof Product, Yup.AnySchema>;
 
 export const schema = Yup.object<ProductValues>().shape({
-  image: Yup.string().url("Invalid image URL!").required("Required"),
+  image: Yup.string().required("Required"),
   imageAlt: Yup.string().max(20, "Must be 20 characters or less"),
   title: Yup.string()
     .max(50, "Must be 50 characters or less")
@@ -95,13 +95,13 @@ export function AdminForm() {
   const formik = useFormik<addProduct>({
     initialValues: {
       image: "",
-      imageAlt: "",
-      title: "",
-      description: "",
-      price: 0,
-      bgColor: "",
-      inStock: 0,
-      categories: [],
+      imageAlt: "bild",
+      title: "Test Upload",
+      description: "test",
+      price: 30,
+      bgColor: "#bf96da",
+      inStock: 10,
+      categories: ["646c7ba0bd0a27074657a7f5"],
     },
     validationSchema: schema,
     onSubmit: (values, actions) => {
@@ -116,6 +116,36 @@ export function AdminForm() {
     formik.setFieldValue("category", selectedCategories);
   };
 
+  // Added - uploads the image to DB
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    try {
+      const file = event.target.files?.[0];
+
+      if (file) {
+        const formData = new FormData();
+        formData.append("image", file);
+
+        const response = await axios.post(
+          "http://localhost:3000/api/file",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        const uploadedImageId = response.data;
+
+        formik.setFieldValue("image", uploadedImageId);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <form data-cy="product-form" onSubmit={formik.handleSubmit}>
       <FormControl>
@@ -124,11 +154,11 @@ export function AdminForm() {
           data-cy="product-image"
           id="image"
           name="image"
-          type="text"
+          type="file"
+          accept="image/*"
           placeholder="Image URL"
-          onChange={formik.handleChange}
+          onChange={handleImageChange}
           onBlur={formik.handleBlur}
-          value={formik.values.image}
         />
         {formik.touched.image && formik.errors.image ? (
           <Text data-cy="product-image-error" sx={requiredText}>
@@ -145,7 +175,6 @@ export function AdminForm() {
           placeholder="Image Alt"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          value={formik.values.imageAlt}
         />
         {formik.touched.imageAlt && formik.errors.imageAlt ? (
           <Text sx={requiredText}>{formik.errors.imageAlt}</Text>

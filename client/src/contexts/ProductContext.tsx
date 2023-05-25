@@ -44,7 +44,7 @@ export function ProductProvider({ children }: PropsWithChildren) {
 
   const addProduct = (product: addProduct) => {
     axios
-      .post("http://127.0.0.1:3000/api/products", product, {
+      .post("/api/products", product, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })
@@ -62,30 +62,32 @@ export function ProductProvider({ children }: PropsWithChildren) {
 
   const deleteProduct = (id: string) => {
     axios
-      .delete(`http://127.0.0.1:3000/api/products/${id}`, {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true
+      .delete(`/api/products/${id}`, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
       })
       .then(function (response) {
         console.log(response);
         setProductList((prevProductList) => {
           // Create a new array without the deleted product
-          const updatedProductList = prevProductList.filter((product) => product._id !== id);
+          const updatedProductList = prevProductList.filter(
+            (product) => product._id !== id
+          );
           return updatedProductList;
         });
       })
       .catch(function (error) {
         console.error(error);
       });
-    };
-  
+  };
+
   const editProduct = (editedProduct: Product) => {
     const updatedProduct = editedProduct;
     console.log(editedProduct);
     axios
-      .put(`http://127.0.0.1:3000/api/products/${updatedProduct._id}`, updatedProduct, {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true
+      .put(`/api/products/${updatedProduct._id}`, updatedProduct, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
       })
       .then(function (response) {
         console.log(response);
@@ -93,7 +95,6 @@ export function ProductProvider({ children }: PropsWithChildren) {
       .catch(function (error) {
         console.error(error);
       });
-
 
     setProductList((prevProductList) => {
       const updatedProductList = prevProductList.map((product) =>
