@@ -76,10 +76,10 @@ export const loginUser = async (
       console.log(req.session )
       res.status(200).json(userData);
     } else {
-      res.status(401).json("wrong password Password");
+      res.status(401).json({ error: "Wrong password"});
     }
   } else {
-    res.status(401).json("cant find username");
+    res.status(401).json({ error: "Wrong username"});
   }
 
 };
