@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createContext, useContext } from "react";
 import { Customer } from "../components/CheckoutForm";
 import { CartItem } from "../data";
@@ -11,21 +12,39 @@ type Order = {
 
 type OrderContextType = {
   orderList: Order[];
-  createOrder: (customer: Customer) => Order;
+  createOrder: (customer: Customer) => Promise<CreateOrderReturnType>;
 };
+type CreateOrderReturnType = {
+  _id: string;
+  products: {
+    image: string;
+    imageAlt: string;
+    title: string;
+    description: string;
+    price: number;
+    bgColor: string;
+    quantity: number;
+    inStock: number;
+  }[];
+  categories: string[];
+  user: string;
+  deliveryAddress: {
+    firstName: string;
+    lastName: string;
+    street: string;
+    zipCode: string;
+    city: string;
+  };
+  createdAt: string;
+  isSent: boolean;
+  __v: number;
+};
+
+
 
 const OrderContext = createContext<OrderContextType>({
   orderList: [],
-  createOrder: () => ({
-    itemList: [],
-    deliveryAddress: {
-      firstName: "",
-      lastName: "",
-      street: "",
-      city: "",
-      zipCode: "",
-    },
-  })
+  createOrder: ((customer:Customer) => {}) as any,
 });
 
 export function useOrder() {
@@ -44,18 +63,32 @@ export function OrderProvider({ children }: Props) {
     "orderList"
   );
 
-  const createOrder = (customer: Customer) => {
-    const itemList = cartList;
-    const totalPrice = itemList.reduce((total, item) => {
-      return total + item.quantity * item.price;
-    }, 0);
-
-    const deliveryAddress = customer;
-    const newOrder = { itemList, deliveryAddress,  totalPrice };
-    clearCart(cartList); // clear cart after creating order
-
-    return newOrder;
-  };
+  const createOrder = async (customer:Customer) => {
+    const itemList = cartList.map(item => ({ _id: item._id, quantity: item.quantity }));
+  
+    const deliveryAddress = {
+      firstName: customer.firstName,
+      lastName: customer.lastName,
+      street: customer.street,
+      zipCode: customer.zipCode,
+      city: customer.city
+    };
+  
+    const newOrder = { products: itemList, deliveryAddress };
+  
+    
+      const response = await axios.post('/api/orders', newOrder, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        
+          console.log('Order created:', response.data);
+          clearCart(cartList); // Clear cart after creating order
+      return response.data
+    
+    }
+  
 
 
   const getLastOrder = (): {
