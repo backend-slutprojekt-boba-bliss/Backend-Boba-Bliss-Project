@@ -9,16 +9,16 @@ import { OrderConfirmationCard } from "../components/OrderConfirmationCard";
 import { useOrder } from "../contexts/orderContext";
 
 export function ConfirmationPage() {
-  const { getLastOrder } = useOrder();
+  //const { getLastOrder } = useOrder();
 
-  const { lastOrder } = getLastOrder();
+  //const { lastOrder } = getLastOrder();
 
   return (
     <Container sx={checkoutContainer} maxW="container.md">
       <OrderConfirmationCard />
       <Flex sx={informationContainer}>
         <div>
-          {lastOrder ? (
+          {/*lastOrder ? (
             <div>
               <p>Name: {lastOrder?.deliveryAddress.name}</p>
               <p>Email: {lastOrder?.deliveryAddress.email}</p>
@@ -31,7 +31,7 @@ export function ConfirmationPage() {
             </div>
           ) : (
             <p>No stored values found.</p>
-          )}
+          )*/}
         </div>
       </Flex>
       <Flex>

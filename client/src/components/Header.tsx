@@ -1,6 +1,8 @@
 import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
+  Button,
+  Link as ChakraLink,
   Container,
   Drawer,
   DrawerCloseButton,
@@ -11,7 +13,6 @@ import {
   Icon,
   IconButton,
   Image,
-  Link as ChakraLink,
   Spacer,
   Text,
   useDisclosure
@@ -72,6 +73,26 @@ export function Header() {
 
     fetchSession();
   }, []);
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("/api/users/logout", {
+        method: "DELETE",
+      });
+  
+      // Handle the response as needed
+      if (response.ok) {
+        // Logout was successful
+        // Perform any additional actions after logout
+      } else {
+        // Handle error cases
+        // ...
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle error cases
+      // ...
+    }
+  };
 
   return (
     <Container as="header" sx={containerStyle}>
@@ -88,6 +109,7 @@ export function Header() {
               sx={logoText}
             />
           </ChakraLink>
+          <Button onClick={handleLogout}> logout </Button>
         </HStack>
         <Spacer />
 

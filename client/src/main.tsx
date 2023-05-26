@@ -55,7 +55,7 @@ const colors = {
 
 const fonts = {
 	body: "Comfortaa, sans-serif",
-	heading: "Inconsolata, sans-serif",
+	heading: "Comfortaa, sans-serif",
 };
 
 export function ScrollToTop() {
