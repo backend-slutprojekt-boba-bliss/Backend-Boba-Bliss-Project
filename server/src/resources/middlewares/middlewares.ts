@@ -11,7 +11,6 @@ export function isLoggedin(req: Request, res: Response, next: NextFunction) {
 
 
 export function isAdmin(req: Request, res: Response, next: NextFunction) {
-    console.log(req.session!.user)
     if (req.session?.user.isAdmin === false) {
       res.status(401).json("You must be admin to do this!");
       return;
