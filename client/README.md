@@ -1,4 +1,5 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-8d59dc4de5201274e310e4c54b9627a8934c3b88527886e3b421487c677d23eb.svg)](https://classroom.github.com/a/h5FXkH4A)
+
 # Boba webshop using React & Typescript by Mimmi, Caisa, Felicia och Leon
 
 ## Installation
@@ -48,22 +49,48 @@ Ni ska vid presentationstillfället hålla i en muntlig presentation för klasse
 - Reflektioner om projektets genomförande.
 - Designsystemet ni valde, hur det används, samt egna reflektioner (VG).
 
- ## Kravspecifikation på projektet:
+## Kravspecifikation på projektet:
 
- [x] Alla sidor skall vara responsiva. (G) - Vi uppfyllde kravet genom att låta de delar av applikationen som redan var responsiva vara, samt iterera över de komponenter vi skapade tills de uppfyllde kravspecen.
- [x] Arbetet ska implementeras med en React frontend och en Express backend. - Vi initialiserade projektet med React, och använde oss av en express app.
- [x] Express backenden ska ha validering på samtliga endpoints. (G) - Validering kan betyda många olika saker. Vi uppnådde kravet genom att lägga upp validering av lösenord och epost, samt middlewares där det behövdes för autentisering eller kontroll av information skickad till endpoints.
- [x] Skapa ett ER diagram och koddiagram, detta ska lämnas in vid idégodkännandet (G) 
- [x] Beskriv er företagsidé i en kort textuell presentation, detta ska lämnas in vid idégodkännandet (G)
- [x] All data som programmet utnyttjar ska vara sparat i en Mongo-databas (produkter, beställningar, konton mm) (G) - Vi uppnådde det genom att skapa controllers och routers, som i sin tur skriver till MongoDB-databasen vid behov. Vid skapande av users,
- produkter, eller ordrar samt vid uppdatering skriver vi till databasen. Vi hämtar också information direkt från databasen, så att vi inte arbetar med client-side variabler.
- [x] Man ska kunna logga in som administratör i systemet (G) - All inloggning sker via inloggningskomponenten. Både users och Admins kan logga in via interfacen där. Det är databasen och komponenterna samt en middleware som håller koll på om du är Admin
- och därmed autentiserar dig och/eller visar dig de relevanta delarna en administratör ska ha tillgång till på sidan.
- [x] Inga Lösenord får sparas i klartext i databasen (G) - Vi ville klara detta mål genom att hasha lösenordet direkt när det skrivs in i Client. Men Argon2 kraschar hela projektet om det ligger i Client. Så vi hashar lösenordet så fort det skickas till servern, och sparar den hashade versionen på databasen. Vi kontrollerar lösenordet genom en Verify.
- [] En besökare ska kunna beställa produkter från sidan, detta ska uppdatera lagersaldot i databasen (G)
- [] Administratörer ska kunna uppdatera antalet produkter i lager från admin delen av sidan (G)
- [] Administratörer ska kunna se en lista på alla gjorda beställningar (G)
- [x] Sidans produkter ska delas upp i kategorier, en produkt ska tillhöra minst en kategori, men kan tillhöra flera [] Från hemsidan ska man kunna se en lista över alla produkter, och man ska kunna lista bara dom produkter som tillhör en kategori (G)
- [x] Besökare ska kunna lägga produkterna i en kundkorg, som är sparad i local-storage på klienten (G) - Repot hade redan denna logiken i början av projektet. 
- 
- 
+[x] Alla sidor skall vara responsiva. (G)
+
+- Vi uppfyllde kravet genom att låta de delar av applikationen som redan var responsiva vara, samt iterera över de komponenter vi skapade tills de uppfyllde kravspecen.
+
+[x] Arbetet ska implementeras med en React frontend och en Express backend.
+
+- Vi initialiserade projektet med React, och använde oss av en express app.
+
+[x] Express backenden ska ha validering på samtliga endpoints. (G)
+
+- Validering kan betyda många olika saker. Vi uppnådde kravet genom att lägga upp validering av lösenord och epost, samt middlewares där det behövdes för autentisering eller kontroll av information skickad till endpoints.
+
+[x] Skapa ett ER diagram och koddiagram, detta ska lämnas in vid idégodkännandet (G)
+[x] Beskriv er företagsidé i en kort textuell presentation, detta ska lämnas in vid idégodkännandet (G)
+[x] All data som programmet utnyttjar ska vara sparat i en Mongo-databas (produkter, beställningar, konton mm) (G)
+
+- Vi uppnådde det genom att skapa controllers och routers, som i sin tur skriver till MongoDB-databasen vid behov. Vid skapande av users,
+  produkter, eller ordrar samt vid uppdatering skriver vi till databasen. Vi hämtar också information direkt från databasen, så att vi inte arbetar med client-side variabler.
+
+[x] Man ska kunna logga in som administratör i systemet (G)
+
+- All inloggning sker via inloggningskomponenten. Både users och Admins kan logga in via interfacen där. Det är databasen och komponenterna samt en middleware som håller koll på om du är Admin
+  och därmed autentiserar dig och/eller visar dig de relevanta delarna en administratör ska ha tillgång till på sidan.
+
+[x] Inga Lösenord får sparas i klartext i databasen (G)
+
+- Vi ville klara detta mål genom att hasha lösenordet direkt när det skrivs in i Client. Men Argon2 kraschar hela projektet om det ligger i Client. Så vi hashar lösenordet så fort det skickas till servern, och sparar den hashade versionen på databasen. Vi kontrollerar lösenordet genom en Verify.
+
+[] En besökare ska kunna beställa produkter från sidan, detta ska uppdatera lagersaldot i databasen (G)
+[] Administratörer ska kunna uppdatera antalet produkter i lager från admin delen av sidan (G)
+[] Administratörer ska kunna se en lista på alla gjorda beställningar (G)
+[x] Sidans produkter ska delas upp i kategorier, en produkt ska tillhöra minst en kategori, men kan tillhöra flera (G)
+
+- Kategorierna “Milk”, “Fruit”, “Vegan” och “Premium” finns inlagda på databasen. Vid skapande av ny produkt vid AddProductForm kan man via checkboxes välja att fylla i en eller flera kategorier. Produktens kategorier sparas i en [ ]. Varje kategori har ett id och ett namn.
+
+[x] Från hemsidan ska man kunna se en lista över alla produkter, och man ska kunna lista bara dom produkter som tillhör en kategori (G)
+
+- Hemsidans produkter är uppdelade i fyra olika kategorier, som mappas ut från databasen. Under varje kategori visas de produkter som innehar den valda kategorin. Under “All Teas” visas alla produkter i databasen, oavsett kategori.
+  I takt med att man klickar på olika kategorier anropas den önskade kategorin från databasen: `/api/products/category/${selectedCategory}`
+
+[x] Besökare ska kunna lägga produkterna i en kundkorg, som är sparad i local-storage på klienten (G)
+
+- Repot hade redan denna logiken i början av projektet.
