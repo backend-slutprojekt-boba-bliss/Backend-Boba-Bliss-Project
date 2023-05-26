@@ -105,7 +105,7 @@ export function Header() {
                 />
               </ChakraLink>
               {isAdmin && (
-                <ChakraLink data-cy="admin-link" as={RouterLink} to="/admin">
+                <ChakraLink data-cy="admin-link" as={RouterLink} to="/adminPage">
                 <Icon
                   verticalAlign="sub"
                   width="1.8em"
