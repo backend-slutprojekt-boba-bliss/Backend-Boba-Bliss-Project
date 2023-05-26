@@ -26,6 +26,7 @@ import { AuthContext, AuthContextProvider } from "../contexts/AuthContext.";
 import LoginButton from "./LoginButton";
 
 
+
 export function Header() {
   const { isAdmin } = useContext(AuthContext);
   const { totalItems, cartList } = useCart();

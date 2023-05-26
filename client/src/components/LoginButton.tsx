@@ -1,33 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext.";
 
 const LoginButton = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const authContext = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const fetchLoggedInStatus = () => {
-    fetch("/api/isLoggedin")
-      .then((response) => response.json())
-      .then((data) => {
-        setIsLoggedIn(data.isLoggedIn);
-      })
-      .catch((error) => {
-        console.error("Failed to fetch logged-in status:", error);
-      });
-  };
-  
+  const { isLoggedIn, fetchLoggedInStatus } = authContext;
 
-  useEffect(() => {
-    fetchLoggedInStatus();
-    const interval = setInterval(fetchLoggedInStatus, 10000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleClick = () => {
+  const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
     if (isLoggedIn) {
-      fetch("/api/logout")
-        .then(() => {
-          setIsLoggedIn(false);
+      fetch("/api/users/logout", {
+        method: "DELETE",
+      })
+        .then((response) => {
+          if (response.ok) {
+            fetchLoggedInStatus();
+          }
         })
         .catch((error) => {
           console.error("Logout failed:", error);

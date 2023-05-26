@@ -108,8 +108,11 @@ export async function logoutUser(req: Request, res: Response) {
 // Check if user is logged in
 export function isLoggedin(req: Request, res: Response) {
   if (!req.session || !req.session.user) {
-      res.status(401).json({ error: "You must log in to do this!" });
-      return;
-    }
-  else(res.status(201).json({message: "The user is logged in"}))
+    res.status(401).json({ error: "You must log in to do this!" });
+    return;
+  }
+  
+  // User is logged in, send isLoggedIn as true
+  res.status(200).json({ isLoggedIn: true });
 }
+
