@@ -1,40 +1,31 @@
 import { createContext, useContext } from "react";
-import { useCart } from "./CartContext";
 import { Customer } from "../components/CheckoutForm";
 import { CartItem } from "../data";
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
+import { useCart } from "./CartContext";
 
 type Order = {
   itemList: CartItem[];
-  contactInformation: Customer;
-  orderId: string;
-  totalPrice: number;
+  deliveryAddress: Customer;
 };
 
 type OrderContextType = {
   orderList: Order[];
-  addOrder: (order: Order) => void;
   createOrder: (customer: Customer) => Order;
-  getLastOrder: () => { lastOrder: Order | undefined; ordersCopy: Order[] };
 };
 
 const OrderContext = createContext<OrderContextType>({
   orderList: [],
   createOrder: () => ({
     itemList: [],
-    contactInformation: {
-      name: "",
-      email: "",
-      phone: "",
+    deliveryAddress: {
+      firstName: "",
+      lastName: "",
       street: "",
-      zipCode: "",
       city: "",
+      zipCode: "",
     },
-    orderId: "",
-    totalPrice: 0,
-  }),
-  addOrder: () => {},
-  getLastOrder: () => ({ lastOrder: undefined, ordersCopy: [] }),
+  })
 });
 
 export function useOrder() {
@@ -59,21 +50,13 @@ export function OrderProvider({ children }: Props) {
       return total + item.quantity * item.price;
     }, 0);
 
-    const orderId = "123"
-    const contactInformation = customer;
-    const newOrder = { itemList, contactInformation, orderId, totalPrice };
-    addOrder(newOrder); // add new order to orderList
+    const deliveryAddress = customer;
+    const newOrder = { itemList, deliveryAddress,  totalPrice };
     clearCart(cartList); // clear cart after creating order
 
     return newOrder;
   };
 
-  const addOrder = (order: Order) => {
-    setOrderList((prevOrderList) => {
-      const updatedOrderList = [...prevOrderList, order];
-      return updatedOrderList;
-    });
-  };
 
   const getLastOrder = (): {
     lastOrder: Order | undefined;
@@ -86,7 +69,7 @@ export function OrderProvider({ children }: Props) {
 
   return (
     <OrderContext.Provider
-      value={{ orderList, createOrder, addOrder, getLastOrder }}
+      value={{ orderList, createOrder }}
     >
       {children}
     </OrderContext.Provider>

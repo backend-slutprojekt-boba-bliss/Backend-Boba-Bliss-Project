@@ -19,20 +19,20 @@ import { requiredText } from "./AddProductForm";
 const phoneRegExp = /^[0-9]{10}$/;
 
 const customerSchema = Yup.object({
-  name: Yup.string()
+  firstName: Yup.string()
     .required("First name required")
     .min(2, "First name is too short"),
-  email: Yup.string().email("invalid email").required("email required"),
-  phone: Yup.string()
-    .required("Phone number is required")
-    .matches(phoneRegExp, "Phone number is not valid"),
+  lastName: Yup.string()
+  .required("Last name required")
+  .min(2, "Last name is too short"),
   street: Yup.string()
     .required("Street required")
     .min(2, "Street is too short"),
+  city: Yup.string().required("City required").min(2, "City is too short"),
   zipCode: Yup.string()
     .required("Zip code is required")
     .matches(/^[0-9]{5}(?:-[0-9]{4})?$/, "Invalid zip code"),
-  city: Yup.string().required("City required").min(2, "City is too short"),
+  
 });
 
 export type Customer = Yup.InferType<typeof customerSchema>;
@@ -49,12 +49,12 @@ export function CheckoutForm() {
     try {
       await customerSchema.validate(values);
       const customer = {
-        name: values.name,
-        email: values.email,
-        phone: values.phone,
+        firstName: values.firstName,
+        lastName: values.lastName,
         street: values.street,
         zipCode: values.zipCode,
         city: values.city,
+       
       };
       const order = createOrder(customer);
       actions.resetForm();
@@ -67,12 +67,12 @@ export function CheckoutForm() {
   return (
     <Formik
       initialValues={{
-        name: "",
-        email: "",
-        phone: "",
+        firstName: "",
+        lastName: "",
         street: "",
         zipCode: "",
         city: "",
+
       }}
       validationSchema={customerSchema}
       onSubmit={handleSubmit}
@@ -89,71 +89,45 @@ export function CheckoutForm() {
               <Box sx={formBoxStyle}>
                 <Stack spacing={4}>
                   <FormControl>
-                    <FormLabel my=".5rem">Name</FormLabel>
+                    <FormLabel my=".5rem">firstName</FormLabel>
                     <Input
                       border="1px solid black"
-                      data-cy="customer-name"
-                      id="name"
-                      name="name"
+                      data-cy="customer-firstName"
+                      id="firstName"
+                      name="firstName"
                       type="text"
-                      placeholder="Name"
-                      autoComplete="name"
+                      placeholder="firstName"
+                      autoComplete="firstName"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      value={formik.values.name}
+                      value={formik.values.firstName}
                     ></Input>
-                    {formik.touched.name && formik.errors.name ? (
-                      <Text data-cy="customer-name-error" sx={requiredText}>
-                        {formik.errors.name}
+                    {formik.touched.firstName && formik.errors.firstName ? (
+                      <Text data-cy="customer-firstName-error" sx={requiredText}>
+                        {formik.errors.firstName}
                       </Text>
                     ) : null}
                   </FormControl>
-                  <FormControl
-                    isInvalid={!!(formik.touched.email && formik.errors.email)}
-                  >
-                    <FormLabel my=".5rem">Email</FormLabel>
+                  <FormControl>
+                    <FormLabel my=".5rem">lastName</FormLabel>
                     <Input
                       border="1px solid black"
-                      data-cy="customer-email"
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="Email"
-                      autoComplete="email"
+                      data-cy="customer-lastName"
+                      id="lastName"
+                      name="lastName"
+                      type="text"
+                      placeholder="lastName"
+                      autoComplete="lastName"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      value={formik.values.email}
+                      value={formik.values.lastName}
                     ></Input>
-                    {formik.touched.email && formik.errors.email ? (
-                      <Text data-cy="customer-email-error" sx={requiredText}>
-                        {formik.errors.email}
+                    {formik.touched.lastName && formik.errors.lastName ? (
+                      <Text data-cy="customer-lastName-error" sx={requiredText}>
+                        {formik.errors.lastName}
                       </Text>
                     ) : null}
                   </FormControl>
-
-                  <FormControl
-                    isInvalid={!!(formik.touched.phone && formik.errors.phone)}
-                  >
-                    <FormLabel my=".5rem">Phone nr.</FormLabel>
-                    <Input
-                      border="1px solid black"
-                      data-cy="customer-phone"
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      placeholder="Phone nr."
-                      autoComplete="tel"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.phone}
-                    ></Input>
-                    {formik.touched.phone && formik.errors.phone ? (
-                      <Text data-cy="customer-phone-error" sx={requiredText}>
-                        {formik.errors.phone}
-                      </Text>
-                    ) : null}
-                  </FormControl>
-
                   <FormControl
                     isInvalid={
                       !!(formik.touched.street && formik.errors.street)

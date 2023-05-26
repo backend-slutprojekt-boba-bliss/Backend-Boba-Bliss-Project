@@ -1,12 +1,12 @@
 import {
-  Button,
-  Link as ChakraLink,
-  Container,
-  Flex,
-  SystemStyleObject
+    Button,
+    Link as ChakraLink,
+    Container,
+    Flex,
+    SystemStyleObject
 } from "@chakra-ui/react";
-import { useOrder } from "../contexts/orderContext";
 import { OrderConfirmationCard } from "../components/OrderConfirmationCard";
+import { useOrder } from "../contexts/orderContext";
 
 export function ConfirmationPage() {
   const { getLastOrder } = useOrder();
@@ -20,13 +20,13 @@ export function ConfirmationPage() {
         <div>
           {lastOrder ? (
             <div>
-              <p>Name: {lastOrder?.contactInformation.name}</p>
-              <p>Email: {lastOrder?.contactInformation.email}</p>
-              <p>Phone: {lastOrder?.contactInformation.phone}</p>
+              <p>Name: {lastOrder?.deliveryAddress.name}</p>
+              <p>Email: {lastOrder?.deliveryAddress.email}</p>
+              <p>Phone: {lastOrder?.deliveryAddress.phone}</p>
               <p>
-                Address: {lastOrder?.contactInformation.street},{" "}
-                {lastOrder?.contactInformation.zipCode},{" "}
-                {lastOrder?.contactInformation.city}
+                Address: {lastOrder?.deliveryAddress.street},{" "}
+                {lastOrder?.deliveryAddress.zipCode},{" "}
+                {lastOrder?.deliveryAddress.city}
               </p>
             </div>
           ) : (
