@@ -4,7 +4,6 @@ import { OrderModel } from "./orderModel";
 import { createOrderSchema } from "./orderYupValidationScema";
 
 export async function getAllOrders(req: Request, res: Response) {
-    console.log("get all Orders");
     try {
         const orders = await OrderModel.find({});
         res.status(200).json(orders);
@@ -14,7 +13,6 @@ export async function getAllOrders(req: Request, res: Response) {
 }
 
 export async function getOrderById(req: Request, res: Response) {
-  console.log("get all Order by ID");
   try {
     const orderId = req.params.id
     const order = await OrderModel.findById(orderId); 
@@ -28,7 +26,6 @@ export async function getOrderById(req: Request, res: Response) {
 }
 
 export async function getLoggedInUserOrders(req: Request, res: Response) {
-  console.log("Get all orders by logged-in user");
   const userID = req.session!.user._id;
 
   try {
@@ -108,7 +105,6 @@ export async function createOrder(req: Request, res: Response) {
 }
 
 export async function toggleIsSent(req: Request, res: Response) {
-  console.log("updating isSent");
   const order = await OrderModel.findById(req.params.id); 
   try {
     if(!order) {

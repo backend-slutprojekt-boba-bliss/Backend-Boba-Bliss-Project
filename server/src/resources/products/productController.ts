@@ -6,7 +6,6 @@ import { ProductSchema, editProductSchema } from "./productValidation";
 
 // GET PRODUCTS
 export async function getAllProducts(req: Request, res: Response) {
-  console.log("get all products");
   try {
     const products = await ProductModel.find({});
     res.status(200).json(products);
@@ -17,7 +16,6 @@ export async function getAllProducts(req: Request, res: Response) {
 
 // CREATE PRODUCT
 export async function createProduct(req: Request, res: Response) {
-  console.log("Product data received:", req.body);
 
   try {
     await ProductSchema.validate(req.body);
@@ -32,13 +30,11 @@ export async function createProduct(req: Request, res: Response) {
   const product = new ProductModel(productData);
 
   await product.save();
-  console.log("Product saved:", product);
   res.status(201).json(product);
 }
 
 // EDIT PRODUCT
 export async function editProduct(req: Request, res: Response) {
-  console.log("updating product");
 
   try {
     await editProductSchema.validate(req.body);
@@ -81,7 +77,6 @@ export async function editProduct(req: Request, res: Response) {
 
 // DELETE PRODUCT
 export async function deleteProduct(req: Request, res: Response) {
-  console.log("deleting product");
 
   try {
     const product = await ProductModel.findById(req.params.id);

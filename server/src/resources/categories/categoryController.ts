@@ -7,9 +7,7 @@ import { CategorySchema } from "./categoryValidation";
 // GET CATEGORY
 export async function getCategory(req: Request, res: Response) {
   const category = req.params.category;
-  console.log(req.params.category);
   const products = await ProductModel.find({ categories: category });
-  console.log(products);
   res.json(products);
 }
 
