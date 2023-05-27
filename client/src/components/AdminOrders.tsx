@@ -13,17 +13,31 @@ import {
 	UnorderedList,
 	useBreakpointValue,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { useState } from "react";
 import { MdCheckCircle } from "react-icons/md";
-import { useLocation } from "react-router-dom";
-import { useOrder } from "../contexts/orderContext";
-export function AdminOrders() {
-	const location = useLocation();
-	const { orderList } = useOrder();
+import { Product } from "../data";
 
+export interface OrderData {
+	_id: string;
+	products: Product[];
+	user: string;
+	//deliveryAddress: Address; // Antagande att du har definierat Address-gränssnittet
+	createdAt: Date;
+	isSent: boolean;
+}
+
+export function AdminOrders() {
 	const [showOrders, setShowOrders] = useState(false);
+	const [orderList, setOrderList] = useState<OrderData[]>([]);
 
 	const handleButtonOnClick = () => {
+		axios
+			.get("/api/orders")
+			.then((res) => {
+				setOrderList(res.data);
+			})
+			.catch((error) => console.error(error));
 		setShowOrders(true);
 	};
 
@@ -51,13 +65,14 @@ export function AdminOrders() {
 						<UnorderedList listStyleType="none" marginInlineStart="0">
 							{orderList.map((order) => (
 								<ListItem
-									key={order.orderId}
+									key={order._id}
 									style={{ display: "flex", alignItems: "center" }}
 								>
-									<ListIcon as={MdCheckCircle} color="green.500" />
-									<Text>
-										Order ID: {order.orderId} Total price: {order.totalPrice}{" "}
+									{" "}
+									<Text fontSize="12px">
+										Order: {order._id} User: {order.user}
 									</Text>
+									<ListIcon as={MdCheckCircle} color="green.500" />
 								</ListItem>
 							))}
 						</UnorderedList>
