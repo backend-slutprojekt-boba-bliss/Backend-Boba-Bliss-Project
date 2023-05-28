@@ -21,6 +21,8 @@ import { HomePage } from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import { ProductPage } from "./pages/ProductPage";
 import RegisterPage from "./pages/RegisterPage";
+import { AuthContextProvider } from "../src/contexts/AuthContext.";
+
 
 //extent the theme
 
@@ -92,14 +94,16 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 	<React.StrictMode>
-		<CartProvider>
-			<OrderProvider>
-				<ProductProvider>
-					<ChakraProvider theme={theme}>
-						<RouterProvider router={router} />
-					</ChakraProvider>
-				</ProductProvider>
-			</OrderProvider>
-		</CartProvider>
-	</React.StrictMode>
+		<AuthContextProvider> 
+			<CartProvider>
+				<OrderProvider>
+					<ProductProvider>
+						<ChakraProvider theme={theme}>
+							<RouterProvider router={router} />
+						</ChakraProvider>
+					</ProductProvider>
+				</OrderProvider>
+			</CartProvider>
+		</AuthContextProvider>
+	</React.StrictMode>   
 );

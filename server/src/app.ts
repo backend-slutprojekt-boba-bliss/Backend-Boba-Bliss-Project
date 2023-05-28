@@ -1,4 +1,4 @@
-import cors from "cors";
+// import cors from "cors";
 import cookieSession from "cookie-session";
 import express, { NextFunction, Request, Response } from "express";
 import { categoryRouter } from "./resources/categories/categoryRouter";
@@ -21,7 +21,7 @@ app.use(
   })
 );
 
-app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+// app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 
 app.use(express.json());
 

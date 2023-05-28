@@ -1,5 +1,5 @@
 import express from 'express';
-import { getSession, loginUser, logoutUser, registerUser } from "./userController";
+import { getSession, isLoggedin, loginUser, logoutUser, registerUser } from "./userController";
 
 
 export const userRouter = express.Router();
@@ -16,5 +16,8 @@ userRouter.post('/login', loginUser);
 
 // DELETE api/users/logout
 userRouter.delete('/logout', logoutUser);
+
+
+userRouter.get('/isLoggedin', isLoggedin);
 
 

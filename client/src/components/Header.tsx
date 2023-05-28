@@ -17,19 +17,23 @@ import {
   Text,
   useDisclosure
 } from "@chakra-ui/react";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { AiFillHome } from "react-icons/ai";
 import { IoMdCart } from "react-icons/io";
 import { RiAdminFill } from "react-icons/ri";
 import { Link as RouterLink } from "react-router-dom";
 import { useCart } from "../contexts/CartContext";
+import { AuthContext, AuthContextProvider } from "../contexts/AuthContext.";
+import LoginButton from "./LoginButton";
+
+
 
 export function Header() {
+  const { isAdmin } = useContext(AuthContext);
   const { totalItems, cartList } = useCart();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isMobileView, setIsMobileView] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false); //isAdmin state
 
   const handleResize = () => {
     if (window.innerWidth <= 768) {
@@ -58,21 +62,7 @@ export function Header() {
     onClose();
   };
 
-  useEffect(() => {
-    const fetchSession = async () => {
-      try {
-        const response = await fetch("/api/users/session");
-        const data = await response.json();
-        if (data.user && data.user.isAdmin) {
-          setIsAdmin(true);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
 
-    fetchSession();
-  }, []);
   const handleLogout = async () => {
     try {
       const response = await fetch("/api/users/logout", {
@@ -117,6 +107,7 @@ export function Header() {
         {!isMobileView ? (
           <Box>
             <HStack spacing="1rem" whiteSpace="nowrap">
+              <LoginButton></LoginButton>
               <ChakraLink as={RouterLink} to="/">
                 <Icon
                   verticalAlign="sub"
