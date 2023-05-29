@@ -113,4 +113,10 @@ DELETE http://localhost:3000/api/users/logout
 ###
 GET http://localhost:3000/api/orders/user
 
+###
+GET http://localhost:3000/api/users/session
+
+###
+GET http://localhost:3000/api/loggedinornot
+
 

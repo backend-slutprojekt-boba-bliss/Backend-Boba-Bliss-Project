@@ -1,5 +1,5 @@
 import express from 'express';
-import { getSession, isLoggedin, loginUser, logoutUser, registerUser } from "./userController";
+import { getSession, loginUser, logoutUser, registerUser } from "./userController";
 
 
 export const userRouter = express.Router();
@@ -18,6 +18,15 @@ userRouter.post('/login', loginUser);
 userRouter.delete('/logout', logoutUser);
 
 
-userRouter.get('/isLoggedin', isLoggedin);
+// userRouter.get('/isLoggedin', isLoggedin);
+
+// CHECK IF LOGGED IN ----------------------------------------------------------
+// export function checkIfLoggedIn(req: Request, res: Response) {
+//   const email = req.session?.email;
+//   const isAdmin = req.session?.isAdmin;
+//   const publicSession = { email, isAdmin };
+
+//   res.status(200).json(publicSession);
+// }
 
 

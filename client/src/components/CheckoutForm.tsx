@@ -1,12 +1,13 @@
 import { Button } from "@chakra-ui/button";
 import { Heading } from "@chakra-ui/layout";
 import { Formik, FormikHelpers } from "formik";
-import * as Yup from "yup";
 import { Link as RouterLink } from "react-router-dom";
+import * as Yup from "yup";
 
 
 import {
   Box,
+  Link as ChakraLink,
   Flex,
   FormControl,
   FormLabel,
@@ -14,10 +15,10 @@ import {
   Input,
   Stack,
   Text,
-  Link as ChakraLink,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext.";
 import { useOrder } from "../contexts/orderContext";
 import { requiredText } from "./AddProductForm";
 
@@ -47,23 +48,8 @@ export function CheckoutForm() {
 
   const { createOrder } = useOrder();
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false); //isAdmin state
+  const {isLoggedIn}= useContext(AuthContext); //isAdmin state
 
-  useEffect(() => {
-    const fetchSession = async () => {
-      try {
-        const response = await fetch("/api/users/session");
-        const data = await response.json();
-        if (data.user) {
-          setIsLoggedIn(true);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchSession();
-  }, []);
 
   const handleSubmit = async (
     values: Customer,

@@ -1,9 +1,12 @@
-import React, { createContext, useState, useEffect, ReactNode } from "react";
+import axios from "axios";
+import { ReactNode, createContext, useEffect, useState } from "react";
+
 
 interface AuthContextType {
   isAdmin: boolean;
   isLoggedIn: boolean;
-  fetchLoggedInStatus: () => void;
+  loginUser: (email:string, password:string)=> void;
+  logOutUser: () => void
 }
 
 interface AuthContextProviderProps {
@@ -13,7 +16,9 @@ interface AuthContextProviderProps {
 const deafultContextValue: AuthContextType = {
   isAdmin: false,
   isLoggedIn: false,
-  fetchLoggedInStatus: () => {}
+  loginUser: (email:string, password:string)=> {},
+  logOutUser: ()=> {},
+  
 }
 
 export const AuthContext = createContext<AuthContextType>(deafultContextValue);
@@ -22,37 +27,76 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    const fetchSession = async () => {
-      try {
-        const response = await fetch("/api/users/session");
-        const data = await response.json();
-        setIsAdmin(data.user && data.user.isAdmin);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchSession();
-    fetchLoggedInStatus();
+ useEffect(() => {
+  console.log(isLoggedIn)
+    axios
+      .get("/api/users/session", )
+      .then((res) => {
+        console.log(isLoggedIn)
+        if (res.status === 200)  {
+          console.log(isLoggedIn)
+          setIsLoggedIn(true);
+          return
+        }else {
+          console.log(isLoggedIn)
+          setIsLoggedIn(false);
+        }
+      })
+      .catch((error) => console.error(error));
   }, []);
 
-  const fetchLoggedInStatus = () => {
-    // Fetch logged-in status and update isLoggedIn
-    fetch("/api/users/isLoggedin")
-      .then((response) => response.json())
-      .then((data) => {
-        setIsLoggedIn(data.isLoggedIn);
+  const loginUser = (email: string, password: string) => {
+    axios
+   
+      .post(
+        "/api/users/login",
+        { email, password },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+      .then((response) => {
+        if (response.status === 201) {
+          // Successful login logic
+          setIsLoggedIn(true);
+          console.log("Login successful");
+          //navigate("/");
+        } else {
+          // Handle login error
+          console.log("Login failed");
+          throw new Error("Wrong password or email");
+        }
       })
       .catch((error) => {
-        console.error("Failed to fetch logged-in status:", error);
+        console.log("An error occurred:", error);
+        throw error; // Rethrow the error to be caught by the catch block in handleFormSubmit
       });
   };
-
+  const logOutUser = () => {
+    if (isLoggedIn) {
+      fetch("/api/users/logout", {
+        method: "DELETE",
+        credentials: "include",
+      })
+        .then((response) => {
+          if (response.ok) {
+            setIsLoggedIn(false); // Update isLoggedIn state in the context
+            console.log("Logout successful");
+          } else {
+            console.log("Logout failed");
+          }
+        })
+        .catch((error) => {
+          console.error("Logout failed:", error);
+        });
+    }
+  };
   const contextValue: AuthContextType = {
     isAdmin,
     isLoggedIn,
-    fetchLoggedInStatus,
+    loginUser,
+    logOutUser,
+   
   };
 
   return (
@@ -61,3 +105,5 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     </AuthContext.Provider>
   );
 };
+
+

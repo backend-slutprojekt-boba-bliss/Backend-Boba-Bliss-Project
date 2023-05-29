@@ -99,7 +99,6 @@ export function Header() {
               sx={logoText}
             />
           </ChakraLink>
-          <Button onClick={handleLogout}> logout </Button>
         </HStack>
         <Spacer />
 

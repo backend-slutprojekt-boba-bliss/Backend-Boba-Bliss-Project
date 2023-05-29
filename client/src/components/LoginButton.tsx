@@ -6,7 +6,7 @@ const LoginButton = () => {
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const { isLoggedIn, fetchLoggedInStatus } = authContext;
+  const { isLoggedIn,logOutUser} = authContext;
 
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
     if (isLoggedIn) {
@@ -15,7 +15,7 @@ const LoginButton = () => {
       })
         .then((response) => {
           if (response.ok) {
-            fetchLoggedInStatus();
+            logOutUser()
           }
         })
         .catch((error) => {
