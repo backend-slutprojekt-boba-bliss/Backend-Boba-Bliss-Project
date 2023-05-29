@@ -111,7 +111,9 @@ function RegisterPage() {
         <FormControl isInvalid={!!passwordError}>
           <FormLabel>Password</FormLabel>
           <Input id="password" name="password" type="password" />
-          <FormErrorMessage>{passwordError || " "}</FormErrorMessage>
+          <FormErrorMessage width="17rem">
+            {passwordError || " "}
+          </FormErrorMessage>
         </FormControl>
 
         <Box display={"Flex"} flexDirection={"column"}>
