@@ -15,6 +15,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useOrder } from "../contexts/orderContext";
 import { requiredText } from "./AddProductForm";
+import { AuthContext } from "../contexts/AuthContext.";
+import { useContext } from "react";
 
 const phoneRegExp = /^[0-9]{10}$/;
 
@@ -39,7 +41,7 @@ export type Customer = Yup.InferType<typeof customerSchema>;
 
 export function CheckoutForm() {
   const navigate = useNavigate();
-
+  const authContext = useContext(AuthContext);
   const { createOrder } = useOrder();
 
   const handleSubmit = async (
@@ -47,6 +49,12 @@ export function CheckoutForm() {
     actions: FormikHelpers<Customer>
   ) => {
     try {
+      
+      if (!authContext.isLoggedIn) {
+        console.log("User is not logged in. Stopping the function.");
+        return;
+      }
+  
       await customerSchema.validate(values);
       const customer = {
         name: values.name,

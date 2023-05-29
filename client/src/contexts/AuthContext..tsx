@@ -22,21 +22,6 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    const fetchSession = async () => {
-      try {
-        const response = await fetch("/api/users/session");
-        const data = await response.json();
-        setIsAdmin(data.user && data.user.isAdmin);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchSession();
-    fetchLoggedInStatus();
-  }, []);
-
   const fetchLoggedInStatus = () => {
     // Fetch logged-in status and update isLoggedIn
     fetch("/api/users/isLoggedin")
@@ -48,6 +33,25 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         console.error("Failed to fetch logged-in status:", error);
       });
   };
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      try {
+        const response = await fetch("/api/users/session");
+        const data = await response.json();
+        setIsAdmin(data.user && data.user.isAdmin);
+      } catch (error) {
+       ;
+      }
+    };
+    
+    fetchSession();
+    fetchLoggedInStatus();
+  }, []);
+
+  
+
+
 
   const contextValue: AuthContextType = {
     isAdmin,
