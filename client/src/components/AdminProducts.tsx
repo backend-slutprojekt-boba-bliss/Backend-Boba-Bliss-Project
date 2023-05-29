@@ -17,7 +17,10 @@ export function AdminProducts() {
   const handleButtonOnClick = () => {
     setShowOrders(true);
   };
-
+  
+  if (showOrders) {
+    return <AdminOrders />;
+  }
 
   return (
     <Container maxWidth="container.xl" my=".3rem">
