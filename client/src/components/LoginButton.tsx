@@ -16,6 +16,7 @@ const LoginButton = () => {
         .then((response) => {
           if (response.ok) {
             logOutUser()
+            navigate("/")
           }
         })
         .catch((error) => {

@@ -90,7 +90,10 @@ export const loginUser = async (
       req.session!.user = user;
       const userData = user.toObject() as any;
       delete userData.password;
-      res.status(201).send({ message: "User login successfully" });
+      res.status(201).send({
+        message: "User logged in",
+        userData: userData,
+      });
     } else {
       res.status(401).json({ error: "Wrong password"});
     }

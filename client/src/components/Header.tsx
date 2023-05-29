@@ -62,28 +62,6 @@ export function Header() {
     onClose();
   };
 
-
-  const handleLogout = async () => {
-    try {
-      const response = await fetch("/api/users/logout", {
-        method: "DELETE",
-      });
-  
-      // Handle the response as needed
-      if (response.ok) {
-        // Logout was successful
-        // Perform any additional actions after logout
-      } else {
-        // Handle error cases
-        // ...
-      }
-    } catch (error) {
-      console.error(error);
-      // Handle error cases
-      // ...
-    }
-  };
-
   return (
     <Container as="header" sx={containerStyle}>
       <Flex as="nav" sx={flexStyle}>

@@ -8,12 +8,14 @@ import {
 	createRoutesFromElements,
 	useLocation,
 } from "react-router-dom";
+import { AuthContextProvider } from "../src/contexts/AuthContext.";
 import App from "./App";
+import { NotFound } from "./components/NotFound";
+import AdminRouteGuard from "./components/routeGuard";
 import { CartProvider } from "./contexts/CartContext";
 import { ProductProvider } from "./contexts/ProductContext";
-import { NotFound } from "./components/NotFound";
-import "./main.css";
 import { OrderProvider } from "./contexts/orderContext";
+import "./main.css";
 import { AdminPage } from "./pages/AdminPage";
 import { CheckoutPage } from "./pages/CheckoutPage";
 import { ConfirmationPage } from "./pages/ConfirmationPage";
@@ -21,7 +23,6 @@ import { HomePage } from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import { ProductPage } from "./pages/ProductPage";
 import RegisterPage from "./pages/RegisterPage";
-import { AuthContextProvider } from "../src/contexts/AuthContext.";
 
 
 //extent the theme
@@ -74,23 +75,23 @@ const theme = extendTheme({ colors, fonts });
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
-		<Route path="/" element={<App />}>
-			{/* Outlet start */}
-			<Route index element={<HomePage />}></Route>
-			<Route path="product/:id" element={<ProductPage />} />
-			<Route path="checkout" element={<CheckoutPage />} />
-			<Route path="confirmation" element={<ConfirmationPage />} />
-			<Route path="registerPage" element={<RegisterPage />}></Route>
-			<Route path="loginPage" element={<LoginPage />}></Route>
-			<Route path="admin" element={<AdminPage />}>
-				<Route path="product/:id" element={<AdminPage />} />
-				<Route path="product/new" element={<AdminPage />} />
-			</Route>
-			<Route path="*" element={<NotFound />} />
-			{/* Outlet end */}
-		</Route>
+	  <Route path="/" element={<App />}>
+		{/* Outlet start */}
+		<Route index element={<HomePage />} />
+		<Route path="product/:id" element={<ProductPage />} />
+		<Route path="checkout" element={<CheckoutPage />} />
+		<Route path="confirmation" element={<ConfirmationPage />} />
+		<Route path="registerPage" element={<RegisterPage />} />
+		<Route path="loginPage" element={<LoginPage />} />
+		<Route path="/admin" element={AdminRouteGuard(<AdminPage />)}>
+  <Route path="product/:id" element={AdminRouteGuard(<AdminPage />)} />
+  <Route path="product/new" element={AdminRouteGuard(<AdminPage />)} />
+</Route>
+		<Route path="*" element={<NotFound />} />
+		{/* Outlet end */}
+	  </Route>
 	)
-);
+  );
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 	<React.StrictMode>

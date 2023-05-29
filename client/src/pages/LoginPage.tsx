@@ -38,6 +38,7 @@ function LoginPage() {
       console.log(email, password)
       await loginUser(email, password);
       setLoginError(null); // Reset the login error if login succeeds
+      navigate("/")
     } catch (error) {
       setLoginError("Wrong password or Email");
     }
