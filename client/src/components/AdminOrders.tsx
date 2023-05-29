@@ -13,17 +13,32 @@ import {
 	UnorderedList,
 	useBreakpointValue,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { useState } from "react";
 import { MdCheckCircle } from "react-icons/md";
-import { useLocation } from "react-router-dom";
-import { useOrder } from "../contexts/orderContext";
-export function AdminOrders() {
-	const location = useLocation();
-	const { orderList } = useOrder();
+import { Product } from "../data";
+import { Customer } from "./CheckoutForm";
 
+export interface OrderData {
+	_id: string;
+	products: Product[];
+	user: string;
+	deliveryAddress: Customer;
+	createdAt: Date;
+	isSent: boolean;
+}
+
+export function AdminOrders() {
 	const [showOrders, setShowOrders] = useState(false);
+	const [orderList, setOrderList] = useState<OrderData[]>([]);
 
 	const handleButtonOnClick = () => {
+		axios
+			.get("/api/orders")
+			.then((res) => {
+				setOrderList(res.data);
+			})
+			.catch((error) => console.error(error));
 		setShowOrders(true);
 	};
 
@@ -46,17 +61,23 @@ export function AdminOrders() {
 					<CardHeader p="5px">
 						<Text as="h2">Orders</Text>
 					</CardHeader>
-
 					<CardBody fontSize={cardBodyFontSize} width="100%" p="0">
 						<UnorderedList listStyleType="none" marginInlineStart="0">
 							{orderList.map((order) => (
-								<ListItem
-									key={order.orderId}
-									style={{ display: "flex", alignItems: "center" }}
-								>
-									<ListIcon as={MdCheckCircle} color="green.500" />
-									<Text>
-										Order ID: {order.orderId} Total price: {order.totalPrice}{" "}
+								<ListItem key={order._id}>
+									<Text fontSize="10px">
+										Ordernumber: {order._id}, Customer:{" "}
+										{order.deliveryAddress.firstName},{" "}
+										{order.deliveryAddress.lastName},{" "}
+										{order.deliveryAddress.city},{" "}
+										{order.deliveryAddress.zipCode}, Created:{" "}
+										{new Date(order.createdAt).toLocaleDateString()}
+										{order.products.map((product) => (
+											<ListItem key={product._id}>
+												{product.title}
+												<ListIcon as={MdCheckCircle} color="green.500" />
+											</ListItem>
+										))}
 									</Text>
 								</ListItem>
 							))}
