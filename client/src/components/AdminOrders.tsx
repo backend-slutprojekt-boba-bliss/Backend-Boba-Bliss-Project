@@ -67,7 +67,9 @@ export function AdminOrders() {
 								<ListItem key={order._id}>
 									<Text fontSize="10px">
 										Ordernumber: {order._id}, Customer:{" "}
-										{order.deliveryAddress.name}, {order.deliveryAddress.city},{" "}
+										{order.deliveryAddress.firstName},{" "}
+										{order.deliveryAddress.lastName},{" "}
+										{order.deliveryAddress.city},{" "}
 										{order.deliveryAddress.zipCode}, Created:{" "}
 										{new Date(order.createdAt).toLocaleDateString()}
 										{order.products.map((product) => (
