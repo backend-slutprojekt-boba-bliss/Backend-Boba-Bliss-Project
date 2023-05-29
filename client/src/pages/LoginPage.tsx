@@ -2,44 +2,18 @@ import {
   Box,
   Button,
   Center,
-  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Heading,
-  Input,
-  VStack,
+  Input
 } from "@chakra-ui/react";
+import { useContext, useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
-import { useState } from "react";
-
-async function loginUser(email: string, password: string, navigate: Function) {
-  try {
-    const response = await fetch("/api/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-
-    if (response.ok) {
-      // Successful login logic
-      console.log("Login successful");
-      navigate("/");
-    } else {
-      // Handle login error
-      console.log("Login failed");
-      throw new Error("Wrong password or Email");
-    }
-  } catch (error) {
-    console.log("An error occurred:", error);
-    throw error; // Rethrow the error to be caught by the catch block in handleFormSubmit
-  }
-}
-
+import { AuthContext } from "../contexts/AuthContext.";
 
 function LoginPage() {
+  const {loginUser} = useContext(AuthContext);
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState<string | null>(null);
 
@@ -55,8 +29,9 @@ function LoginPage() {
     const password = form.password.value;
 
     try {
-      await loginUser(email, password, navigate);
+      loginUser(email, password);
       setLoginError(null); // Reset the login error if login succeeds
+      navigate("/")
     } catch (error) {
       setLoginError("Wrong password or Email");
     }

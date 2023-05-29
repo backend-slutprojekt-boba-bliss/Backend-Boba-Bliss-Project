@@ -76,6 +76,9 @@ export async function createOrder(req: Request, res: Response) {
         };
       })
     );
+    if (productDetails.length === 0) {
+      return res.status(400).json({ error: "Empty order! No products in this order. Please add something to cart before placing order." });
+    }
 
     // Set user of order to user
     const { _id } = req.session!.user;

@@ -1,7 +1,7 @@
 import argon2 from 'argon2';
 import { Request, Response } from "express";
-import { UserModel } from "./userModel";
 import * as yup from 'yup';
+import { UserModel } from "./userModel";
 
 const userSchema = yup.object().shape({
   email: yup.string().email("Invalid email format").required("Email is required"),
@@ -22,12 +22,12 @@ export const getSession = async (
         // Skicka session information om vi hittar user
         const userData = user.toObject() as any;
         delete userData.password;
-        res.send({ user: userData });
+        res.status(200).send({ user: userData });
       } else {
         res.status(404).send("User not found");
       }
     } else {
-      res.status(401).send("No active session");
+      res.status(201).send("No active session");
     }
   } catch (error: any) {
     console.error(error);
@@ -90,7 +90,10 @@ export const loginUser = async (
       req.session!.user = user;
       const userData = user.toObject() as any;
       delete userData.password;
-      res.status(201).send({ message: "User login successfully" });
+      res.status(201).send({
+        message: "User logged in",
+        userData: userData,
+      });
     } else {
       res.status(401).json({ error: "Wrong password"});
     }
@@ -104,3 +107,15 @@ export async function logoutUser(req: Request, res: Response) {
   req.session = null;
   res.status(204).json(null);
 }
+
+// Check if user is logged in
+export function isLoggedin(req: Request, res: Response) {
+  if (!req.session || !req.session.user) {
+    res.status(200).json({ isLoggedIn: false });
+    return;
+  }
+  
+  // User is logged in, send isLoggedIn as true
+  res.status(200).json({ isLoggedIn: true });
+}
+

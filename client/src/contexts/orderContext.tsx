@@ -1,40 +1,50 @@
+import axios from "axios";
 import { createContext, useContext } from "react";
-import { useCart } from "./CartContext";
 import { Customer } from "../components/CheckoutForm";
 import { CartItem } from "../data";
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
+import { useCart } from "./CartContext";
 
 type Order = {
   itemList: CartItem[];
-  contactInformation: Customer;
-  orderId: string;
-  totalPrice: number;
+  deliveryAddress: Customer;
 };
 
 type OrderContextType = {
   orderList: Order[];
-  addOrder: (order: Order) => void;
-  createOrder: (customer: Customer) => Order;
-  getLastOrder: () => { lastOrder: Order | undefined; ordersCopy: Order[] };
+  createOrder: (customer: Customer) => Promise<CreateOrderReturnType>;
 };
+type CreateOrderReturnType = {
+  _id: string;
+  products: {
+    image: string;
+    imageAlt: string;
+    title: string;
+    description: string;
+    price: number;
+    bgColor: string;
+    quantity: number;
+    inStock: number;
+  }[];
+  categories: string[];
+  user: string;
+  deliveryAddress: {
+    firstName: string;
+    lastName: string;
+    street: string;
+    zipCode: string;
+    city: string;
+  };
+  createdAt: string;
+  isSent: boolean;
+  __v: number;
+};
+
+
 
 const OrderContext = createContext<OrderContextType>({
   orderList: [],
-  createOrder: () => ({
-    itemList: [],
-    contactInformation: {
-      name: "",
-      email: "",
-      phone: "",
-      street: "",
-      zipCode: "",
-      city: "",
-    },
-    orderId: "",
-    totalPrice: 0,
-  }),
-  addOrder: () => {},
-  getLastOrder: () => ({ lastOrder: undefined, ordersCopy: [] }),
+  createOrder: ((customer:Customer) => {}) as any,
 });
 
 export function useOrder() {
@@ -53,27 +63,33 @@ export function OrderProvider({ children }: Props) {
     "orderList"
   );
 
-  const createOrder = (customer: Customer) => {
-    const itemList = cartList;
-    const totalPrice = itemList.reduce((total, item) => {
-      return total + item.quantity * item.price;
-    }, 0);
+  const createOrder = async (customer:Customer) => {
+    const itemList = cartList.map(item => ({ _id: item._id, quantity: item.quantity }));
+  
+    const deliveryAddress = {
+      firstName: customer.firstName,
+      lastName: customer.lastName,
+      street: customer.street,
+      zipCode: customer.zipCode,
+      city: customer.city
+    };
+  
+    const newOrder = { products: itemList, deliveryAddress };
+  
+    
+      const response = await axios.post('/api/orders', newOrder, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        
+          console.log('Order created:', response.data);
+          clearCart(cartList); // Clear cart after creating order
+      return response.data
+    
+    }
+  
 
-    const orderId = "123"
-    const contactInformation = customer;
-    const newOrder = { itemList, contactInformation, orderId, totalPrice };
-    addOrder(newOrder); // add new order to orderList
-    clearCart(cartList); // clear cart after creating order
-
-    return newOrder;
-  };
-
-  const addOrder = (order: Order) => {
-    setOrderList((prevOrderList) => {
-      const updatedOrderList = [...prevOrderList, order];
-      return updatedOrderList;
-    });
-  };
 
   const getLastOrder = (): {
     lastOrder: Order | undefined;
@@ -86,7 +102,7 @@ export function OrderProvider({ children }: Props) {
 
   return (
     <OrderContext.Provider
-      value={{ orderList, createOrder, addOrder, getLastOrder }}
+      value={{ orderList, createOrder }}
     >
       {children}
     </OrderContext.Provider>
