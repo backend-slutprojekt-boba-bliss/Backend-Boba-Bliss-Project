@@ -1,22 +1,22 @@
 import { DeleteIcon } from "@chakra-ui/icons";
 import {
-    Button,
-    Card,
-    CardBody,
-    CardFooter,
-    CardHeader,
-    Link as ChakraLink,
-    Divider,
-    Flex,
-    HStack,
-    Heading,
-    IconButton,
-    Image,
-    ListItem,
-    Spacer,
-    Text,
-    UnorderedList,
-    useBreakpointValue
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Link as ChakraLink,
+  Divider,
+  Flex,
+  HStack,
+  Heading,
+  IconButton,
+  Image,
+  ListItem,
+  Spacer,
+  Text,
+  UnorderedList,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import { useCart } from "../contexts/CartContext";
@@ -53,7 +53,7 @@ export function CartCard({ checkOutPage = true }) {
                     {checkOutPage && (
                       <Image
                         sx={thumbNailStyle}
-                        src={cartItem.image}
+                        src={"/api/file/" + cartItem.image}
                         alt={cartItem.imageAlt}
                       />
                     )}

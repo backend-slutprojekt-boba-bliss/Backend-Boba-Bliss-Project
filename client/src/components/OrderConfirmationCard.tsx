@@ -1,45 +1,32 @@
 import {
-    Box,
-    Card,
-    CardBody,
-    CardFooter,
-    CardHeader,
-    Center,
-    Flex,
-    Heading,
-    Icon,
-    Image,
-    ListItem,
-    SystemStyleObject,
-    Text,
-    UnorderedList,
-    useBreakpointValue
+  Box,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Center,
+  Flex,
+  Heading,
+  Icon,
+  Image,
+  ListItem,
+  SystemStyleObject,
+  Text,
+  UnorderedList,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { BsCupStraw } from "react-icons/bs";
 import { FaTruckMoving } from "react-icons/fa";
 import { useCart } from "../contexts/CartContext";
 import { useOrder } from "../contexts/orderContext";
 
-export function generateUniqueNumber(): number {
-  let number = Math.floor(Math.random() * 90000) + 10000;
-  if (localStorage.getItem(number.toString())) {
-    return generateUniqueNumber();
-  } else {
-    localStorage.setItem(number.toString(), "true");
-    return number;
-  }
-}
+
 
 export function OrderConfirmationCard() {
-  const { getLastOrder } = useOrder();
+  
+
   const { cartList } = useCart();
 
-  const { lastOrder } = getLastOrder();
-  console.log("Last order:", lastOrder?.contactInformation.name);
-
-  const totalPrice = cartList.reduce((total, cartItem) => {
-    return total + cartItem.quantity * cartItem.price;
-  }, 0);
 
   const cardBodyFontSize = useBreakpointValue({ base: "1rem", sm: "1.2rem" });
   const cardFooterFontSize = useBreakpointValue({ base: "1rem", sm: "1.2rem" });
@@ -47,9 +34,9 @@ export function OrderConfirmationCard() {
   return (
     <Card sx={cartStyle}>
       <Flex sx={flexStyle}>
-        <CardHeader p="5px">
+        {/*<CardHeader p="5px">
           <Heading size="lg" padding="15px">
-            Thank you {lastOrder?.contactInformation.name} for your order! Your
+            Thank you {lastOrder?.deliveryAddress.name} for your order! Your
             order id is: #{lastOrder?.orderId}
           </Heading>
         </CardHeader>
@@ -70,7 +57,7 @@ export function OrderConfirmationCard() {
                   >
                     <Image
                       sx={thumbNailStyle}
-                      src={cartItem.image}
+                      src={"/api/file/" + cartItem.image}
                       alt={cartItem.imageAlt}
                       width="100%"
                       height="100%"
@@ -121,7 +108,7 @@ export function OrderConfirmationCard() {
             />
             <Text float="right">Total: ${lastOrder?.totalPrice}</Text>
           </Flex>
-        </CardFooter>
+        </CardFooter>*/}
       </Flex>
     </Card>
   );

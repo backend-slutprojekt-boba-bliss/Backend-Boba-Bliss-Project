@@ -40,10 +40,10 @@ export function HomePage() {
           >
             Boba Bliss
           </Heading>
-          <Text
+          <Text 
+            fontWeight={600}
             fontSize={["1.5rem", "1.3rem", "1.6rem", "1.6rem"]}
             color={"lightBrownText"}
-            fontWeight="bold"
             display={["none", "none", "flex"]}
           >
             Your ultimate destination for an exquisite bubble tea experience.
