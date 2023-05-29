@@ -17,12 +17,13 @@ import axios from "axios";
 import { useState } from "react";
 import { MdCheckCircle } from "react-icons/md";
 import { Product } from "../data";
+import { Customer } from "./CheckoutForm";
 
 export interface OrderData {
 	_id: string;
 	products: Product[];
 	user: string;
-	//deliveryAddress: Address; // Antagande att du har definierat Address-gränssnittet
+	deliveryAddress: Customer;
 	createdAt: Date;
 	isSent: boolean;
 }
@@ -60,19 +61,22 @@ export function AdminOrders() {
 					<CardHeader p="5px">
 						<Text as="h2">Orders</Text>
 					</CardHeader>
-
 					<CardBody fontSize={cardBodyFontSize} width="100%" p="0">
 						<UnorderedList listStyleType="none" marginInlineStart="0">
 							{orderList.map((order) => (
-								<ListItem
-									key={order._id}
-									style={{ display: "flex", alignItems: "center" }}
-								>
-									{" "}
-									<Text fontSize="12px">
-										Order: {order._id} User: {order.user}
+								<ListItem key={order._id}>
+									<Text fontSize="10px">
+										Ordernumber: {order._id}, Customer:{" "}
+										{order.deliveryAddress.name}, {order.deliveryAddress.city},{" "}
+										{order.deliveryAddress.zipCode}, Created:{" "}
+										{new Date(order.createdAt).toLocaleDateString()}
+										{order.products.map((product) => (
+											<ListItem key={product._id}>
+												{product.title}
+												<ListIcon as={MdCheckCircle} color="green.500" />
+											</ListItem>
+										))}
 									</Text>
-									<ListIcon as={MdCheckCircle} color="green.500" />
 								</ListItem>
 							))}
 						</UnorderedList>
