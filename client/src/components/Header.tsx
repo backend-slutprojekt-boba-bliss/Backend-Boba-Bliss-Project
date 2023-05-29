@@ -29,11 +29,13 @@ import LoginButton from "./LoginButton";
 
 
 export function Header() {
-  const { isAdmin } = useContext(AuthContext);
+  const { isAdmin,isLoggedIn } = useContext(AuthContext);
   const { totalItems, cartList } = useCart();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isMobileView, setIsMobileView] = useState(false);
+  console.log("isadmin",isAdmin)
+  console.log("isloggedin",isLoggedIn)
 
   const handleResize = () => {
     if (window.innerWidth <= 768) {
@@ -43,6 +45,7 @@ export function Header() {
       onClose();
     }
   };
+
 
   useLayoutEffect(() => {
     const handleResize = () => {
