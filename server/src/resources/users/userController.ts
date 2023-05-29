@@ -1,10 +1,13 @@
-import argon2 from 'argon2';
+import argon2 from "argon2";
 import { Request, Response } from "express";
-import * as yup from 'yup';
+import * as yup from "yup";
 import { UserModel } from "./userModel";
 
 const userSchema = yup.object().shape({
-  email: yup.string().email("Invalid email format").required("Email is required"),
+  email: yup
+    .string()
+    .email("Invalid email format")
+    .required("Email is required"),
   password: yup.string().required("Password is required"),
 });
 
@@ -36,16 +39,17 @@ export const getSession = async (
 };
 
 // POST api/users/register
-export const registerUser = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const registerUser = async (req: Request, res: Response) => {
   try {
     // Tar in parametrar från form i registerform
     const { email, password } = req.body;
 
     try {
       await userSchema.validate({ email, password });
+      const existingUser = await UserModel.findOne({ email: req.body.email });
+      if (existingUser) {
+        return res.status(409).json("Username is already taken");
+      }
     } catch (validationError: any) {
       res.status(400).send(validationError.errors);
       return;
@@ -53,7 +57,7 @@ export const registerUser = async (
 
     const hashedPassword = await argon2.hash(password, {
       timeCost: 2,
-      memoryCost: 1024
+      memoryCost: 1024,
     });
     // Hashar lösenord och skapar ny user från vår schema
     const user = new UserModel({ email, password: hashedPassword });
@@ -68,14 +72,9 @@ export const registerUser = async (
 };
 
 // POST api/users/login
-export const loginUser = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-
-  const user = await UserModel.findOne({ email: req.body.email});
+export const loginUser = async (req: Request, res: Response): Promise<void> => {
+  const user = await UserModel.findOne({ email: req.body.email });
   if (user) {
-
     const { email, password } = req.body;
 
     try {
@@ -95,10 +94,10 @@ export const loginUser = async (
         userData: userData,
       });
     } else {
-      res.status(401).json({ error: "Wrong password"});
+      res.status(401).json({ error: "Wrong password" });
     }
   } else {
-    res.status(401).json({ error: "Wrong username"});
+    res.status(401).json({ error: "Wrong username" });
   }
 };
 
@@ -114,8 +113,7 @@ export function isLoggedin(req: Request, res: Response) {
     res.status(200).json({ isLoggedIn: false });
     return;
   }
-  
+
   // User is logged in, send isLoggedIn as true
   res.status(200).json({ isLoggedIn: true });
 }
-
