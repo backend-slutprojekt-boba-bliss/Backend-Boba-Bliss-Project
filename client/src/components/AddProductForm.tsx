@@ -127,15 +127,11 @@ export function AdminForm() {
         const formData = new FormData();
         formData.append("image", file);
 
-        const response = await axios.post(
-          "http://localhost:3000/api/file",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
+        const response = await axios.post("/api/file", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
 
         const uploadedImageId = response.data;
 
