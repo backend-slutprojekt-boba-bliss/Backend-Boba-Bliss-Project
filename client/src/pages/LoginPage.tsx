@@ -12,12 +12,6 @@ import { useContext, useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext.";
 
-
- 
-
-
-
-
 function LoginPage() {
   const {loginUser} = useContext(AuthContext);
   const navigate = useNavigate();
@@ -35,8 +29,7 @@ function LoginPage() {
     const password = form.password.value;
 
     try {
-      console.log(email, password)
-      await loginUser(email, password);
+      loginUser(email, password);
       setLoginError(null); // Reset the login error if login succeeds
       navigate("/")
     } catch (error) {

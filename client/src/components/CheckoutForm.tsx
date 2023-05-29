@@ -45,10 +45,8 @@ export type Customer = Yup.InferType<typeof customerSchema>;
 
 export function CheckoutForm() {
   const navigate = useNavigate();
-
-  const { createOrder } = useOrder();
-
   const {isLoggedIn}= useContext(AuthContext); //isAdmin state
+  const { createOrder } = useOrder();
 
 
   const handleSubmit = async (
@@ -73,6 +71,10 @@ export function CheckoutForm() {
     }
   };
 
+  const handleNavigateToLogin = () => {
+    navigate("/login");
+  }
+  
   return (
     <Formik
       initialValues={{
@@ -250,8 +252,7 @@ export function CheckoutForm() {
                   <Button
                     sx={logInButtonStyle}
                     variant="solid"
-                    onClick={() => {
-                      // Handle the click event for the button when not logged in
+                    onClick={() => {handleNavigateToLogin
                     }}
                   >
                     Log in
