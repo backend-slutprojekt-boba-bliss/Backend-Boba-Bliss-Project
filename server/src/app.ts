@@ -1,12 +1,10 @@
 import cookieSession from "cookie-session";
 import express, { NextFunction, Request, Response } from "express";
 import { categoryRouter } from "./resources/categories/categoryRouter";
-// import { filesRouter } from "./resources/files/filesRouter";
 import { fileRouter } from "./resources/files/fileRouter";
 import { orderRouter } from "./resources/orders/orderRouter";
 import { productRouter } from "./resources/products/productRouter";
 import { userRouter } from "./resources/users/userRouter";
-
 
 export const app = express();
 
@@ -20,9 +18,7 @@ app.use(
   })
 );
 
-
 app.use(express.json());
-
 
 app.use("/api/products", productRouter);
 app.use("/api/products/category", categoryRouter);

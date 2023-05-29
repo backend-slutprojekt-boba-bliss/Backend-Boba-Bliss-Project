@@ -1,19 +1,19 @@
 import {
-    Box,
-    Card,
-    CardBody,
-    CardFooter,
-    CardHeader,
-    Center,
-    Flex,
-    Heading,
-    Icon,
-    Image,
-    ListItem,
-    SystemStyleObject,
-    Text,
-    UnorderedList,
-    useBreakpointValue
+  Box,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Center,
+  Flex,
+  Heading,
+  Icon,
+  Image,
+  ListItem,
+  SystemStyleObject,
+  Text,
+  UnorderedList,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { BsCupStraw } from "react-icons/bs";
 import { FaTruckMoving } from "react-icons/fa";
@@ -57,7 +57,7 @@ export function OrderConfirmationCard() {
                   >
                     <Image
                       sx={thumbNailStyle}
-                      src={cartItem.image}
+                      src={"/api/file/" + cartItem.image}
                       alt={cartItem.imageAlt}
                       width="100%"
                       height="100%"
