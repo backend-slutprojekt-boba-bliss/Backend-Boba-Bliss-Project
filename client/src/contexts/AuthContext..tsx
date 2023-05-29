@@ -30,22 +30,23 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
 
  useEffect(() => {
-  console.log("IsLoggedIn: " + isLoggedIn)
     axios
       .get("/api/users/session", )
       .then((res) => {
-        console.log("IsLoggedIn: " + isLoggedIn)
         if (res.status === 200)  {
-          console.log("IsLoggedIn: " + isLoggedIn)
+          console.log(res.data.user.isAdmin)
           setIsLoggedIn(true);
+          if (res.data.user.isAdmin) {
+            setIsAdmin(true);
+            return
+          }
           return
         }else {
-          console.log("IsLoggedIn: " + isLoggedIn)
           setIsLoggedIn(false);
         }
       })
       .catch((error) => console.error(error));
-  }, []);
+  }, [isLoggedIn]);
 
   const loginUser = (email: string, password: string) => {
     axios
