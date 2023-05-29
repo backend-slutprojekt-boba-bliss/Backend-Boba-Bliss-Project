@@ -48,7 +48,7 @@ export const registerUser = async (req: Request, res: Response) => {
       await userSchema.validate({ email, password });
       const existingUser = await UserModel.findOne({ email: req.body.email });
       if (existingUser) {
-        return res.status(409).json("Username is already taken");
+        return res.status(409).json("Email is already registered");
       }
     } catch (validationError: any) {
       res.status(400).send(validationError.errors);

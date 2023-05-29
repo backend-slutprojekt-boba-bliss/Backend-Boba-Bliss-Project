@@ -14,7 +14,8 @@ import { Form, Link, useNavigate } from "react-router-dom";
 async function registerUser(
   email: string,
   password: string,
-  navigate: Function
+  navigate: Function,
+  setEmailAlreadyRegistered: (error: string) => void
 ) {
   try {
     const response = await fetch("/api/users/register", {
@@ -29,6 +30,10 @@ async function registerUser(
       console.log("Registration successful");
       // Redirect the user to the login page
       navigate("/loginPage");
+    } else if (response.status === 409) {
+      const data = await response.json();
+      setEmailAlreadyRegistered("Email already registered");
+      console.log("Email already registered");
     } else {
       console.log("Registration failed");
     }
@@ -58,8 +63,9 @@ function validatePassword(password: string): string | null {
 
 function RegisterPage() {
   const navigate = useNavigate();
-  const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [emailAlreadyRegistered, setEmailAlreadyRegistered] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -84,7 +90,7 @@ function RegisterPage() {
     }
 
     setPasswordError(""); // Reset password error
-    registerUser(email, password, navigate);
+    registerUser(email, password, navigate, setEmailAlreadyRegistered);
   };
 
   return (
@@ -94,10 +100,12 @@ function RegisterPage() {
           Register
         </Heading>
 
-        <FormControl isInvalid={!!emailError}>
+        <FormControl isInvalid={!!emailError || !!emailAlreadyRegistered}>
           <FormLabel>Email</FormLabel>
           <Input id="email" name="email" type="text" />
-          <FormErrorMessage>{emailError || " "}</FormErrorMessage>
+          <FormErrorMessage>
+            {emailError || emailAlreadyRegistered || " "}
+          </FormErrorMessage>
         </FormControl>
 
         <FormControl isInvalid={!!passwordError}>
