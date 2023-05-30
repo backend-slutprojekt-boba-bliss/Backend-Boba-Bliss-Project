@@ -64,7 +64,7 @@ export function Products() {
         boxShadow="2px 2px 2px rgb(0,0,0, 0.2)"
         bg={"white"}
         my={5}
-        width={["100%", "100%", "100%", "63.5%"]}
+        width={["98%", "98%", "96%", "62%"]}
         isFitted
         onChange={(index) => {
           setSelectedCategory(

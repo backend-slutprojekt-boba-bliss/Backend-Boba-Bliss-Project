@@ -17,7 +17,6 @@ export function ProductsLayout({ products }: ProductsLayoutProps) {
       wrap={"wrap"}
       width={["100%", "100%", "100%", "70%"]}
       display={"flex"}
-      justifyContent={"space-between"}
     >
       {/* Iterate through the products and render SmallProductCard components */}
       {products.map((product) => (
