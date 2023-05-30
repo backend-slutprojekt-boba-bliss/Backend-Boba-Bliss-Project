@@ -3,6 +3,7 @@ import { AdminOrders } from "./AdminOrders";
 import {
   Box,
   Button,
+  Card,
   Container,
   Flex,
   SystemStyleObject,
@@ -36,13 +37,13 @@ export function AdminProducts() {
       >
         {/* Renders a list of product cards in a grid layout. Displays products managed by an admin */}
         <AdminProductsLayout />
-        <Box as="aside" width={["100%", "100%", "96%", "40%"]}>
+        <Box as="aside" width={["100%", "100%", "96%", "40%"]} position="relative">
           <AdminCard />
-          <Box sx={orderButtonBoxStyle}>
+          <Card sx={cartStyle}>
             <Button sx={orderButtonStyle} onClick={handleButtonOnClick}>
               See Orders
             </Button>
-          </Box>
+          </Card>
         </Box>
       </Flex>
     </Container>
@@ -54,9 +55,15 @@ const orderButtonStyle: SystemStyleObject = {
   width: "100%",
   bg: "lightGreenButton",
   color: "black",
+  marginTop: "1.1rem"
 };
 
-
-const orderButtonBoxStyle: SystemStyleObject = {
-	
-  };
+const cartStyle: SystemStyleObject = {
+  marginTop: "var(--chakra-space-1)",
+  bg: "#FFF9F4",
+  border: "1px solid rgb(0, 0, 0, 0.2)",
+  borderRadius: "0.625rem",
+  px: "1rem",
+  position: "relative",
+  paddingBottom: "1.1rem"
+};
