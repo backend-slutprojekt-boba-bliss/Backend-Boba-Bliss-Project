@@ -1,4 +1,7 @@
-import { Box, Button, Card, Image, Text } from "@chakra-ui/react";
+import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import { Box, Button, Card, Flex, Image, Text } from "@chakra-ui/react";
+import axios from "axios";
+import { useEffect } from "react";
 import { useCart } from "../contexts/CartContext";
 import { Product } from "../data";
 
@@ -29,6 +32,21 @@ export function SmallProductCard({ product }: SmallProductCardProps) {
     boxShadow: "1px 5px 5px gray",
   };
 
+  const stockMessage = product?.inStock ?? 0 > 0 ? "In stock" : "Out of stock";
+  const stockIcon =
+    product?.inStock ?? 0 > 0 ? (
+      <CheckIcon color="green.500" />
+    ) : (
+      <CloseIcon color="red.500" />
+    );
+
+  useEffect(() => {
+    axios
+      .get("/api/products")
+      .then((res) => {})
+      .catch((error) => console.error(error));
+  }, []);
+
   return (
     <Card data-cy="product" align="center" sx={cardStyle}>
       <Box sx={roundBG}>
@@ -44,10 +62,24 @@ export function SmallProductCard({ product }: SmallProductCardProps) {
       <Text data-cy="product-price" sx={textStyle}>
         ${product.price.toFixed(2)}
       </Text>
+      <Box>
+        <Flex
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: ".5rem",
+            fontSize: ".8rem",
+          }}
+        >
+          {stockMessage}
+          {stockIcon}
+        </Flex>
+      </Box>
       <Button
         data-cy="product-buy-button"
         sx={buttonStyle}
         onClick={handleAddToCartClick}
+        disabled={product.inStock === 0}
       >
         Add to cart{" "}
       </Button>
