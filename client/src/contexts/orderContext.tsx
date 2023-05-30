@@ -3,6 +3,7 @@ import { createContext, useContext, useState } from "react";
 import { Customer } from "../components/CheckoutForm";
 import { CartItem } from "../data";
 import { useCart } from "./CartContext";
+import { useNavigate } from "react-router-dom";
 
 type Order = {
   itemList: CartItem[];
@@ -12,9 +13,9 @@ type Order = {
 type OrderContextType = {
 
   createOrder: (customer: Customer) => Promise<CreateOrderReturnType>;
-  orderId: null, // Initialize orderId to null
+  orderId: null | string, // Initialize orderId to null
 };
-type CreateOrderReturnType = {
+export type CreateOrderReturnType = {
   _id: string;
   products: {
     image: string;
@@ -42,7 +43,7 @@ type CreateOrderReturnType = {
 
 
 
-const OrderContext = createContext<OrderContextType>({
+export const OrderContext = createContext<OrderContextType>({
   createOrder: ((customer:Customer) => {}) as any,
   orderId: null, // Initialize orderId to null
 });
@@ -81,6 +82,7 @@ export function OrderProvider({ children }: Props) {
       })
         
           console.log('Order created:', response.data);
+          setOrderId(response.data._id)
           clearCart(cartList); // Clear cart after creating order
       return response.data
     

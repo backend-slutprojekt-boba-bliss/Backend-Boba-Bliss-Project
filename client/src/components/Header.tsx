@@ -34,8 +34,7 @@ export function Header() {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isMobileView, setIsMobileView] = useState(false);
-  console.log("isadmin",isAdmin)
-  console.log("isloggedin",isLoggedIn)
+
 
   const handleResize = () => {
     if (window.innerWidth <= 768) {

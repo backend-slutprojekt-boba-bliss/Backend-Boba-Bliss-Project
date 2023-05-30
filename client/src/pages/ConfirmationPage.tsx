@@ -6,26 +6,35 @@ import {
   SystemStyleObject
 } from "@chakra-ui/react";
 import axios from 'axios';
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { OrderConfirmationCard } from "../components/OrderConfirmationCard";
+import { CreateOrderReturnType, OrderContext } from "../contexts/orderContext";
+
 
 export function ConfirmationPage() {
   const { id } = useParams();
-  const [order, setOrder] = useState(null); // State to store the order details
+  const { orderId } = useContext(OrderContext);
+  console.log (orderId)
+
+  const [order, setOrder] = useState<CreateOrderReturnType | null>(null);
 
   useEffect(() => {
     const fetchOrder = async () => {
       try {
         const response = await axios.get(`/api/orders/id/${id}`);
-        setOrder(response.data);
+        const fetchedOrder = response.data;
+        setOrder(fetchedOrder);
       } catch (error) {
         // Handle error
       }
     };
 
-    fetchOrder();
+    if (id) {
+      fetchOrder();
+    }
   }, [id]);
+
 
 
   return (

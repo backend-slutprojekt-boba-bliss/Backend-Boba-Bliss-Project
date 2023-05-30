@@ -16,7 +16,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext.";
 import { useOrder } from "../contexts/orderContext";
@@ -62,12 +62,11 @@ export function CheckoutForm() {
         street: values.street,
         zipCode: values.zipCode,
         city: values.city,
-       
       };
       const order = await createOrder(customer);
-      setOrderById(response._id)
+      console.log(order);
       actions.resetForm();
-      navigate(`/confirmation{$response._id}`);
+      navigate(`/confirmation/${order._id}`);
     } catch (err) {
       console.log(err);
     }
