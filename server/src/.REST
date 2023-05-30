@@ -61,11 +61,11 @@ Content-Type: application/json
   }
   ],
   "deliveryAddress": {
-    "firstName": "Adam",
-    "lastName": "Svensson",
-    "street": "hejvägen",
+    "firstName": "hey order",
+    "lastName": "heyyy",
+    "street": "hey",
     "zipCode": 12345,
-    "city": "hejstaden"
+    "city": "heystaden"
   }
 }
 
@@ -76,8 +76,8 @@ POST http://localhost:3000/api/users/register
 Content-Type: application/json
 
 {
-  "email": "test@gmail.com",
-  "password":  "test"
+  "email": "hey@gmail.com",
+  "password":  "hey"
 }
 ###
 
@@ -85,8 +85,8 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-  "email": "test@gmail.com",
-  "password":  "test"
+  "email": "hey@gmail.com",
+  "password":  "hey"
 }
 
 
@@ -118,5 +118,10 @@ GET http://localhost:3000/api/users/session
 
 ###
 GET http://localhost:3000/api/loggedinornot
+
+###
+GET http://localhost:3000/api/orders/id/6475d3564b3f99e10a095403
+Content-Type: application/json
+
 
 

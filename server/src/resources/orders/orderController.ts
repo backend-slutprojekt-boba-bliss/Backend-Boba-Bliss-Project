@@ -14,15 +14,23 @@ export async function getAllOrders(req: Request, res: Response) {
 
 export async function getOrderById(req: Request, res: Response) {
   try {
-    const orderId = req.params.id
-    const order = await OrderModel.findById(orderId); 
-    if(!order) {
-      res.status(404).json(`Order ${orderId} not found`)
+    const orderId = req.params.id;
+    const order = await OrderModel.findById(orderId).populate('user');
+    if (!order) {
+      return res.status(404).json(`Order ${orderId} not found`);
     }
-      res.status(200).json(order);
-    } catch (error) {
-      res.status(500).json({ message: "Error fetching order" });
+    console.log("reqsession user:",req.session!.user._id, "order creator:",  order.user!._id)
+    // Check if the user ID from the session matches the order user ID
+    const orderUser = order.user!._id.toString() 
+    console.log("reqsession user:",req.session!.user._id, "order creator:",  orderUser)
+    if (req.session!.user._id !==  orderUser) {
+      return res.status(403).json(`Unauthorized access to order ${orderId}`);
     }
+
+    return res.status(200).json(order);
+  } catch (error) {
+    return res.status(500).json({ message: "Error fetching order" });
+  }
 }
 
 export async function getLoggedInUserOrders(req: Request, res: Response) {
