@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import { Button, Flex, Text} from "@chakra-ui/react";
+import React, { useContext } from "react";
+import { BiExit } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext.";
 
@@ -28,10 +30,23 @@ const LoginButton = () => {
   };
 
   return (
-    <button onClick={handleClick}>
-      {isLoggedIn ? "Log Out" : "Log In"}
-    </button>
+    <Button onClick={handleClick} variant={"outline"} color={"darkChocolateBrown"} sx={loginbtn}>
+      {isLoggedIn ? (
+        <Flex justify={"center"} align= {"center"}>
+          <Text>log out</Text>
+          <BiExit size="1.4rem" />
+          
+        </Flex>
+      ) : (
+        <span>Log In</span>
+      )}
+    </Button>
   );
+};
+
+
+const loginbtn = {
+  border: "2px solid #412D2D"
 };
 
 export default LoginButton;

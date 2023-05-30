@@ -19,7 +19,9 @@ import {
 import { useContext, useLayoutEffect, useState } from "react";
 import { AiFillHome } from "react-icons/ai";
 import { IoMdCart } from "react-icons/io";
+
 import { RiAdminFill } from "react-icons/ri";
+import { BiCoffeeTogo } from  "react-icons/bi";
 import { Link as RouterLink } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext.";
 import { useCart } from "../contexts/CartContext";
@@ -88,6 +90,15 @@ export function Header() {
                   width="1.8em"
                   height="1.8em"
                   as={AiFillHome}
+                  _hover={{ color: "#c8a59b" }}
+                />
+              </ChakraLink>
+              <ChakraLink as={RouterLink} to="/products">
+                <Icon
+                  verticalAlign="sub"
+                  width="1.8em"
+                  height="1.8em"
+                  as={BiCoffeeTogo}
                   _hover={{ color: "#c8a59b" }}
                 />
               </ChakraLink>
