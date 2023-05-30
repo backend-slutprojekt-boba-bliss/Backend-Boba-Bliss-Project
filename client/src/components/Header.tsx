@@ -1,7 +1,6 @@
 import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Button,
   Link as ChakraLink,
   Container,
   Drawer,
@@ -15,26 +14,23 @@ import {
   Image,
   Spacer,
   Text,
-  useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
-import { useContext, useEffect, useLayoutEffect, useState } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 import { AiFillHome } from "react-icons/ai";
 import { IoMdCart } from "react-icons/io";
 import { RiAdminFill } from "react-icons/ri";
 import { Link as RouterLink } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext.";
 import { useCart } from "../contexts/CartContext";
-import { AuthContext, AuthContextProvider } from "../contexts/AuthContext.";
 import LoginButton from "./LoginButton";
 
-
-
 export function Header() {
-  const { isAdmin,isLoggedIn } = useContext(AuthContext);
+  const { isAdmin, isLoggedIn } = useContext(AuthContext);
   const { totalItems, cartList } = useCart();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isMobileView, setIsMobileView] = useState(false);
-
 
   const handleResize = () => {
     if (window.innerWidth <= 768) {
@@ -44,7 +40,6 @@ export function Header() {
       onClose();
     }
   };
-
 
   useLayoutEffect(() => {
     const handleResize = () => {
@@ -86,7 +81,7 @@ export function Header() {
         {!isMobileView ? (
           <Box>
             <HStack spacing="1rem" whiteSpace="nowrap">
-              <LoginButton></LoginButton>
+              <LoginButton />
               <ChakraLink as={RouterLink} to="/">
                 <Icon
                   verticalAlign="sub"
@@ -98,16 +93,16 @@ export function Header() {
               </ChakraLink>
               {isAdmin && (
                 <ChakraLink data-cy="admin-link" as={RouterLink} to="/admin">
-                <Icon
-                  verticalAlign="sub"
-                  width="1.8em"
-                  height="1.8em"
-                  as={RiAdminFill}
-                  _hover={{ color: "#c8a59b" }}
-                />
-              </ChakraLink>
+                  <Icon
+                    verticalAlign="sub"
+                    width="1.8em"
+                    height="1.8em"
+                    as={RiAdminFill}
+                    _hover={{ color: "#c8a59b" }}
+                  />
+                </ChakraLink>
               )}
-              
+
               <ChakraLink
                 data-cy="cart-link"
                 as={RouterLink}
@@ -179,16 +174,18 @@ export function Header() {
             >
               Home
             </ChakraLink>
-            <ChakraLink
-              as={RouterLink}
-              to="/admin"
-              display="block"
-              mx="4"
-              my="2"
-              onClick={handleLinkClick}
-            >
-              Admin
-            </ChakraLink>
+            {isAdmin && (
+              <ChakraLink
+                as={RouterLink}
+                to="/admin"
+                display="block"
+                mx="4"
+                my="2"
+                onClick={handleLinkClick}
+              >
+                Admin
+              </ChakraLink>
+            )}
             <ChakraLink
               data-cy="cart-link"
               as={RouterLink}
@@ -206,6 +203,9 @@ export function Header() {
               />
               <Text data-cy="cart-items-count-badge">({totalItems})</Text>
             </ChakraLink>
+            <Box mx="4" my="2">
+              <LoginButton />
+            </Box>
           </Box>
         </DrawerContent>
       </Drawer>
