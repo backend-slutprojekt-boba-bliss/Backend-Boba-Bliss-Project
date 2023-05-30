@@ -203,6 +203,9 @@ export function Header() {
               />
               <Text data-cy="cart-items-count-badge">({totalItems})</Text>
             </ChakraLink>
+            <Box mx="4" my="2">
+              <LoginButton />
+            </Box>
           </Box>
         </DrawerContent>
       </Drawer>
