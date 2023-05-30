@@ -134,6 +134,8 @@ const cartStyle = {
   marginTop: "var(--chakra-space-1)",
   bg: "#FFF9F4",
   border: "1px solid rgb(0,0,0, 0.2)",
+  marginLeft: "1rem",
+  marginRight: "1rem",
   borderRadius: "0.625rem",
   padding: "1rem",
   position: "relative",

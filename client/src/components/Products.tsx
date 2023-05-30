@@ -64,7 +64,7 @@ export function Products() {
         boxShadow="2px 2px 2px rgb(0,0,0, 0.2)"
         bg={"white"}
         my={5}
-        width={["100%", "100%", "98%", "62.5%"]}
+        width={["100%", "100%", "100%", "63.5%"]}
         isFitted
         onChange={(index) => {
           setSelectedCategory(
@@ -74,7 +74,7 @@ export function Products() {
       >
         <TabList>
           <Tab
-            fontSize={[".8rem", ".9rem", "1rem"]}
+            fontSize={[".6rem", ".8rem", "1rem"]}
             borderRadius=".6rem"
             _selected={{ color: "white", bg: "pinkCardButton" }}
           >
@@ -82,7 +82,7 @@ export function Products() {
           </Tab>
           {categories.map((category) => (
             <Tab
-              fontSize={[".8rem", ".9rem", "1rem"]}
+              fontSize={[".6rem", ".8rem", "1rem"]}
               borderRadius=".6rem"
               _selected={{ color: "white", bg: "pinkCardButton" }}
               textTransform="uppercase"
