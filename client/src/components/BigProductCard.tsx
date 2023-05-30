@@ -119,8 +119,7 @@ export function BigProductCard({
     color: "white",
     borderRadius: "4rem",
     _hover: {
-      bgGradient: `linear(${product.bgColor} 30%, yellow.50 100%)`,
-      color: "black"
+      bgGradient: `linear(${product.bgColor} 10%, yellow.50 100%)`,
     },
   };
   
@@ -164,7 +163,7 @@ export function BigProductCard({
       <Container
         w={["90%"]}
         maxW={"80rem"}
-        h={["92%", "90%", "65%", "80%"]}
+        h={["90%", "90%", "65%", "80%"]}
         display={"flex"}
         flexDirection={["column-reverse", "column-reverse", "row", "row"]}
         justifyContent={"center"}
@@ -191,12 +190,12 @@ export function BigProductCard({
             direction={"column"}
             h={"100%"}
             justifyContent={"center"}
-            gap={[2, 2, 4,5]}
+            gap={[2, 2, 4,4]}
             maxW={"25rem"}
           >
             <Heading
               data-cy="product-title"
-              fontSize={["1.5rem", "1.7rem", "2rem", "2.5rem"]}
+              fontSize={["1.3rem", "1.7rem", "2rem", "2.5rem"]}
             >
               {product.title}
             </Heading>
@@ -206,7 +205,12 @@ export function BigProductCard({
             >
               ${product.price}
             </Heading>
-            <Text data-cy="product-description">{product.description}</Text>
+            <Box>
+            <Text data-cy="product-description" mb={1}>{product.description}</Text>
+            <Text fontSize="xs">
+              {product.inStock === 0 ? "Out of Stock!" : `Hurry! Only: ${product.inStock} in Stock!`}
+              </Text>
+            </Box>
             <Box>
               <Flex justify={["center", "center", "flex-start"]}>
                 <Flex justify={"space-between"} w={["50%","50%","30%"]}>
@@ -223,6 +227,7 @@ export function BigProductCard({
                   sx={addButtonStyle}
                   marginLeft={5}
                   onClick={() => addToCart(product, quantity)}
+                  isDisabled={product.inStock === 0}
                 >
                   <Icon sx={addToCartButtonStyle} as={FaCartPlus}></Icon>
                 </Button>
