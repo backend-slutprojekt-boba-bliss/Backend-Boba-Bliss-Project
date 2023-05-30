@@ -43,7 +43,7 @@ export function AdminOrders() {
 	const cardBodyFontSize = useBreakpointValue({ base: "1rem", sm: "1.2rem" });
 
 	const handleCloseOrders = () => {
-		// Perform any necessary cleanup or reset operations here
+		window.history.back(); // Redirect back to the previous page
 	};
 
 	return (
@@ -58,23 +58,39 @@ export function AdminOrders() {
 				<CardHeader p="5px">
 					<Text as="h2">Orders</Text>
 				</CardHeader>
-				<CardBody fontSize={cardBodyFontSize} width="100%" p="0">
+				<CardBody fontSize={cardBodyFontSize} width="50%" p="0">
 					<UnorderedList listStyleType="none" marginInlineStart="0">
 						{orderList.map((order) => (
-							<ListItem key={order._id}>
+							<ListItem key={order._id} py="1rem" border="2px solid #E2E8F0">
 								<Text fontSize="10px">
-									Ordernumber: {order._id}, Customer:{" "}
-									{order.deliveryAddress.firstName},{" "}
-									{order.deliveryAddress.lastName},{" "}
-									{order.deliveryAddress.city},{" "}
-									{order.deliveryAddress.zipCode}, Created:{" "}
-									{new Date(order.createdAt).toLocaleDateString()}
-									{order.products.map((product) => (
-										<ListItem key={product._id}>
-											{product.title}
-											<ListIcon as={MdCheckCircle} color="green.500" />
-										</ListItem>
-									))}
+									<span>
+										<strong>Order ID:</strong> {order._id}
+									</span>
+									<br />
+									<span>
+										<strong>Customer:</strong>{" "}
+										{`${order.deliveryAddress.firstName} ${order.deliveryAddress.lastName}`}
+									</span>
+									<br />
+									<span>
+										<strong>Address:</strong>{" "}
+										{`${order.deliveryAddress.city}, ${order.deliveryAddress.zipCode}`}
+									</span>
+									<br />
+									<span>
+										<strong>Created:</strong>{" "}
+										{new Date(order.createdAt).toLocaleDateString()}
+									</span>
+									<br />
+									<strong>Products:</strong>
+									<UnorderedList pl="1rem" listStyleType="none">
+										{order.products.map((product) => (
+											<ListItem key={product._id} display="flex" alignItems="center">
+												<Text>{product.title}</Text>
+												<ListIcon as={MdCheckCircle} color="green.500" ml="0.5rem" />
+											</ListItem>
+										))}
+									</UnorderedList>
 								</Text>
 							</ListItem>
 						))}
