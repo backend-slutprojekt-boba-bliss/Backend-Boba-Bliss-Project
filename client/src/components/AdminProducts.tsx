@@ -20,7 +20,30 @@ export function AdminProducts() {
   };
   
   if (showOrders) {
-    return <AdminOrders />;
+    return (
+      <Container maxWidth="container.xl" my=".3rem">
+        <Flex
+         direction={[
+            "column-reverse",
+            "column-reverse",
+            "column-reverse",
+            "row",
+          ]}
+          justify={["center", "center", "center", "space-between"]}
+          gap={1} 
+        >
+          <AdminOrders />
+          <Box as="aside" width={["100%", "100%", "96%", "40%"]} position="relative">
+            <AdminCard />
+            <Card sx={cartStyle}>
+              <Button sx={orderButtonStyle} onClick={handleButtonOnClick}>
+                See Orders
+              </Button>
+            </Card>
+          </Box>
+        </Flex>
+      </Container>
+    );
   }
 
   return (
@@ -35,7 +58,6 @@ export function AdminProducts() {
         justify={["center", "center", "center", "space-between"]}
         gap={1}
       >
-        {/* Renders a list of product cards in a grid layout. Displays products managed by an admin */}
         <AdminProductsLayout />
         <Box as="aside" width={["100%", "100%", "96%", "40%"]} position="relative">
           <AdminCard />
