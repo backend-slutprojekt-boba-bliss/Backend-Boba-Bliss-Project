@@ -1,38 +1,50 @@
 import {
-    Button,
-    Link as ChakraLink,
-    Container,
-    Flex,
-    SystemStyleObject
+  Button,
+  Link as ChakraLink,
+  Container,
+  Flex,
+  SystemStyleObject
 } from "@chakra-ui/react";
+import axios from 'axios';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { OrderConfirmationCard } from "../components/OrderConfirmationCard";
-import { useOrder } from "../contexts/orderContext";
 
 export function ConfirmationPage() {
-  //const { getLastOrder } = useOrder();
+  const { id } = useParams();
+  const [order, setOrder] = useState(null); // State to store the order details
 
-  //const { lastOrder } = getLastOrder();
+  useEffect(() => {
+    const fetchOrder = async () => {
+      try {
+        const response = await axios.get(`/api/orders/id/${id}`);
+        setOrder(response.data);
+      } catch (error) {
+        // Handle error
+      }
+    };
+
+    fetchOrder();
+  }, [id]);
+
 
   return (
     <Container sx={checkoutContainer} maxW="container.md">
       <OrderConfirmationCard />
       <Flex sx={informationContainer}>
-        <div>
-          {/*lastOrder ? (
+      <div>
+          {order ? (
             <div>
-              <p>Name: {lastOrder?.deliveryAddress.name}</p>
-              <p>Email: {lastOrder?.deliveryAddress.email}</p>
-              <p>Phone: {lastOrder?.deliveryAddress.phone}</p>
-              <p>
-                Address: {lastOrder?.deliveryAddress.street},{" "}
-                {lastOrder?.deliveryAddress.zipCode},{" "}
-                {lastOrder?.deliveryAddress.city}
-              </p>
+              <p>Name: {order?.deliveryAddress.firstName} {order?.deliveryAddress.lastName}</p>
+              <p>Street: {order?.deliveryAddress.street}</p>
+              <p>Zip Code: {order?.deliveryAddress.zipCode}</p>
+              <p>City: {order?.deliveryAddress.city}</p>
+              {/* Display other relevant order information */}
             </div>
           ) : (
-            <p>No stored values found.</p>
-          )*/}
-        </div>
+            <p>Loading order details...</p>
+          )}
+          </div>
       </Flex>
       <Flex>
         <ChakraLink

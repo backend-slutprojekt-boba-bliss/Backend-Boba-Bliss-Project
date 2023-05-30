@@ -47,6 +47,7 @@ export function CheckoutForm() {
   const navigate = useNavigate();
   const {isLoggedIn}= useContext(AuthContext); //isAdmin state
   const { createOrder } = useOrder();
+  
 
 
   const handleSubmit = async (
@@ -63,9 +64,10 @@ export function CheckoutForm() {
         city: values.city,
        
       };
-      const order = createOrder(customer);
+      const order = await createOrder(customer);
+      setOrderById(response._id)
       actions.resetForm();
-      navigate("/confirmation");
+      navigate(`/confirmation{$response._id}`);
     } catch (err) {
       console.log(err);
     }

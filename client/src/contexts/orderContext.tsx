@@ -1,8 +1,7 @@
 import axios from "axios";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import { Customer } from "../components/CheckoutForm";
 import { CartItem } from "../data";
-import { useLocalStorageState } from "../hooks/useLocalStorageState";
 import { useCart } from "./CartContext";
 
 type Order = {
@@ -11,8 +10,9 @@ type Order = {
 };
 
 type OrderContextType = {
-  orderList: Order[];
+
   createOrder: (customer: Customer) => Promise<CreateOrderReturnType>;
+  orderId: null, // Initialize orderId to null
 };
 type CreateOrderReturnType = {
   _id: string;
@@ -43,8 +43,8 @@ type CreateOrderReturnType = {
 
 
 const OrderContext = createContext<OrderContextType>({
-  orderList: [],
   createOrder: ((customer:Customer) => {}) as any,
+  orderId: null, // Initialize orderId to null
 });
 
 export function useOrder() {
@@ -57,11 +57,8 @@ type Props = {
 
 export function OrderProvider({ children }: Props) {
   const { cartList, clearCart } = useCart();
+  const [orderId, setOrderId] = useState<string | null>(null); 
 
-  const [orderList, setOrderList] = useLocalStorageState<Order[]>(
-    [],
-    "orderList"
-  );
 
   const createOrder = async (customer:Customer) => {
     const itemList = cartList.map(item => ({ _id: item._id, quantity: item.quantity }));
@@ -91,18 +88,11 @@ export function OrderProvider({ children }: Props) {
   
 
 
-  const getLastOrder = (): {
-    lastOrder: Order | undefined;
-    ordersCopy: Order[];
-  } => {
-    const ordersCopy = [...orderList];
-    const lastOrder = ordersCopy.pop();
-    return { lastOrder, ordersCopy };
-  };
+ 
 
   return (
     <OrderContext.Provider
-      value={{ orderList, createOrder }}
+      value={{orderId, createOrder }}
     >
       {children}
     </OrderContext.Provider>
