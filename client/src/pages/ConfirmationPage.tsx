@@ -3,6 +3,7 @@ import {
   Link as ChakraLink,
   Container,
   Flex,
+  Heading,
   SystemStyleObject
 } from "@chakra-ui/react";
 import axios from 'axios';
@@ -39,16 +40,17 @@ export function ConfirmationPage() {
 
   return (
     <Container sx={checkoutContainer} maxW="container.md">
-      <OrderConfirmationCard />
+      <OrderConfirmationCard order={order} />
       <Flex sx={informationContainer}>
       <div>
           {order ? (
             <div>
+              <Heading size={"md"} pb={2}>Delivery details:</Heading>
               <p>Name: {order?.deliveryAddress.firstName} {order?.deliveryAddress.lastName}</p>
               <p>Street: {order?.deliveryAddress.street}</p>
               <p>Zip Code: {order?.deliveryAddress.zipCode}</p>
               <p>City: {order?.deliveryAddress.city}</p>
-              {/* Display other relevant order information */}
+              
             </div>
           ) : (
             <p>Loading order details...</p>
