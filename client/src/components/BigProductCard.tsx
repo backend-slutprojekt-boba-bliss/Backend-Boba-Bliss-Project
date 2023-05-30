@@ -74,8 +74,8 @@ export function BigProductCard({
   // Style object for round background
   const roundBG = {
     backgroundColor: `${product.bgColor}`,
-    height: ["16rem", "18rem", "18.5rem", "25rem", "28rem"],
-    width: ["16rem", "18rem", "18.5rem", "25rem", "28rem"],
+    height: ["15rem", "16rem", "17rem", "25rem", "25rem"],
+    width: ["15rem", "16rem", "17rem", "25rem", "25rem"],
     borderRadius: "50%",
     border: "2px solid darkBrownText",
     position: "relative",
@@ -116,7 +116,7 @@ export function BigProductCard({
   });
 
   const buttonStyle = {
-    color: "white",
+    color: "darkChocolateBrown",
     borderRadius: "4rem",
     _hover: {
       bgGradient: `linear(${product.bgColor} 10%, yellow.50 100%)`,
@@ -163,7 +163,7 @@ export function BigProductCard({
       <Container
         w={["90%"]}
         maxW={"80rem"}
-        h={["90%", "90%", "65%", "80%"]}
+        h={["90%", "90%", "65%", "85%"]}
         display={"flex"}
         flexDirection={["column-reverse", "column-reverse", "row", "row"]}
         justifyContent={"center"}
@@ -237,7 +237,7 @@ export function BigProductCard({
         </Flex>
         <Box
           sx={boxStyling}
-          h={["50%", "35%", "80%", "80%"]}
+          h={["50%", "45%", "80%", "80%"]}
           w={["70%", "70%", "40%", "45%"]}
         >
           <Box sx={roundBG}>
