@@ -6,18 +6,18 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
-  Input
+  Input,
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext.";
 
 function LoginPage() {
-  const {loginUser} = useContext(AuthContext);
+  const { loginUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState<string | null>(null);
 
-  function navigateToRegister(){
+  function navigateToRegister() {
     navigate("/registerPage");
   }
 
@@ -29,11 +29,11 @@ function LoginPage() {
     const password = form.password.value;
 
     try {
-      loginUser(email, password);
+      await loginUser(email, password);
       setLoginError(null); // Reset the login error if login succeeds
-      navigate("/")
+      navigate("/");
     } catch (error) {
-      setLoginError("Wrong password or Email");
+      setLoginError("Wrong email or password");
     }
   };
 
