@@ -170,33 +170,40 @@ export function Header() {
       </Flex>
 
       {/* HAMBURGER MENU DRAWER */}
-      <Drawer placement="top" onClose={onClose} isOpen={isOpen}>
+      <Drawer placement="top" onClose={onClose} isOpen={isOpen} size={"md"}>
         <DrawerOverlay />
         <DrawerContent sx={hamburgerMenuStyling}>
-          <DrawerCloseButton />
-          <Box py="4">
-            <ChakraLink
-              as={RouterLink}
-              to="/"
-              display="block"
-              mx="4"
-              my="2"
-              onClick={handleLinkClick}
-            >
-              Home
-            </ChakraLink>
-            {isAdmin && (
-              <ChakraLink
-                as={RouterLink}
-                to="/admin"
-                display="block"
-                mx="4"
-                my="2"
-                onClick={handleLinkClick}
-              >
-                Admin
+          <HStack height={"100%"} justify={"space-evenly"} >
+          <ChakraLink as={RouterLink} to="/">
+                <Icon
+                  verticalAlign="sub"
+                  width="1.8em"
+                  height="1.8em"
+                  as={AiFillHome}
+                  _hover={{ color: "#c8a59b" }}
+                />
               </ChakraLink>
+              <ChakraLink as={RouterLink} to="/products">
+                <Icon
+                  verticalAlign="sub"
+                  width="1.8em"
+                  height="1.8em"
+                  as={BiCoffeeTogo}
+                  _hover={{ color: "#c8a59b" }}
+                />
+              </ChakraLink>
+            {isAdmin && (
+              <ChakraLink data-cy="admin-link" as={RouterLink} to="/admin">
+              <Icon
+                verticalAlign="sub"
+                width="1.8em"
+                height="1.8em"
+                as={RiAdminFill}
+                _hover={{ color: "#c8a59b" }}
+              />
+            </ChakraLink>
             )}
+            <Flex>
             <ChakraLink
               data-cy="cart-link"
               as={RouterLink}
@@ -214,10 +221,13 @@ export function Header() {
               />
               <Text data-cy="cart-items-count-badge">({totalItems})</Text>
             </ChakraLink>
-            <Box mx="4" my="2">
-              <LoginButton />
-            </Box>
-          </Box>
+            </Flex>
+                          <LoginButton />
+
+          </HStack>
+          
+
+       
         </DrawerContent>
       </Drawer>
     </Container>
@@ -260,4 +270,5 @@ const hamburgerMenuStyling = {
   zIndex: "3000",
   color: "lightBrownText",
   backgroundColor: "pink",
+  height: "6.5rem"
 };

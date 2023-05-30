@@ -106,7 +106,7 @@ export function BigProductCard({
 
   // Hide the card and navigates back to home page
   const handleClose = () => {
-    navigate("/");
+    navigate("/products");
   };
 
   // Detect clicks outside the card and triggers the handleClose function
@@ -144,7 +144,7 @@ export function BigProductCard({
         </BreadcrumbItem>
 
         <BreadcrumbItem>
-          <BreadcrumbLink as={Link} to="/" onClick={() => navigate("/")}>
+          <BreadcrumbLink as={Link} to="/products" onClick={() => navigate("/products")}>
             Products
           </BreadcrumbLink>
         </BreadcrumbItem>

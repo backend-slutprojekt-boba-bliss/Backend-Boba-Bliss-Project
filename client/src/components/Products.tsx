@@ -54,7 +54,7 @@ export function Products() {
   }, [selectedCategory]);
 
   return (
-    <Container maxWidth="container.xl" my=".3rem">
+    <Container maxWidth="container.xl" my=".3rem" py={5}>
       <Heading mt="1rem" color={"darkBrownText"}>
         Our Drinks
       </Heading>
