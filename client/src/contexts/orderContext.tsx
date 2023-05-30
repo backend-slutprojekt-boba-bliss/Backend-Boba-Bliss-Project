@@ -1,9 +1,9 @@
 import axios from "axios";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import { Customer } from "../components/CheckoutForm";
 import { CartItem } from "../data";
-import { useLocalStorageState } from "../hooks/useLocalStorageState";
 import { useCart } from "./CartContext";
+import { useNavigate } from "react-router-dom";
 
 type Order = {
   itemList: CartItem[];
@@ -11,10 +11,11 @@ type Order = {
 };
 
 type OrderContextType = {
-  orderList: Order[];
+
   createOrder: (customer: Customer) => Promise<CreateOrderReturnType>;
+  orderId: null | string, // Initialize orderId to null
 };
-type CreateOrderReturnType = {
+export type CreateOrderReturnType = {
   _id: string;
   products: {
     image: string;
@@ -42,9 +43,9 @@ type CreateOrderReturnType = {
 
 
 
-const OrderContext = createContext<OrderContextType>({
-  orderList: [],
+export const OrderContext = createContext<OrderContextType>({
   createOrder: ((customer:Customer) => {}) as any,
+  orderId: null, // Initialize orderId to null
 });
 
 export function useOrder() {
@@ -57,11 +58,8 @@ type Props = {
 
 export function OrderProvider({ children }: Props) {
   const { cartList, clearCart } = useCart();
+  const [orderId, setOrderId] = useState<string | null>(null); 
 
-  const [orderList, setOrderList] = useLocalStorageState<Order[]>(
-    [],
-    "orderList"
-  );
 
   const createOrder = async (customer:Customer) => {
     const itemList = cartList.map(item => ({ _id: item._id, quantity: item.quantity }));
@@ -84,6 +82,7 @@ export function OrderProvider({ children }: Props) {
       })
         
           console.log('Order created:', response.data);
+          setOrderId(response.data._id)
           clearCart(cartList); // Clear cart after creating order
       return response.data
     
@@ -91,18 +90,11 @@ export function OrderProvider({ children }: Props) {
   
 
 
-  const getLastOrder = (): {
-    lastOrder: Order | undefined;
-    ordersCopy: Order[];
-  } => {
-    const ordersCopy = [...orderList];
-    const lastOrder = ordersCopy.pop();
-    return { lastOrder, ordersCopy };
-  };
+ 
 
   return (
     <OrderContext.Provider
-      value={{ orderList, createOrder }}
+      value={{orderId, createOrder }}
     >
       {children}
     </OrderContext.Provider>

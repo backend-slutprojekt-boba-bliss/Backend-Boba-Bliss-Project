@@ -1,38 +1,61 @@
 import {
-    Button,
-    Link as ChakraLink,
-    Container,
-    Flex,
-    SystemStyleObject
+  Button,
+  Link as ChakraLink,
+  Container,
+  Flex,
+  Heading,
+  SystemStyleObject
 } from "@chakra-ui/react";
+import axios from 'axios';
+import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { OrderConfirmationCard } from "../components/OrderConfirmationCard";
-import { useOrder } from "../contexts/orderContext";
+import { CreateOrderReturnType, OrderContext } from "../contexts/orderContext";
+
 
 export function ConfirmationPage() {
-  //const { getLastOrder } = useOrder();
+  const { id } = useParams();
+  const { orderId } = useContext(OrderContext);
+  console.log (orderId)
 
-  //const { lastOrder } = getLastOrder();
+  const [order, setOrder] = useState<CreateOrderReturnType | null>(null);
+
+  useEffect(() => {
+    const fetchOrder = async () => {
+      try {
+        const response = await axios.get(`/api/orders/id/${id}`);
+        const fetchedOrder = response.data;
+        setOrder(fetchedOrder);
+      } catch (error) {
+        // Handle error
+      }
+    };
+
+    if (id) {
+      fetchOrder();
+    }
+  }, [id]);
+
+
 
   return (
     <Container sx={checkoutContainer} maxW="container.md">
-      <OrderConfirmationCard />
+      <OrderConfirmationCard order={order} />
       <Flex sx={informationContainer}>
-        <div>
-          {/*lastOrder ? (
+      <div>
+          {order ? (
             <div>
-              <p>Name: {lastOrder?.deliveryAddress.name}</p>
-              <p>Email: {lastOrder?.deliveryAddress.email}</p>
-              <p>Phone: {lastOrder?.deliveryAddress.phone}</p>
-              <p>
-                Address: {lastOrder?.deliveryAddress.street},{" "}
-                {lastOrder?.deliveryAddress.zipCode},{" "}
-                {lastOrder?.deliveryAddress.city}
-              </p>
+              <Heading size={"md"} pb={2}>Delivery details:</Heading>
+              <p>Name: {order?.deliveryAddress.firstName} {order?.deliveryAddress.lastName}</p>
+              <p>Street: {order?.deliveryAddress.street}</p>
+              <p>Zip Code: {order?.deliveryAddress.zipCode}</p>
+              <p>City: {order?.deliveryAddress.city}</p>
+              
             </div>
           ) : (
-            <p>No stored values found.</p>
-          )*/}
-        </div>
+            <p>Loading order details...</p>
+          )}
+          </div>
       </Flex>
       <Flex>
         <ChakraLink

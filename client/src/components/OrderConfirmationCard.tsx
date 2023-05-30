@@ -18,38 +18,47 @@ import {
 import { BsCupStraw } from "react-icons/bs";
 import { FaTruckMoving } from "react-icons/fa";
 import { useCart } from "../contexts/CartContext";
-import { useOrder } from "../contexts/orderContext";
+import { CreateOrderReturnType } from "../contexts/orderContext";
 
 
-
-export function OrderConfirmationCard() {
-  
-
+export function OrderConfirmationCard({ order }: { order: CreateOrderReturnType | null }) {
   const { cartList } = useCart();
-
 
   const cardBodyFontSize = useBreakpointValue({ base: "1rem", sm: "1.2rem" });
   const cardFooterFontSize = useBreakpointValue({ base: "1rem", sm: "1.2rem" });
 
+  if (!order) {
+    return (
+      <Card>
+        <Text>No order data available.</Text>
+      </Card>
+    );
+  }
+
+  const totalPrice = order.products.reduce(
+    (total:number, product: any) => total + product.quantity * product.price,
+    0
+  );
+ 
   return (
     <Card sx={cartStyle}>
       <Flex sx={flexStyle}>
-        {/*<CardHeader p="5px">
+        <CardHeader p="5px">
           <Heading size="lg" padding="15px">
-            Thank you {lastOrder?.deliveryAddress.name} for your order! Your
-            order id is: #{lastOrder?.orderId}
+            Thank you {order?.deliveryAddress.firstName} for your order! Your
+            order id is: #{order?._id}
           </Heading>
         </CardHeader>
         <CardBody fontSize={cardBodyFontSize} width="100%" p="0">
           <UnorderedList listStyleType="none" marginInlineStart="0">
-            {lastOrder?.itemList.map((cartItem) => (
-              <ListItem key={cartItem._id}>
+            {order?.products.map((product: any) => (
+              <ListItem key={product._id}>
                 <Flex sx={cartItemStyle}>
-                  <Text marginRight="20px">{cartItem.quantity} x</Text>
+                  <Text marginRight="20px">{product.quantity} x</Text>
                   <Box
                     width="70px"
                     height="70px"
-                    backgroundColor={cartItem.bgColor}
+                    backgroundColor={product.bgColor}
                     borderRadius="5px"
                     display="flex"
                     justifyContent="center"
@@ -57,8 +66,8 @@ export function OrderConfirmationCard() {
                   >
                     <Image
                       sx={thumbNailStyle}
-                      src={"/api/file/" + cartItem.image}
-                      alt={cartItem.imageAlt}
+                      src={"/api/file/" + product.image}
+                      alt={product.imageAlt}
                       width="100%"
                       height="100%"
                       objectFit="contain"
@@ -71,10 +80,10 @@ export function OrderConfirmationCard() {
                     textAlign="left"
                     marginLeft="1rem"
                   >
-                    {cartItem.title}
+                    {product.title}
                   </Text>
                   <Text paddingTop="10px">
-                    ${cartItem.quantity * cartItem.price}
+                    ${product.quantity * product.price}
                   </Text>
                 </Flex>
               </ListItem>
@@ -106,14 +115,13 @@ export function OrderConfirmationCard() {
               alt="Logo"
               height="5rem"
             />
-            <Text float="right">Total: ${lastOrder?.totalPrice}</Text>
+            <Text float="right">Total: ${totalPrice}</Text>
           </Flex>
-        </CardFooter>*/}
+        </CardFooter>
       </Flex>
     </Card>
   );
 }
-
 const cartStyle: SystemStyleObject = {
   marginTop: "var(--chakra-space-1)",
   bg: "#FFF9F4",
