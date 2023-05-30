@@ -227,7 +227,7 @@ export function BigProductCard({
                   sx={addButtonStyle}
                   marginLeft={5}
                   onClick={() => addToCart(product, quantity)}
-                  isDisabled={product.inStock === 0}
+                  isDisabled={product?.inStock === 0 || quantity > (product?.inStock || 0)}
                 >
                   <Icon sx={addToCartButtonStyle} as={FaCartPlus}></Icon>
                 </Button>
