@@ -18,22 +18,26 @@ export function AdminProducts() {
   const handleButtonOnClick = () => {
     setShowOrders(true);
   };
-  
+
   if (showOrders) {
     return (
       <Container maxWidth="container.xl" my=".3rem">
         <Flex
-         direction={[
+          direction={[
             "column-reverse",
             "column-reverse",
             "column-reverse",
             "row",
           ]}
           justify={["center", "center", "center", "space-between"]}
-          gap={1} 
+          gap={1}
         >
           <AdminOrders />
-          <Box as="aside" width={["100%", "100%", "96%", "40%"]} position="sticky">
+          <Box
+            as="aside"
+            width={["100%", "100%", "96%", "40%"]}
+            position="sticky"
+          >
             <AdminCard />
             <Card sx={cartStyle}>
               <Button sx={orderButtonStyle} onClick={handleButtonOnClick}>
@@ -59,7 +63,11 @@ export function AdminProducts() {
         gap={1}
       >
         <AdminProductsLayout />
-        <Box as="aside" width={["100%", "100%", "96%", "40%"]} position="sticky">
+        <Box
+          as="aside"
+          width={["100%", "100%", "96%", "40%"]}
+          position="sticky"
+        >
           <AdminCard />
           <Card sx={cartStyle}>
             <Button sx={orderButtonStyle} onClick={handleButtonOnClick}>
@@ -77,7 +85,7 @@ const orderButtonStyle: SystemStyleObject = {
   width: "100%",
   bg: "lightGreenButton",
   color: "black",
-  marginTop: "1.1rem"
+  marginTop: "1.1rem",
 };
 
 const cartStyle: SystemStyleObject = {
@@ -87,5 +95,5 @@ const cartStyle: SystemStyleObject = {
   borderRadius: "0.625rem",
   px: "1rem",
   position: "relative",
-  paddingBottom: "1.1rem"
+  paddingBottom: "1.1rem",
 };

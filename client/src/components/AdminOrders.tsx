@@ -15,11 +15,9 @@ import {
   Image,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { MdCheckCircle } from "react-icons/md";
 import { Product } from "../data";
 import { Customer } from "./CheckoutForm";
 import { useState, useEffect } from "react";
-import { TbBorderRadius } from "react-icons/tb";
 
 export interface OrderData {
   _id: string;
@@ -91,7 +89,7 @@ export function AdminOrders() {
                   </span>
                   <br />
                   <strong>Products:</strong>
-                  <UnorderedList  listStyleType="none">
+                  <UnorderedList listStyleType="none">
                     {order.products.map((product) => (
                       <ListItem
                         key={product._id}
@@ -104,7 +102,9 @@ export function AdminOrders() {
                           src={"/api/file/" + product.image}
                         ></Image>
                         <Text>{product.title}</Text>
-                        <ListItem marginLeft={"1rem"}>Quantity: {product.quantity}</ListItem>
+                        <ListItem marginLeft={"1rem"}>
+                          Quantity: {product.quantity}
+                        </ListItem>
                       </ListItem>
                     ))}
                   </UnorderedList>
@@ -118,18 +118,10 @@ export function AdminOrders() {
   );
 }
 
-const flexStyle: SystemStyleObject = {
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  rowGap: "1.25rem",
-  textAlign: "center",
-};
-
 // Custom style for box component
 
 const thumbNailStyle = {
   width: "2rem",
   borderRadius: "50%",
-  marginRight: "1rem"
+  marginRight: "1rem",
 };

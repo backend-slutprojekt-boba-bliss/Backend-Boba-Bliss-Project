@@ -95,13 +95,13 @@ export function AdminForm() {
   const formik = useFormik<addProduct>({
     initialValues: {
       image: "",
-      imageAlt: "bild",
-      title: "Test Upload",
-      description: "test",
-      price: 30,
-      bgColor: "#bf96da",
-      inStock: 10,
-      categories: ["646c7ba0bd0a27074657a7f5"],
+      imageAlt: "",
+      title: "",
+      description: "",
+      price: 0,
+      bgColor: "",
+      inStock: 0,
+      categories: [""],
     },
     validationSchema: schema,
     onSubmit: (values, actions) => {

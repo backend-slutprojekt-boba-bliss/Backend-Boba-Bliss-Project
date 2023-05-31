@@ -6,7 +6,7 @@ import {
   Grid,
   Icon,
   Image,
-  Text
+  Text,
 } from "@chakra-ui/react";
 import { FaTiktok, FaTwitter } from "react-icons/fa";
 import { FiInstagram } from "react-icons/fi";

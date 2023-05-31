@@ -122,7 +122,6 @@ export function BigProductCard({
       bgGradient: `linear(${product.bgColor} 10%, yellow.50 100%)`,
     },
   };
-  
 
   return (
     <Box
@@ -144,7 +143,11 @@ export function BigProductCard({
         </BreadcrumbItem>
 
         <BreadcrumbItem>
-          <BreadcrumbLink as={Link} to="/products" onClick={() => navigate("/products")}>
+          <BreadcrumbLink
+            as={Link}
+            to="/products"
+            onClick={() => navigate("/products")}
+          >
             Products
           </BreadcrumbLink>
         </BreadcrumbItem>
@@ -190,7 +193,7 @@ export function BigProductCard({
             direction={"column"}
             h={"100%"}
             justifyContent={"center"}
-            gap={[2, 2, 4,4]}
+            gap={[2, 2, 4, 4]}
             maxW={"25rem"}
           >
             <Heading
@@ -206,19 +209,31 @@ export function BigProductCard({
               ${product.price}
             </Heading>
             <Box>
-            <Text data-cy="product-description" mb={1}>{product.description}</Text>
-            <Text fontSize="xs">
-              {product.inStock === 0 ? "Out of Stock!" : `Hurry! Only: ${product.inStock} in Stock!`}
+              <Text data-cy="product-description" mb={1}>
+                {product.description}
+              </Text>
+              <Text fontSize="xs">
+                {product.inStock === 0
+                  ? "Out of Stock!"
+                  : `Hurry! Only: ${product.inStock} in Stock!`}
               </Text>
             </Box>
             <Box>
               <Flex justify={["center", "center", "flex-start"]}>
-                <Flex justify={"space-between"} w={["50%","50%","30%"]}>
-                  <Button sx={buttonStyle} onClick={decreaseQuantity} bg={product.bgColor}>
+                <Flex justify={"space-between"} w={["50%", "50%", "30%"]}>
+                  <Button
+                    sx={buttonStyle}
+                    onClick={decreaseQuantity}
+                    bg={product.bgColor}
+                  >
                     -
                   </Button>
                   <Text sx={quantityStyling}>{quantity}</Text>
-                  <Button sx={buttonStyle} onClick={increaseQuantity} bg={product.bgColor} >
+                  <Button
+                    sx={buttonStyle}
+                    onClick={increaseQuantity}
+                    bg={product.bgColor}
+                  >
                     +
                   </Button>
                 </Flex>
@@ -227,7 +242,9 @@ export function BigProductCard({
                   sx={addButtonStyle}
                   marginLeft={5}
                   onClick={() => addToCart(product, quantity)}
-                  isDisabled={product?.inStock === 0 || quantity > (product?.inStock || 0)}
+                  isDisabled={
+                    product?.inStock === 0 || quantity > (product?.inStock || 0)
+                  }
                 >
                   <Icon sx={addToCartButtonStyle} as={FaCartPlus}></Icon>
                 </Button>
@@ -310,13 +327,12 @@ const addButtonStyle = {
   width: "5rem",
   _hover: {
     backgroundColor: "#ffdda6",
-    color: "black"
+    color: "black",
   },
   _active: {
     backgroundColor: "#ffefd6",
-    color: "black"
+    color: "black",
   },
-
 };
 
 // Styled object for cart icon

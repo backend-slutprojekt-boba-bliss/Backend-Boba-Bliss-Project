@@ -31,8 +31,6 @@ export default function EditForm() {
   const productToEdit = productList.find((product) => product._id === id);
   const [categories, setCategories] = useState<Category[]>([]);
 
-  const [imageId, setImageId] = useState<string>("");
-
   useEffect(() => {
     axios
       .get("/api/products/category")
@@ -103,7 +101,6 @@ export default function EditForm() {
         });
 
         const uploadedImageId = response.data;
-        setImageId(uploadedImageId);
 
         formik.setFieldValue("image", uploadedImageId);
       }

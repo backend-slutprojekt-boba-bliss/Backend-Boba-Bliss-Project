@@ -4,7 +4,6 @@ import { Formik, FormikHelpers } from "formik";
 import { Link as RouterLink } from "react-router-dom";
 import * as Yup from "yup";
 
-
 import {
   Box,
   Link as ChakraLink,
@@ -22,15 +21,13 @@ import { AuthContext } from "../contexts/AuthContext.";
 import { useOrder } from "../contexts/orderContext";
 import { requiredText } from "./AddProductForm";
 
-
-
 const customerSchema = Yup.object({
   firstName: Yup.string()
     .required("First name required")
     .min(2, "First name is too short"),
   lastName: Yup.string()
-  .required("Last name required")
-  .min(2, "Last name is too short"),
+    .required("Last name required")
+    .min(2, "Last name is too short"),
   street: Yup.string()
     .required("Street required")
     .min(2, "Street is too short"),
@@ -38,17 +35,14 @@ const customerSchema = Yup.object({
   zipCode: Yup.string()
     .required("Zip code is required")
     .matches(/^[0-9]{5}(?:-[0-9]{4})?$/, "Invalid zip code"),
-  
 });
 
 export type Customer = Yup.InferType<typeof customerSchema>;
 
 export function CheckoutForm() {
   const navigate = useNavigate();
-  const {isLoggedIn}= useContext(AuthContext); //isAdmin state
+  const { isLoggedIn } = useContext(AuthContext); //isAdmin state
   const { createOrder } = useOrder();
-  
-
 
   const handleSubmit = async (
     values: Customer,
@@ -74,8 +68,8 @@ export function CheckoutForm() {
 
   const handleNavigateToLogin = () => {
     navigate("/login");
-  }
-  
+  };
+
   return (
     <Formik
       initialValues={{
@@ -241,48 +235,50 @@ export function CheckoutForm() {
             )}
             {!isLoggedIn && (
               <Stack align="center" flex={1}>
-                <Heading size={"md"} color={"lightBrownText"} flex={1} pt={5} textAlign={"center"}>
-                    You must be logged in to create an order!
-                  </Heading>
-                <HStack spacing={5} p={"1rem"} align="stretch" w={"100%"}>
-                <Stack flex={1}>
-                  <Text fontSize={["sm"]} color={"lightBrownText"} py={2}>
-                  Already have an account? Log in below:
-                  </Text>
-                  <ChakraLink as={RouterLink} to="/loginPage">
-                  <Button
-                    sx={logInButtonStyle}
-                    variant="solid"
-                    onClick={() => {handleNavigateToLogin
-                    }}
-                  >
-                    Log in
-                  </Button>
-                  </ChakraLink>
-                  
-                </Stack>
-                <Stack flex={1}>
-                <Text fontSize={["sm"]} color={"lightBrownText"} py={2}>
-                Don't have an account yet? Register here:
-                  </Text>
-                  <ChakraLink as={RouterLink} to="/registerPage">
-                <Button
-                  sx={registerButtonStyle}
-                  variant="solid"
-                  onClick={() => {
-                    // Handle the click event for the button when not logged in
-                  }}
+                <Heading
+                  size={"md"}
+                  color={"lightBrownText"}
+                  flex={1}
+                  pt={5}
+                  textAlign={"center"}
                 >
-                  Register
-                </Button>
-                </ChakraLink>
-
-                </Stack>
-
-               
-              </HStack>
+                  You must be logged in to create an order!
+                </Heading>
+                <HStack spacing={5} p={"1rem"} align="stretch" w={"100%"}>
+                  <Stack flex={1}>
+                    <Text fontSize={["sm"]} color={"lightBrownText"} py={2}>
+                      Already have an account? Log in below:
+                    </Text>
+                    <ChakraLink as={RouterLink} to="/loginPage">
+                      <Button
+                        sx={logInButtonStyle}
+                        variant="solid"
+                        onClick={() => {
+                          handleNavigateToLogin;
+                        }}
+                      >
+                        Log in
+                      </Button>
+                    </ChakraLink>
+                  </Stack>
+                  <Stack flex={1}>
+                    <Text fontSize={["sm"]} color={"lightBrownText"} py={2}>
+                      Don't have an account yet? Register here:
+                    </Text>
+                    <ChakraLink as={RouterLink} to="/registerPage">
+                      <Button
+                        sx={registerButtonStyle}
+                        variant="solid"
+                        onClick={() => {
+                          // Handle the click event for the button when not logged in
+                        }}
+                      >
+                        Register
+                      </Button>
+                    </ChakraLink>
+                  </Stack>
+                </HStack>
               </Stack>
-              
             )}
           </Flex>
         </form>
@@ -290,8 +286,6 @@ export function CheckoutForm() {
     </Formik>
   );
 }
-
-
 
 const formStyle = {
   mx: "auto",
@@ -318,7 +312,7 @@ const submitButtonStyle = {
   mx: "auto",
   bg: "lightGreenButton",
   color: "black",
-  border: "none"
+  border: "none",
 };
 const logInButtonStyle = {
   width: "100%",
@@ -331,7 +325,7 @@ const logInButtonStyle = {
   },
   _active: {
     bg: "#b4ddbe",
-    transform: "scale(0.97)"
+    transform: "scale(0.97)",
   },
 };
 const registerButtonStyle = {
@@ -344,22 +338,6 @@ const registerButtonStyle = {
   },
   _active: {
     bg: "#fab4ba",
-    transform: "scale(0.97)"
+    transform: "scale(0.97)",
   },
 };
-
-// Ska vara ett formulär där användaren fyller i
-// namn,
-// mail,
-// telefonnummer och
-// adress.
-// Fälten i formuläret ska gå att automatisk fyllas i.
-// Samtliga fält ska valideras så att endast rätt information kan matas in.
-
-// När alla delar har fyllts i på kassasidan så ska användaren kunna slutföra köpet
-//och då få en bekräftelse på köpet tillsammans med ett unikt ordernummer.
-
-// Tänk på att det inte ska gå att placera ordern två gånger,
-// även om man navigerar tillbaka på sidan!
-// orderinformationen som har matats in skall presenteras i beskräftelsen
-// som ett bevis på att ni har hanterat datan i alla formulären korrekt.

@@ -56,7 +56,6 @@ export function AdminSmallProductCard({ product, id }: SmallProductCardProps) {
 
   return (
     <Card data-cy="product" align="center" sx={cardStyle}>
-      <Text data-cy="product-id">{id}</Text>
       <Box sx={roundBG}>
         <Image
           sx={imageStyle}

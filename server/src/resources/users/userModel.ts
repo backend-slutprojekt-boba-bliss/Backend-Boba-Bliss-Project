@@ -5,8 +5,7 @@ export const userSchema = new Schema({
   password: {
     type: String,
     required: true,
-    minlength: 3, // Minimum längd är nu 8 karaktärer
-    //match: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/, // Vanligt mönster för lösenordssäkerhet
+    minlength: 3,
   },
   isAdmin: { type: Boolean, default: false },
 });
