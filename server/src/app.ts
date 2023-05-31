@@ -25,7 +25,6 @@ app.use("/api/products/category", categoryRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/users", userRouter);
 app.use("/api/file", fileRouter);
-// app.get('/api/loggedinornot', checkIfLoggedIn);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   res.sendStatus(500);
