@@ -206,7 +206,7 @@ export function BigProductCard({
   <Text fontSize="xs">
     {product.inStock === 0
       ? <Text fontSize="xs" color="red">Out of stock!</Text>
-      : <Text fontSize="xs" color="green.600">`Hurry! Only ${product.inStock} in Stock!`</Text>}
+      : <Text fontSize="xs" color="green.600">`Hurry! Only {product.inStock} in Stock!`</Text>}
   </Text>
 </Box>
             <Box>
