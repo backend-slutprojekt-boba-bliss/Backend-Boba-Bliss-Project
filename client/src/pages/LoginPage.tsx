@@ -6,10 +6,10 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
-  Input,
+  Input,Text
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
-import { Form, useNavigate } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext.";
 
 function LoginPage() {
@@ -116,17 +116,9 @@ function LoginPage() {
                 >
                   Log In
                 </Button>
-                <Button
-                  width="half"
-                  onClick={navigateToRegister}
-                  marginTop={"1em"}
-                  size={"sm"}
-                  bg={"#EEA6B4"}
-                  _hover={{ bg: "#eca0af" }} // Apply hover color style
-                  _active={{ bg: "#f3b9c5" }} // Apply active color style
-                >
-                  Register
-                </Button>
+                <Text fontSize={"xs"} pt={3}  w={"50%"} color={["white", "#54383E"]}>
+                    Already have an account? <Link to="/registerPage">Register</Link>
+                </Text>
               </Box>
             </Form>
           </Center>

@@ -12,7 +12,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 export function TimeForTeaCard() {
   return (
-    <Box bg={"white"} h={["30rem", "35rem", "25rem"]} w={"100%"}>
+    <Box bg={"white"} h={["30rem", "35rem", "25rem"]} w={"100%"} mb={7} mt={3}>
       <Container
         maxW={"container.xl"}
         h={"100%"}
