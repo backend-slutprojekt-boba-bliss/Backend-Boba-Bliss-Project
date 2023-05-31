@@ -7,6 +7,8 @@ import {
   FormLabel,
   Heading,
   Input,
+  Stack,
+  Text
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Form, Link, useNavigate } from "react-router-dom";
@@ -66,6 +68,9 @@ function RegisterPage() {
   const [emailError, setEmailError] = useState("");
   const [emailAlreadyRegistered, setEmailAlreadyRegistered] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  function navigateToLogin() {
+    navigate("/loginPage");
+  }
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -91,42 +96,97 @@ function RegisterPage() {
 
     setPasswordError(""); // Reset password error
     registerUser(email, password, navigate, setEmailAlreadyRegistered);
+
+    
   };
 
   return (
-    <Center minHeight="80vh" minWidth="100vw" bgColor="inherit">
-      <Form onSubmit={handleFormSubmit}>
-        <Heading as="h1" size="lg">
-          Register
-        </Heading>
+    <Center minHeight="90vh" minWidth="100vw"bg={["inherit"]}transition={"300ms ease"}>
+      <Center
+        w={["35rem"]}
+        h={["92vh"]}
+        bgImage={["none","url('/images/111.png')"]}
+        transition={"300ms ease"}
+        bgSize="contain"
+        bgRepeat="no-repeat"
+        bgPosition="center"
 
-        <FormControl isInvalid={!!emailError || !!emailAlreadyRegistered}>
-          <FormLabel>Email</FormLabel>
-          <Input id="email" name="email" type="text" />
-          <FormErrorMessage>
+      >
+        <Center>
+          <Center
+            bg={["#54383E","#ffd1da"]}
+            border={"2px"}
+            borderColor={"#54383E"}
+            transition={"300ms ease"}
+            w={"20rem"}
+            h={"20rem"}
+            borderRadius={"50%"}
+            mt={[0,10]}
+            p={10}
+          >
+            <Form onSubmit={handleFormSubmit}>
+              <Heading
+                as="h1"
+                size="lg"
+                textAlign={"center"}
+                pb={2}
+                color={["white", "#54383E"]}
+              >
+                Register
+              </Heading>
+
+              <FormControl pb={3} isInvalid={!!emailError || !!emailAlreadyRegistered}>
+                <FormLabel color={["white", "#54383E"]}>Email</FormLabel>
+                <Input
+                  id="email"
+                  name="email"
+                  type="text"
+                  bg={"white"}
+                  size={"sm"}
+
+                />
+                <FormErrorMessage>
             {emailError || emailAlreadyRegistered || " "}
           </FormErrorMessage>
-        </FormControl>
+              </FormControl>
 
-        <FormControl isInvalid={!!passwordError}>
-          <FormLabel>Password</FormLabel>
-          <Input id="password" name="password" type="password" />
-          <FormErrorMessage width="17rem">
-            {passwordError || " "}
-          </FormErrorMessage>
-        </FormControl>
+              <FormControl isInvalid={!!passwordError} >
+                <FormLabel color={["white", "#54383E"]}>Password</FormLabel>
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  bg={"white"}
+                  size={"sm"}
+                />
+                <FormErrorMessage>{passwordError || " "}</FormErrorMessage>
+              </FormControl>
 
-        <Box display={"Flex"} flexDirection={"column"}>
-          <Button width="full" type="submit" marginTop={"1em"}>
-            Register
-          </Button>
-          <Box display={"block"}>
-            <h2>
-              Already have an account? <Link to="/loginPage">Login</Link>
-            </h2>
-          </Box>
-        </Box>
-      </Form>
+              <Box display={"Flex"} justifyContent={"space-evenly"} alignItems={"center"}>
+
+                <Text fontSize={"xs"} pt={3} pl={2} w={"50%"} color={["white", "#54383E"]}>
+                    Already have an account? <Link to="/loginPage">Login</Link>
+                </Text>
+
+  
+            
+                <Button
+                  width="half"
+                  type="submit"
+                  marginTop={"1em"}
+                  size={"sm"}
+                  bg={"#EEA6B4"}
+                  _hover={{ bg: "#eca0af" }} // Apply hover color style
+                  _active={{ bg: "#f3b9c5" }} // Apply active color style
+                >
+                  Register
+                </Button>
+
+              </Box>
+            </Form>
+          </Center>
+        </Center>
+      </Center>
     </Center>
   );
 }
