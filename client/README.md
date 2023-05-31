@@ -1,6 +1,6 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-8d59dc4de5201274e310e4c54b9627a8934c3b88527886e3b421487c677d23eb.svg)](https://classroom.github.com/a/h5FXkH4A)
 
-# Boba webshop using React & Typescript by Mimmi, Caisa, Felicia och Leon
+# Boba webshop using React & Typescript by Mimmi, Linus, Hanna och Linus
 
 ## Installation
 
@@ -83,7 +83,7 @@ Ni ska vid presentationstillfället hålla i en muntlig presentation för klasse
 [] Administratörer ska kunna uppdatera antalet produkter i lager från admin delen av sidan (G)
 [x] Administratörer ska kunna se en lista på alla gjorda beställningar (G)
 
-- Detta löstes genom att map:a ut alla orders med ett fetchanrop
+- Detta löstes genom att hämta data från databasen med ett fetchanrop och sen mappade ut alla orders.  
   .
   [x] Sidans produkter ska delas upp i kategorier, en produkt ska tillhöra minst en kategori, men kan tillhöra flera (G)
 
