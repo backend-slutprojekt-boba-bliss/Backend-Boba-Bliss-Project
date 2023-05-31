@@ -57,7 +57,7 @@ export function AdminCard() {
           {!addPage && !editPage && (
             <Link to="/admin/product/new">
               <Button sx={orderButtonStyle} data-cy="admin-add-product">
-                Add product!
+                Add Product
               </Button>
             </Link>
           )}
