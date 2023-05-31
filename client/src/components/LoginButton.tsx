@@ -37,6 +37,7 @@ const LoginButton = () => {
       color={"darkChocolateBrown"}
       sx={loginbtn}
       size={"sm"}
+      borderRadius={"lg"}
     >
       {isLoggedIn ? (
         <Flex justify={"center"} align={"center"}>
@@ -57,7 +58,7 @@ const loginbtn = {
   border: "2px solid #54383E",
   transition: "400ms ease",
   _hover: {
-    backgroundColor: "#c8a59b",
+    backgroundColor: "#ACCDB5",
   },
 };
 

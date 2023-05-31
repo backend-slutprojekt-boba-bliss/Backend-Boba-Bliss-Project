@@ -29,41 +29,109 @@ function LoginPage() {
     const password = form.password.value;
 
     try {
-      loginUser(email, password);
+      await loginUser(email, password);
+      console.log(email, password);
       setLoginError(null);
       navigate("/");
-    } catch (error) {
-      setLoginError("Wrong email or password");
+    } catch (error: any) {
+      setLoginError(error.message);
+    }
+  };
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    if (value === "") {
+      setLoginError(null);
     }
   };
 
   return (
-    <Center minHeight="80vh" minWidth="100vw" bgColor="inherit">
-      <Form onSubmit={handleFormSubmit}>
-        <Heading as="h1" size="lg">
-          Log In
-        </Heading>
+    <Center minHeight="90vh" minWidth="100vw"bg={["inherit"]}transition={"300ms ease"}>
+      <Center
+        w={["35rem"]}
+        h={["92vh"]}
+        bgImage={["none","url('/images/111.png')"]}
+        transition={"300ms ease"}
+        bgSize="contain"
+        bgRepeat="no-repeat"
+        bgPosition="center"
 
-        <FormControl>
-          <FormLabel>Email</FormLabel>
-          <Input id="email" name="email" type="text" />
-        </FormControl>
+      >
+        <Center>
+          <Center
+            bg={["#54383E","#ACCDB5"]}
+            border={"2px"}
+            borderColor={"#54383E"}
+            transition={"300ms ease"}
+            w={"20rem"}
+            h={"20rem"}
+            borderRadius={"100%"}
+            mt={[0,10]}
+            p={10}
+          >
+            <Form onSubmit={handleFormSubmit}>
+              <Heading
+                as="h1"
+                size="lg"
+                textAlign={"center"}
+                pb={2}
+                color={["white", "#54383E"]}
+              >
+                Log In
+              </Heading>
 
-        <FormControl isInvalid={!!loginError}>
-          <FormLabel>Password</FormLabel>
-          <Input id="password" name="password" type="password" />
-          <FormErrorMessage>{loginError || " "}</FormErrorMessage>
-        </FormControl>
+              <FormControl pb={3} isInvalid={!!loginError}>
+                <FormLabel color={["white", "#54383E"]}>Email</FormLabel>
+                <Input
+                  id="email"
+                  name="email"
+                  type="text"
+                  bg={"white"}
+                  size={"sm"}
+                  onChange={handleInputChange}
+                />
+              </FormControl>
 
-        <Box display={"Flex"} justifyContent={"space-evenly"}>
-          <Button width="half" type="submit" marginTop={"1em"}>
-            Log In
-          </Button>
-          <Button width="half" onClick={navigateToRegister} marginTop={"1em"}>
-            Register
-          </Button>
-        </Box>
-      </Form>
+              <FormControl isInvalid={!!loginError && loginError.trim() !== ""}>
+                <FormLabel color={["white", "#54383E"]}>Password</FormLabel>
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  bg={"white"}
+                  size={"sm"}
+                  onChange={handleInputChange}
+                />
+                <FormErrorMessage>{loginError || " "}</FormErrorMessage>
+              </FormControl>
+
+              <Box display={"Flex"} justifyContent={"space-evenly"}>
+                <Button
+                  width="half"
+                  type="submit"
+                  marginTop="1em"
+                  size={"sm"}
+                  bg={"#FEE5BE"}
+                  _hover={{ bg: "#ffefd5" }} // Apply hover color style
+                  _active={{ bg: "#ffdfab" }} // Apply active color style
+                >
+                  Log In
+                </Button>
+                <Button
+                  width="half"
+                  onClick={navigateToRegister}
+                  marginTop={"1em"}
+                  size={"sm"}
+                  bg={"#EEA6B4"}
+                  _hover={{ bg: "#eca0af" }} // Apply hover color style
+                  _active={{ bg: "#f3b9c5" }} // Apply active color style
+                >
+                  Register
+                </Button>
+              </Box>
+            </Form>
+          </Center>
+        </Center>
+      </Center>
     </Center>
   );
 }

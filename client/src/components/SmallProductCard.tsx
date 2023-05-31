@@ -75,7 +75,9 @@ export function SmallProductCard({ product }: SmallProductCardProps) {
         data-cy="product-buy-button"
         sx={buttonStyle}
         onClick={handleAddToCartClick}
-        disabled={product.inStock === 0}
+        isDisabled={
+          product?.inStock === 0
+        }
       >
         Add to cart{" "}
       </Button>
@@ -95,7 +97,7 @@ const cardStyle = {
   transition: "0.3s ease-in-out",
   ":hover": {
     backgroundColor: "#f3e5d7",
-    transform: "scale(0.96)",
+    transform: "scale(0.98)",
   },
 };
 

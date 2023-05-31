@@ -62,12 +62,16 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
             }
             resolve();
           } else {
-            reject("Wrong email or password");
+            reject(new Error("Wrong email or password"));
           }
         })
         .catch((error) => {
-          console.log("An error occurred:", error);
-          reject(error.message);
+          if (error.response && error.response.status === 401) {
+            reject(new Error("Wrong username or password"));
+          } else {
+            console.log("An error occurred:", error);
+            reject(error);
+          }
         });
     });
   };
