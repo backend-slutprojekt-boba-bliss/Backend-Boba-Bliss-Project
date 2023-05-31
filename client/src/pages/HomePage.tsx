@@ -1,13 +1,12 @@
 import {
-    Box, Center,
-    Container,
-    Flex,
-    Heading,
-    Image,
-    Stack,
-    Text
+  Box, Center,
+  Container,
+  Flex,
+  Heading,
+  Image,
+  Stack,
+  Text
 } from "@chakra-ui/react";
-import { Products } from "../components/Products";
 import { TimeForTeaCard } from "../components/TimeForTeaCard";
 
 export function HomePage() {

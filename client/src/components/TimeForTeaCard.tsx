@@ -13,7 +13,7 @@ import { Link as RouterLink } from "react-router-dom";
 export function TimeForTeaCard() {
   return (
     // Main container with a background color and defined height and width
-    <Box bg={"CartBackgroundYellow"} h={["30rem", "35rem", "25rem"]} w={"100%"}>
+    <Box bg={"white"} h={["30rem", "35rem", "25rem"]} w={"100%"}>
       {/* Container with max-width and display properties */}
       <Container
         maxW={"container.xl"}
@@ -46,10 +46,13 @@ export function TimeForTeaCard() {
               We've got something for everyone, and we know you'll find your
               next favorite on our menu.
             </Text>
-            <ChakraLink>
+            <ChakraLink
+            as={RouterLink}
+            to= "/products">
+              
             <Button
-              as={RouterLink}
-              to= "/products"
+              
+              
               color={"white"}
               fontSize={[13, 13, 14]}
               backgroundColor={"darkPinkButton"}
