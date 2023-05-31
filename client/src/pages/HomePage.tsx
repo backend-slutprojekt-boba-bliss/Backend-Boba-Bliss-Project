@@ -1,13 +1,12 @@
 import {
-    Box, Center,
-    Container,
-    Flex,
-    Heading,
-    Image,
-    Stack,
-    Text
+  Box, Center,
+  Container,
+  Flex,
+  Heading,
+  Image,
+  Stack,
+  Text
 } from "@chakra-ui/react";
-import { Products } from "../components/Products";
 import { TimeForTeaCard } from "../components/TimeForTeaCard";
 
 export function HomePage() {
@@ -93,16 +92,14 @@ export function HomePage() {
         bg={"pink"}
         marginBottom={["8rem", "8rem", "5rem", "8rem"]}
       />
-      <Products />
+
       <TimeForTeaCard />
     </Box>
   );
 }
 
 const gradientBackground = {
-  background: "rgb(254, 211, 212)",
-  backgroundImage:
-    "linear-gradient(0deg, rgba(254, 211, 212, 1) 0%, rgba(255, 241, 221, 1) 47%, rgba(254, 211, 212, 1) 100%, rgba(255, 255, 255, 1) 100%)",
+  background: "#FED3D4",
   width: "100%",
   height: "20rem",
   color: "lightBrownText",
@@ -110,7 +107,7 @@ const gradientBackground = {
 };
 
 const bigGradient = {
-  backgroundImage: "linear-gradient(to bottom, transparent 22%, #FED3D4)",
+  backgroundImage: "linear-gradient(to bottom, transparent 90%, #FED3D4)",
   backgroundColor: "#fffaf4",
 };
 

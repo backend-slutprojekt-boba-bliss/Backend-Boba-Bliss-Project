@@ -5,6 +5,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Button,
+  Container,
   Flex,
   Heading,
   Icon,
@@ -63,17 +64,18 @@ export function BigProductCard({
 
   // Style object for the whole container
   const cardStyle = {
-    height: "85vh",
+    height: "90vh",
     width: "100%",
+    display: "flex",
+    position: "relative",
     bgGradient: `linear(${product.bgColor} 30%, yellow.50 90%)`,
   };
 
   // Style object for round background
   const roundBG = {
-    marginTop: ".5rem",
     backgroundColor: `${product.bgColor}`,
-    height: ["20rem", "20rem", "18.5rem", "25rem", "28rem"],
-    width: ["20rem", "20rem", "18.5rem", "25rem", "28rem"],
+    height: ["15rem", "16rem", "17rem", "25rem", "25rem"],
+    width: ["15rem", "16rem", "17rem", "25rem", "25rem"],
     borderRadius: "50%",
     border: "2px solid darkBrownText",
     position: "relative",
@@ -104,7 +106,7 @@ export function BigProductCard({
 
   // Hide the card and navigates back to home page
   const handleClose = () => {
-    navigate("/");
+    navigate("/products");
   };
 
   // Detect clicks outside the card and triggers the handleClose function
@@ -113,8 +115,23 @@ export function BigProductCard({
     handler: () => handleClose(),
   });
 
+  const buttonStyle = {
+    color: "darkChocolateBrown",
+    borderRadius: "4rem",
+    _hover: {
+      bgGradient: `linear(${product.bgColor} 10%, yellow.50 100%)`,
+    },
+  };
+  
+
   return (
-    <Box ref={cardRef} sx={cardStyle}>
+    <Box
+      ref={cardRef}
+      sx={cardStyle}
+      justifyContent={["flex-end", "center"]}
+      alignItems={["flex-end", "flex-end", "center"]}
+      pb={5}
+    >
       <Breadcrumb
         sx={breadcrumbStyle}
         spacing="8px"
@@ -127,7 +144,7 @@ export function BigProductCard({
         </BreadcrumbItem>
 
         <BreadcrumbItem>
-          <BreadcrumbLink as={Link} to="/" onClick={() => navigate("/")}>
+          <BreadcrumbLink as={Link} to="/products" onClick={() => navigate("/products")}>
             Products
           </BreadcrumbLink>
         </BreadcrumbItem>
@@ -143,14 +160,17 @@ export function BigProductCard({
         icon={<ArrowBackIcon />}
         onClick={handleClose}
       />
-      <Flex
-        w={"100%"}
-        h={"100%"}
-        direction={["column-reverse", "column-reverse", "row", "row"]}
-        justify={"center"}
+      <Container
+        w={["90%"]}
+        maxW={"80rem"}
+        h={["90%", "90%", "65%", "85%"]}
+        display={"flex"}
+        flexDirection={["column-reverse", "column-reverse", "row", "row"]}
+        justifyContent={"center"}
         alignItems={"center"}
-        padding={"1%"}
-        marginTop={"-2rem"}
+        bg={"#fffdf9"}
+        borderRadius={"1rem"}
+        boxShadow="1px 5px 5px gray"
       >
         <Flex
           direction={["column-reverse", "column-reverse", "row", "row"]}
@@ -163,20 +183,19 @@ export function BigProductCard({
           ]}
           alignItems={["center", "center", "space-evenly", "space-evenly"]}
           sx={boxStyling}
-          h={["50%", "50%", "80%"]}
+          h={["40%", "50%", "80%"]}
           w={["80%", "70%", "60%", "60%"]}
-          marginTop={"-2rem"}
         >
           <Flex
             direction={"column"}
             h={"100%"}
             justifyContent={"center"}
-            gap={[0, 1, 3, 4]}
-            marginTop={"-2rem"}
+            gap={[2, 2, 4,4]}
+            maxW={"25rem"}
           >
             <Heading
               data-cy="product-title"
-              fontSize={["1.5rem", "1.7rem", "2rem", "2.5rem"]}
+              fontSize={["1.3rem", "1.7rem", "2rem", "2.5rem"]}
             >
               {product.title}
             </Heading>
@@ -186,41 +205,40 @@ export function BigProductCard({
             >
               ${product.price}
             </Heading>
-            <Text data-cy="product-description">{product.description}</Text>
             <Box>
-              <Flex>
-                <Button sx={buttonStyle} onClick={decreaseQuantity}>
-                  -
-                </Button>
-                <Text sx={quantityStyling}>{quantity}</Text>
-                <Button sx={buttonStyle} onClick={increaseQuantity}>
-                  +
-                </Button>
+            <Text data-cy="product-description" mb={1}>{product.description}</Text>
+            <Text fontSize="xs">
+              {product.inStock === 0 ? "Out of Stock!" : `Hurry! Only: ${product.inStock} in Stock!`}
+              </Text>
+            </Box>
+            <Box>
+              <Flex justify={["center", "center", "flex-start"]}>
+                <Flex justify={"space-between"} w={["50%","50%","30%"]}>
+                  <Button sx={buttonStyle} onClick={decreaseQuantity} bg={product.bgColor}>
+                    -
+                  </Button>
+                  <Text sx={quantityStyling}>{quantity}</Text>
+                  <Button sx={buttonStyle} onClick={increaseQuantity} bg={product.bgColor} >
+                    +
+                  </Button>
+                </Flex>
                 <Button
                   data-cy="product-buy-button"
                   sx={addButtonStyle}
+                  marginLeft={5}
                   onClick={() => addToCart(product, quantity)}
+                  isDisabled={product?.inStock === 0 || quantity > (product?.inStock || 0)}
                 >
                   <Icon sx={addToCartButtonStyle} as={FaCartPlus}></Icon>
                 </Button>
               </Flex>
             </Box>
           </Flex>
-          {/* <Box display={["none", "none", "none"]}>
-            <Text>Allergens:</Text>
-            <Flex direction="column" align={["center", "center", "left"]}>
-              <Text sx={inputText}>{product.allergens}</Text>
-            </Flex>
-            <Text>Ingredients:</Text>
-            <Flex direction="column" align={["center", "center", "left"]}>
-              <Text sx={inputText}>{product.ingredients}</Text>
-            </Flex>
-          </Box> */}
         </Flex>
         <Box
           sx={boxStyling}
-          h={["70%", "50%", "80%", "80%"]}
-          w={["80%", "70%", "40%", "45%"]}
+          h={["50%", "45%", "80%", "80%"]}
+          w={["70%", "70%", "40%", "45%"]}
         >
           <Box sx={roundBG}>
             <Box as="div" sx={backgroundImageWrapper}>
@@ -233,7 +251,7 @@ export function BigProductCard({
             </Box>
           </Box>
         </Box>
-      </Flex>
+      </Container>
     </Box>
   );
 }
@@ -241,17 +259,19 @@ export function BigProductCard({
 //Style object for breadcrumbs
 const breadcrumbStyle = {
   padding: "1rem",
+  position: "absolute",
+  top: "0",
+  left: "0",
 };
 
 // Style object for product image
 const imageStyle = {
   position: "absolute",
-  top: ["40%", "40%", "40%", "40%"],
+  top: ["45%", "45%", "45%", "45%"],
   left: "50%",
   transform: "translate(-50%, -50%)",
-  objectFit: "cover",
-  width: ["40%", "40%", "40%", "40%"],
-  zIndex: "200",
+  width: ["40%", "40%", "40%", "45%"],
+  zIndex: "5000",
 };
 
 // Style object for close button
@@ -279,22 +299,24 @@ const quantityStyling = {
   alignItems: "center",
   justifyContent: "center",
   minHeight: "1.5rem",
-  mx: "1rem",
 };
 
 // Styled object for -decrease +increase buttons
-const buttonStyle = {
-  backgroundColor: "darkGreenButton",
-  color: "white",
-  borderRadius: "4rem",
-  mx: "1rem",
-};
 
 // Styled object for add to cart button
 const addButtonStyle = {
   backgroundColor: "yellowButton",
   borderRadius: "4rem",
   width: "5rem",
+  _hover: {
+    backgroundColor: "#ffdda6",
+    color: "black"
+  },
+  _active: {
+    backgroundColor: "#ffefd6",
+    color: "black"
+  },
+
 };
 
 // Styled object for cart icon

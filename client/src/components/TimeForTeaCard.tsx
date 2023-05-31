@@ -1,17 +1,19 @@
 import {
   Box,
   Button,
+  Link as ChakraLink,
   Container,
   Flex,
   Heading,
   Image,
   Text
 } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 
 export function TimeForTeaCard() {
   return (
     // Main container with a background color and defined height and width
-    <Box bg={"CartBackgroundYellow"} h={["30rem", "35rem", "25rem"]} w={"100%"}>
+    <Box bg={"white"} h={["30rem", "35rem", "25rem"]} w={"100%"}>
       {/* Container with max-width and display properties */}
       <Container
         maxW={"container.xl"}
@@ -44,7 +46,13 @@ export function TimeForTeaCard() {
               We've got something for everyone, and we know you'll find your
               next favorite on our menu.
             </Text>
+            <ChakraLink
+            as={RouterLink}
+            to= "/products">
+              
             <Button
+              
+              
               color={"white"}
               fontSize={[13, 13, 14]}
               backgroundColor={"darkPinkButton"}
@@ -55,6 +63,7 @@ export function TimeForTeaCard() {
             >
               See all drinks
             </Button>
+            </ChakraLink>
           </Box>
         </Flex>
         {/* Container for the image with height, width, min-width and overflow */}

@@ -11,7 +11,6 @@ import {
 import { AuthContextProvider } from "../src/contexts/AuthContext.";
 import App from "./App";
 import { NotFound } from "./components/NotFound";
-import AdminRouteGuard from "./components/routeGuard";
 import { CartProvider } from "./contexts/CartContext";
 import { ProductProvider } from "./contexts/ProductContext";
 import { OrderProvider } from "./contexts/orderContext";
@@ -23,6 +22,7 @@ import { HomePage } from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import { ProductPage } from "./pages/ProductPage";
 import RegisterPage from "./pages/RegisterPage";
+import { SuperProductsPage } from "./pages/SuperProductPage";
 
 //extent the theme
 
@@ -77,6 +77,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />}>
       <Route index element={<HomePage />} />
       <Route path="product/:id" element={<ProductPage />} />
+      <Route path="products" element={<SuperProductsPage />} />
       <Route path="checkout" element={<CheckoutPage />} />
       <Route path="confirmation/:id" element={<ConfirmationPage />} />
       <Route path="registerPage" element={<RegisterPage />} />

@@ -8,6 +8,10 @@ interface ProductsLayoutProps {
   products: Product[];
 }
 
+interface ProductsLayoutProps {
+  products: Product[];
+}
+
 export function ProductsLayout({ products }: ProductsLayoutProps) {
   return (
     <Flex
@@ -18,11 +22,9 @@ export function ProductsLayout({ products }: ProductsLayoutProps) {
       width={["100%", "100%", "100%", "70%"]}
       display={"flex"}
     >
-      {/* Iterate through the products and render SmallProductCard components */}
       {products.map((product) => (
         <Box sx={boxStyle} key={product._id}>
-          {/* Wrap each SmallProductCard with a link for navigation */}
-          <Link key={product._id} to={`/product/${product._id}`}>
+          <Link to={`/product/${product._id}`}>
             <SmallProductCard product={product} />
           </Link>
         </Box>

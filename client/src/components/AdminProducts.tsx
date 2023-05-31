@@ -33,7 +33,7 @@ export function AdminProducts() {
           gap={1} 
         >
           <AdminOrders />
-          <Box as="aside" width={["100%", "100%", "96%", "40%"]} position="relative">
+          <Box as="aside" width={["100%", "100%", "96%", "40%"]} position="sticky">
             <AdminCard />
             <Card sx={cartStyle}>
               <Button sx={orderButtonStyle} onClick={handleButtonOnClick}>
@@ -59,7 +59,7 @@ export function AdminProducts() {
         gap={1}
       >
         <AdminProductsLayout />
-        <Box as="aside" width={["100%", "100%", "96%", "40%"]} position="relative">
+        <Box as="aside" width={["100%", "100%", "96%", "40%"]} position="sticky">
           <AdminCard />
           <Card sx={cartStyle}>
             <Button sx={orderButtonStyle} onClick={handleButtonOnClick}>

@@ -101,14 +101,14 @@ export function CheckoutForm() {
                 <Box sx={formBoxStyle}>
                   <Stack spacing={4}>
                     <FormControl>
-                      <FormLabel my=".5rem">firstName</FormLabel>
+                      <FormLabel my=".3rem">First Name</FormLabel>
                       <Input
                         border="1px solid black"
                         data-cy="customer-firstName"
                         id="firstName"
                         name="firstName"
                         type="text"
-                        placeholder="firstName"
+                        placeholder="First Name"
                         autoComplete="firstName"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -124,14 +124,14 @@ export function CheckoutForm() {
                       ) : null}
                     </FormControl>
                     <FormControl>
-                      <FormLabel my=".5rem">lastName</FormLabel>
+                      <FormLabel my=".3rem">Last Name</FormLabel>
                       <Input
                         border="1px solid black"
                         data-cy="customer-lastName"
                         id="lastName"
                         name="lastName"
                         type="text"
-                        placeholder="lastName"
+                        placeholder="Last Name"
                         autoComplete="lastName"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -151,7 +151,7 @@ export function CheckoutForm() {
                         !!(formik.touched.street && formik.errors.street)
                       }
                     >
-                      <FormLabel my=".5rem">Street</FormLabel>
+                      <FormLabel my=".3rem">Street</FormLabel>
                       <Input
                         border="1px solid black"
                         data-cy="customer-address"
@@ -179,7 +179,7 @@ export function CheckoutForm() {
                         !!(formik.touched.zipCode && formik.errors.zipCode)
                       }
                     >
-                      <FormLabel my=".5rem">Zip Code</FormLabel>
+                      <FormLabel my=".3rem">Zip Code</FormLabel>
                       <Input
                         border="1px solid black"
                         data-cy="customer-zipcode"
@@ -205,14 +205,14 @@ export function CheckoutForm() {
                     <FormControl
                       isInvalid={!!(formik.touched.city && formik.errors.city)}
                     >
-                      <FormLabel my=".5rem">City</FormLabel>
+                      <FormLabel my=".3rem">City</FormLabel>
                       <Input
                         border="1px solid black"
                         data-cy="customer-city"
                         id="city"
                         name="city"
                         type="text"
-                        placeholder="city"
+                        placeholder="City"
                         autoComplete="address-level2"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
