@@ -4,26 +4,36 @@ import { OrderModel } from "./orderModel";
 import { createOrderSchema } from "./orderYupValidationScema";
 
 export async function getAllOrders(req: Request, res: Response) {
-    try {
-        const orders = await OrderModel.find({});
-        res.status(200).json(orders);
-      } catch (error) {
-        res.status(500).json({ message: "Error fetching orders" });
-      }
+  try {
+    const orders = await OrderModel.find({});
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching orders" });
+  }
 }
 
 export async function getOrderById(req: Request, res: Response) {
   try {
     const orderId = req.params.id;
-    const order = await OrderModel.findById(orderId).populate('user');
+    const order = await OrderModel.findById(orderId).populate("user");
     if (!order) {
       return res.status(404).json(`Order ${orderId} not found`);
     }
-    console.log("reqsession user:",req.session!.user._id, "order creator:",  order.user!._id)
+    console.log(
+      "reqsession user:",
+      req.session!.user._id,
+      "order creator:",
+      order.user!._id
+    );
     // Check if the user ID from the session matches the order user ID
-    const orderUser = order.user!._id.toString() 
-    console.log("reqsession user:",req.session!.user._id, "order creator:",  orderUser)
-    if (req.session!.user._id !==  orderUser) {
+    const orderUser = order.user!._id.toString();
+    console.log(
+      "reqsession user:",
+      req.session!.user._id,
+      "order creator:",
+      orderUser
+    );
+    if (req.session!.user._id !== orderUser) {
       return res.status(403).json(`Unauthorized access to order ${orderId}`);
     }
 
@@ -50,14 +60,14 @@ export async function getLoggedInUserOrders(req: Request, res: Response) {
 }
 
 export async function createOrder(req: Request, res: Response) {
-
   //Validera inkommande order data
   try {
     await createOrderSchema.validate(req.body);
   } catch (error) {
-    if(error instanceof Error){
+    if (error instanceof Error) {
       res.status(400).json(error.message);
-    return;}
+      return;
+    }
   }
 
   const products = req.body.products;
@@ -73,7 +83,9 @@ export async function createOrder(req: Request, res: Response) {
         }
         // Kollar om lagerstatus är tillräcklig
         if (product.quantity > productData.inStock) {
-          return res.status(400).json({ error: "Quantity of product exceeds stock!" });
+          return res
+            .status(400)
+            .json({ error: "Quantity of product exceeds stock!" });
         }
         // minskar produktens lager med quantity och uppdaterar i databasen
         productData.inStock -= product.quantity;
@@ -85,7 +97,12 @@ export async function createOrder(req: Request, res: Response) {
       })
     );
     if (productDetails.length === 0) {
-      return res.status(400).json({ error: "Empty order! No products in this order. Please add something to cart before placing order." });
+      return res
+        .status(400)
+        .json({
+          error:
+            "Empty order! No products in this order. Please add something to cart before placing order.",
+        });
     }
 
     // Set user of order to user
@@ -116,18 +133,18 @@ export async function createOrder(req: Request, res: Response) {
 }
 
 export async function toggleIsSent(req: Request, res: Response) {
-  const order = await OrderModel.findById(req.params.id); 
+  const order = await OrderModel.findById(req.params.id);
   try {
-    if(!order) {
-      res.status(404).json(`Order ${req.params.id} not found`)
-      return
+    if (!order) {
+      res.status(404).json(`Order ${req.params.id} not found`);
+      return;
     }
-     order.isSent = !order.isSent;
-     await order.save()
-      res.status(200).json(order);
-    } catch (error) {
-      res.status(500).json({ message: "Error fetching order" });
-    }
+    order.isSent = !order.isSent;
+    await order.save();
+    res.status(200).json(order);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching order" });
+  }
 }
 
 export async function deleteOrder(req: Request, res: Response) {
@@ -149,5 +166,4 @@ export async function deleteOrder(req: Request, res: Response) {
   } catch (error) {
     res.status(500).json({ message: "Error deleting order" });
   }
-  
 }

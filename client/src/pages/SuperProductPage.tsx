@@ -1,6 +1,4 @@
-import {
-    Box
-} from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { Products } from "../components/Products";
 
 export function SuperProductsPage() {

@@ -1,11 +1,12 @@
 import {
-  Box, Center,
+  Box,
+  Center,
   Container,
   Flex,
   Heading,
   Image,
   Stack,
-  Text
+  Text,
 } from "@chakra-ui/react";
 import { TimeForTeaCard } from "../components/TimeForTeaCard";
 
@@ -39,7 +40,7 @@ export function HomePage() {
           >
             Boba Bliss
           </Heading>
-          <Text 
+          <Text
             fontWeight={600}
             fontSize={["1.5rem", "1.3rem", "1.6rem", "1.6rem"]}
             color={"lightBrownText"}
@@ -80,8 +81,7 @@ export function HomePage() {
             justifyContent="flex-start"
             marginTop="40px"
             display={["none", "none", "none", "flex"]}
-          >
-          </Stack>
+          ></Stack>
         </Container>
       </Flex>
       <Image

@@ -20,8 +20,11 @@ import { FaTruckMoving } from "react-icons/fa";
 import { useCart } from "../contexts/CartContext";
 import { CreateOrderReturnType } from "../contexts/orderContext";
 
-
-export function OrderConfirmationCard({ order }: { order: CreateOrderReturnType | null }) {
+export function OrderConfirmationCard({
+  order,
+}: {
+  order: CreateOrderReturnType | null;
+}) {
   const { cartList } = useCart();
 
   const cardBodyFontSize = useBreakpointValue({ base: "1rem", sm: "1.2rem" });
@@ -36,10 +39,10 @@ export function OrderConfirmationCard({ order }: { order: CreateOrderReturnType 
   }
 
   const totalPrice = order.products.reduce(
-    (total:number, product: any) => total + product.quantity * product.price,
+    (total: number, product: any) => total + product.quantity * product.price,
     0
   );
- 
+
   return (
     <Card sx={cartStyle}>
       <Flex sx={flexStyle}>

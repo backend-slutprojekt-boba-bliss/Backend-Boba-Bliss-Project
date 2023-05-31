@@ -11,9 +11,8 @@ type Order = {
 };
 
 type OrderContextType = {
-
   createOrder: (customer: Customer) => Promise<CreateOrderReturnType>;
-  orderId: null | string, // Initialize orderId to null
+  orderId: null | string; // Initialize orderId to null
 };
 export type CreateOrderReturnType = {
   _id: string;
@@ -41,10 +40,8 @@ export type CreateOrderReturnType = {
   __v: number;
 };
 
-
-
 export const OrderContext = createContext<OrderContextType>({
-  createOrder: ((customer:Customer) => {}) as any,
+  createOrder: ((customer: Customer) => {}) as any,
   orderId: null, // Initialize orderId to null
 });
 
@@ -58,44 +55,38 @@ type Props = {
 
 export function OrderProvider({ children }: Props) {
   const { cartList, clearCart } = useCart();
-  const [orderId, setOrderId] = useState<string | null>(null); 
+  const [orderId, setOrderId] = useState<string | null>(null);
 
+  const createOrder = async (customer: Customer) => {
+    const itemList = cartList.map((item) => ({
+      _id: item._id,
+      quantity: item.quantity,
+    }));
 
-  const createOrder = async (customer:Customer) => {
-    const itemList = cartList.map(item => ({ _id: item._id, quantity: item.quantity }));
-  
     const deliveryAddress = {
       firstName: customer.firstName,
       lastName: customer.lastName,
       street: customer.street,
       zipCode: customer.zipCode,
-      city: customer.city
+      city: customer.city,
     };
-  
+
     const newOrder = { products: itemList, deliveryAddress };
-  
-    
-      const response = await axios.post('/api/orders', newOrder, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        
-          console.log('Order created:', response.data);
-          setOrderId(response.data._id)
-          clearCart(cartList); // Clear cart after creating order
-      return response.data
-    
-    }
-  
 
+    const response = await axios.post("/api/orders", newOrder, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
- 
+    console.log("Order created:", response.data);
+    setOrderId(response.data._id);
+    clearCart(cartList); // Clear cart after creating order
+    return response.data;
+  };
 
   return (
-    <OrderContext.Provider
-      value={{orderId, createOrder }}
-    >
+    <OrderContext.Provider value={{ orderId, createOrder }}>
       {children}
     </OrderContext.Provider>
   );

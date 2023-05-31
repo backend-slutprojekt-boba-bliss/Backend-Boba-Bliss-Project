@@ -82,10 +82,10 @@ const router = createBrowserRouter(
       <Route path="confirmation/:id" element={<ConfirmationPage />} />
       <Route path="registerPage" element={<RegisterPage />} />
       <Route path="loginPage" element={<LoginPage />} />
-      <Route path="/admin" element={<AdminPage/>}>
-        <Route path="product/:id" element={<AdminPage/>}/>
-        <Route path="product/new" element={<AdminPage/>}/>
-	  </Route>
+      <Route path="/admin" element={<AdminPage />}>
+        <Route path="product/:id" element={<AdminPage />} />
+        <Route path="product/new" element={<AdminPage />} />
+      </Route>
       <Route path="*" element={<NotFound />} />
     </Route>
   )

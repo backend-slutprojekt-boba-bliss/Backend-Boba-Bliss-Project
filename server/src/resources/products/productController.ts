@@ -16,7 +16,6 @@ export async function getAllProducts(req: Request, res: Response) {
 
 // CREATE PRODUCT
 export async function createProduct(req: Request, res: Response) {
-
   try {
     await ProductSchema.validate(req.body);
   } catch (error) {
@@ -35,7 +34,6 @@ export async function createProduct(req: Request, res: Response) {
 
 // EDIT PRODUCT
 export async function editProduct(req: Request, res: Response) {
-
   try {
     await editProductSchema.validate(req.body);
   } catch (error) {
@@ -77,7 +75,6 @@ export async function editProduct(req: Request, res: Response) {
 
 // DELETE PRODUCT
 export async function deleteProduct(req: Request, res: Response) {
-
   try {
     const product = await ProductModel.findById(req.params.id);
     if (!product) {

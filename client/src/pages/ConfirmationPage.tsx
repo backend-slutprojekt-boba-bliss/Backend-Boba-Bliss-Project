@@ -4,19 +4,18 @@ import {
   Container,
   Flex,
   Heading,
-  SystemStyleObject
+  SystemStyleObject,
 } from "@chakra-ui/react";
-import axios from 'axios';
+import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { OrderConfirmationCard } from "../components/OrderConfirmationCard";
 import { CreateOrderReturnType, OrderContext } from "../contexts/orderContext";
 
-
 export function ConfirmationPage() {
   const { id } = useParams();
   const { orderId } = useContext(OrderContext);
-  console.log (orderId)
+  console.log(orderId);
 
   const [order, setOrder] = useState<CreateOrderReturnType | null>(null);
 
@@ -36,26 +35,28 @@ export function ConfirmationPage() {
     }
   }, [id]);
 
-
-
   return (
     <Container sx={checkoutContainer} maxW="container.md">
       <OrderConfirmationCard order={order} />
       <Flex sx={informationContainer}>
-      <div>
+        <div>
           {order ? (
             <div>
-              <Heading size={"md"} pb={2}>Delivery details:</Heading>
-              <p>Name: {order?.deliveryAddress.firstName} {order?.deliveryAddress.lastName}</p>
+              <Heading size={"md"} pb={2}>
+                Delivery details:
+              </Heading>
+              <p>
+                Name: {order?.deliveryAddress.firstName}{" "}
+                {order?.deliveryAddress.lastName}
+              </p>
               <p>Street: {order?.deliveryAddress.street}</p>
               <p>Zip Code: {order?.deliveryAddress.zipCode}</p>
               <p>City: {order?.deliveryAddress.city}</p>
-              
             </div>
           ) : (
             <p>Loading order details...</p>
           )}
-          </div>
+        </div>
       </Flex>
       <Flex>
         <ChakraLink
