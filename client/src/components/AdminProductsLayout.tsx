@@ -3,7 +3,6 @@ import { useProduct } from "../contexts/ProductContext";
 import { AdminSmallProductCard } from "./AdminSmallProductCard";
 
 export function AdminProductsLayout() {
-  // Get the productsList from the ProductContext
   const { productList } = useProduct();
   return (
     <Flex
@@ -23,7 +22,6 @@ export function AdminProductsLayout() {
   );
 }
 
-// Custom style for box component
 const boxStyle = {
   width: [
     "calc(100%/2.08)",

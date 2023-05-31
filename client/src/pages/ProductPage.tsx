@@ -18,7 +18,6 @@ export function ProductPage() {
       <BigProductCard
         product={product}
         backgroundUrl="/images/bubble-background-1.png"
-        backgroundAlt="net"
       />
     </Box>
   );

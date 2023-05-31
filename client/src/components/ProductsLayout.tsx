@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Product } from "../data";
 import { SmallProductCard } from "./SmallProductCard";
 
-// Three categories: fruit, milk or null (all)
 interface ProductsLayoutProps {
   products: Product[];
 }
@@ -33,7 +32,6 @@ export function ProductsLayout({ products }: ProductsLayoutProps) {
   );
 }
 
-// Custom style for box component
 const boxStyle = {
   width: [
     "calc(100%/2.08)",

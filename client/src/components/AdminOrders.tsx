@@ -1,14 +1,11 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import {
-  Button,
   Card,
   CardBody,
   CardHeader,
   Flex,
   IconButton,
-  ListIcon,
   ListItem,
-  SystemStyleObject,
   Text,
   UnorderedList,
   useBreakpointValue,
@@ -118,7 +115,6 @@ export function AdminOrders() {
   );
 }
 
-// Custom style for box component
 
 const thumbNailStyle = {
   width: "2rem",

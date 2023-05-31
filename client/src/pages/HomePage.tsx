@@ -110,21 +110,3 @@ const bigGradient = {
   backgroundImage: "linear-gradient(to bottom, transparent 90%, #FED3D4)",
   backgroundColor: "#fffaf4",
 };
-
-const buttonStyling = {
-  colorScheme: "brown",
-  variant: "outline",
-  borderRadius: "50px",
-  border: "2px",
-  padding: "1.5rem",
-  fontFamily: "Comfortaa",
-  background: "none",
-  transition: "all 250ms ease-in-out",
-  _hover: {
-    color: "white",
-  },
-  _active: {
-    background: "none",
-    transform: "scale(0.96)",
-  },
-};

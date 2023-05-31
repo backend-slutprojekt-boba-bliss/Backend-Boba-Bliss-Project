@@ -24,12 +24,9 @@ interface SmallProductCardProps {
 }
 
 export function AdminSmallProductCard({ product, id }: SmallProductCardProps) {
-  // Manage the state of the AlertDialog component for confirming product deletion
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // Cancel button reference in the AlertDialog
   const cancelRef = React.useRef<HTMLButtonElement>(null);
 
-  // Get the deleteProduct and editProduct functions from the ProductContext
   const { deleteProduct, editProduct } = useProduct();
 
   const roundBG = {
@@ -44,7 +41,6 @@ export function AdminSmallProductCard({ product, id }: SmallProductCardProps) {
     boxShadow: "1px 5px 5px gray",
   };
 
-  // Handle the product deletion process
   const handleDelete = () => {
     deleteProduct(product._id);
     onClose();
@@ -124,7 +120,6 @@ export function AdminSmallProductCard({ product, id }: SmallProductCardProps) {
   );
 }
 
-// Style object for card
 const cardStyle = {
   backgroundColor: "lightYellow",
   boxShadow: "3px 3px 5px gray",
@@ -139,7 +134,6 @@ const cardStyle = {
   },
 };
 
-// Style object for header
 const headerStyle = {
   textAlign: "center",
   color: "darkBrownText",
@@ -154,7 +148,6 @@ const textStyle = {
   fontSize: ["1rem", "1rem", "1.4rem"],
 };
 
-// Style object for button
 const buttonStyle = {
   margin: "5%",
   backgroundColor: "#f5c945",
@@ -165,7 +158,6 @@ const buttonStyle = {
   },
 };
 
-// Style object for delete button
 const deleteButtonStyle = {
   margin: "5%",
   backgroundColor: "#eb3f3f",
@@ -176,7 +168,6 @@ const deleteButtonStyle = {
   },
 };
 
-// Style object for product image
 const imageStyle = {
   position: "absolute",
   top: "50%",

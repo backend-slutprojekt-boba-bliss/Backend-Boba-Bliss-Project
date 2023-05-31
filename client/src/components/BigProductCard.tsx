@@ -16,7 +16,6 @@ import {
   useOutsideClick,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
-
 import { FaCartPlus } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../contexts/CartContext";
@@ -25,18 +24,14 @@ import { Product } from "../data";
 interface BigProductCardProps {
   product: Product;
   backgroundUrl: string;
-  backgroundAlt: string;
 }
 
 export function BigProductCard({
   product,
   backgroundUrl,
-  backgroundAlt,
 }: BigProductCardProps) {
-  // Access cart-related functions from the CartContext
-  const { addToCart, removeFromCart, cartList } = useCart();
+  const { addToCart } = useCart();
 
-  // Set up quantity state and handlers for increasing and decreasing quantity by 1
   const [quantity, setQuantity] = useState(1);
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -54,8 +49,6 @@ export function BigProductCard({
   const cardRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
 
-  // Set up visible state and the handleClose function to hide the card and navigate to the home page
-  const [visible, setVisible] = useState(true);
   const closeButtonSize = useBreakpointValue({
     base: "sm",
     md: "md",
@@ -104,12 +97,10 @@ export function BigProductCard({
     backgroundPosition: "center",
   });
 
-  // Hide the card and navigates back to home page
   const handleClose = () => {
     navigate("/products");
   };
 
-  // Detect clicks outside the card and triggers the handleClose function
   useOutsideClick({
     ref: cardRef,
     handler: () => handleClose(),
@@ -305,7 +296,6 @@ const xButton = {
   },
 };
 
-// Style object for padding
 const boxStyling = {
   padding: "3%",
 };
@@ -318,7 +308,6 @@ const quantityStyling = {
   minHeight: "1.5rem",
 };
 
-// Styled object for -decrease +increase buttons
 
 // Styled object for add to cart button
 const addButtonStyle = {

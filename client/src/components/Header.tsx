@@ -28,7 +28,6 @@ import LoginButton from "./LoginButton";
 export function Header() {
   const { isAdmin } = useContext(AuthContext);
   const { totalItems } = useCart();
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isMobileView, setIsMobileView] = useState(false);
 
@@ -62,7 +61,6 @@ export function Header() {
   return (
     <Container as="header" sx={containerStyle}>
       <Flex as="nav" sx={flexStyle}>
-        {/* LOGO */}
         <HStack>
           <ChakraLink as={RouterLink} to="/" sx={linkStyles}>
             <Image src="/images/bobablissiconupdate.png" alt="Logo" sx={logo} />
@@ -77,7 +75,6 @@ export function Header() {
         </HStack>
         <Spacer />
 
-        {/* LINKS */}
         {!isMobileView ? (
           <Box>
             <HStack spacing="1rem" whiteSpace="nowrap">

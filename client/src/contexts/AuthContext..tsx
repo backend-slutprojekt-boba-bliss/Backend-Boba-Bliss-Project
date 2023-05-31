@@ -80,7 +80,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       })
         .then((response) => {
           if (response.ok) {
-            setIsLoggedIn(false); // Update isLoggedIn state in the context
+            setIsLoggedIn(false);
             setIsAdmin(false);
 
             console.log("Logout successful");

@@ -26,7 +26,6 @@ export function ConfirmationPage() {
         const fetchedOrder = response.data;
         setOrder(fetchedOrder);
       } catch (error) {
-        // Handle error
       }
     };
 

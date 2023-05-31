@@ -33,14 +33,13 @@ function calculateTotalItems(cartList: CartItem[]) {
 
 export function CartProvider({ children }: Props) {
   const [cartList, setCartList] = useLocalStorageState<CartItem[]>([], "cart");
-
   const [totalItems, setTotalItems] = useState(calculateTotalItems(cartList));
+  const toast = useToast();
 
   useEffect(() => {
     setTotalItems(calculateTotalItems(cartList));
   }, [cartList]);
 
-  const toast = useToast();
 
   // // cypress-workaround
   const toastElement = document.getElementById("chakra-toast-manager-bottom");

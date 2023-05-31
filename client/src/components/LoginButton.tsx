@@ -9,7 +9,6 @@ import { AuthContext } from "../contexts/AuthContext.";
 const LoginButton = () => {
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
-
   const { isLoggedIn, logOutUser } = authContext;
 
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {

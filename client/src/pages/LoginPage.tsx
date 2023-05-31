@@ -29,8 +29,8 @@ function LoginPage() {
     const password = form.password.value;
 
     try {
-      await loginUser(email, password);
-      setLoginError(null); // Reset the login error if login succeeds
+      loginUser(email, password);
+      setLoginError(null);
       navigate("/");
     } catch (error) {
       setLoginError("Wrong email or password");

@@ -17,7 +17,6 @@ import {
 } from "@chakra-ui/react";
 import { BsCupStraw } from "react-icons/bs";
 import { FaTruckMoving } from "react-icons/fa";
-import { useCart } from "../contexts/CartContext";
 import { CreateOrderReturnType } from "../contexts/orderContext";
 
 export function OrderConfirmationCard({
@@ -25,7 +24,6 @@ export function OrderConfirmationCard({
 }: {
   order: CreateOrderReturnType | null;
 }) {
-  const { cartList } = useCart();
 
   const cardBodyFontSize = useBreakpointValue({ base: "1rem", sm: "1.2rem" });
   const cardFooterFontSize = useBreakpointValue({ base: "1rem", sm: "1.2rem" });
@@ -74,7 +72,7 @@ export function OrderConfirmationCard({
                       width="100%"
                       height="100%"
                       objectFit="contain"
-                      marginLeft="1rem" //temporär lösning
+                      marginLeft="1rem"
                     />
                   </Box>
                   <Text

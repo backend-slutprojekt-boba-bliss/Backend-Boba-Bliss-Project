@@ -10,11 +10,7 @@ interface SmallProductCardProps {
 }
 
 export function SmallProductCard({ product }: SmallProductCardProps) {
-  // Get addToCart function from useCart custom hook
   const { addToCart } = useCart();
-
-  // Handles the Add to Cart button click
-  // Add to Cart adds the product to the cart with a quantity of 1
   const handleAddToCartClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     addToCart(product, 1);

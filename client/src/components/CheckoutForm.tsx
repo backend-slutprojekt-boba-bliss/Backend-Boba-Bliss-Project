@@ -3,7 +3,6 @@ import { Heading } from "@chakra-ui/layout";
 import { Formik, FormikHelpers } from "formik";
 import { Link as RouterLink } from "react-router-dom";
 import * as Yup from "yup";
-
 import {
   Box,
   Link as ChakraLink,
@@ -41,7 +40,7 @@ export type Customer = Yup.InferType<typeof customerSchema>;
 
 export function CheckoutForm() {
   const navigate = useNavigate();
-  const { isLoggedIn } = useContext(AuthContext); //isAdmin state
+  const { isLoggedIn } = useContext(AuthContext);
   const { createOrder } = useOrder();
 
   const handleSubmit = async (
@@ -269,9 +268,6 @@ export function CheckoutForm() {
                       <Button
                         sx={registerButtonStyle}
                         variant="solid"
-                        onClick={() => {
-                          // Handle the click event for the button when not logged in
-                        }}
                       >
                         Register
                       </Button>

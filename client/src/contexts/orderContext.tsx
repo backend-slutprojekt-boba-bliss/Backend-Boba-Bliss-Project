@@ -1,18 +1,11 @@
 import axios from "axios";
 import { createContext, useContext, useState } from "react";
 import { Customer } from "../components/CheckoutForm";
-import { CartItem } from "../data";
 import { useCart } from "./CartContext";
-import { useNavigate } from "react-router-dom";
-
-type Order = {
-  itemList: CartItem[];
-  deliveryAddress: Customer;
-};
 
 type OrderContextType = {
   createOrder: (customer: Customer) => Promise<CreateOrderReturnType>;
-  orderId: null | string; // Initialize orderId to null
+  orderId: null | string;
 };
 export type CreateOrderReturnType = {
   _id: string;
@@ -42,7 +35,7 @@ export type CreateOrderReturnType = {
 
 export const OrderContext = createContext<OrderContextType>({
   createOrder: ((customer: Customer) => {}) as any,
-  orderId: null, // Initialize orderId to null
+  orderId: null,
 });
 
 export function useOrder() {
@@ -81,7 +74,7 @@ export function OrderProvider({ children }: Props) {
 
     console.log("Order created:", response.data);
     setOrderId(response.data._id);
-    clearCart(cartList); // Clear cart after creating order
+    clearCart(cartList);
     return response.data;
   };
 

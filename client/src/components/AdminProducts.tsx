@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { AdminProductsLayout } from "./AdminProductsLayout";
 import { AdminCard } from "./AdminCard";
-// ...
+
 
 export function AdminProducts() {
   const [showOrders, setShowOrders] = useState(false);
