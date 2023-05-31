@@ -81,8 +81,11 @@ Ni ska vid presentationstillfället hålla i en muntlig presentation för klasse
 
 [] En besökare ska kunna beställa produkter från sidan, detta ska uppdatera lagersaldot i databasen (G)
 [] Administratörer ska kunna uppdatera antalet produkter i lager från admin delen av sidan (G)
-[] Administratörer ska kunna se en lista på alla gjorda beställningar (G)
-[x] Sidans produkter ska delas upp i kategorier, en produkt ska tillhöra minst en kategori, men kan tillhöra flera (G)
+[x] Administratörer ska kunna se en lista på alla gjorda beställningar (G)
+
+- Detta löstes genom att map:a ut alla orders med ett fetchanrop
+  .
+  [x] Sidans produkter ska delas upp i kategorier, en produkt ska tillhöra minst en kategori, men kan tillhöra flera (G)
 
 - Kategorierna “Milk”, “Fruit”, “Vegan” och “Premium” finns inlagda på databasen. Vid skapande av ny produkt vid AddProductForm kan man via checkboxes välja att fylla i en eller flera kategorier. Produktens kategorier sparas i en [ ]. Varje kategori har ett id och ett namn.
 
