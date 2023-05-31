@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ProductModel } from "../products/productModel";
 import { OrderModel } from "./orderModel";
-import { createOrderSchema } from "./orderYupValidationScema";
+import { createOrderSchema } from "./orderValidation";
 
 export async function getAllOrders(req: Request, res: Response) {
   try {
@@ -97,12 +97,10 @@ export async function createOrder(req: Request, res: Response) {
       })
     );
     if (productDetails.length === 0) {
-      return res
-        .status(400)
-        .json({
-          error:
-            "Empty order! No products in this order. Please add something to cart before placing order.",
-        });
+      return res.status(400).json({
+        error:
+          "Empty order! No products in this order. Please add something to cart before placing order.",
+      });
     }
 
     // Set user of order to user
