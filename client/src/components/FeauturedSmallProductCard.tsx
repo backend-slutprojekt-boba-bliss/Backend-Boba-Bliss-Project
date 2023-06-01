@@ -135,7 +135,7 @@ const priceStyle = {
     transform: "translate(-50%, -50%)",
     width: "3.5rem",
     height: "3.5rem",
-    zIndex: "50000",
+    zIndex: "500",
     borderRadius: "50%",
     backgroundColor: "#ff8f96"
 
