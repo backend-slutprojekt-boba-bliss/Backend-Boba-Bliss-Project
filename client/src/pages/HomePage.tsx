@@ -6,13 +6,12 @@ import {
   Flex,
   Heading,
   Image,
-
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { FeauturedCard } from "../components/FeauturedCard";
 import { TimeForTeaCard } from "../components/TimeForTeaCard";
-import {  Link } from "react-router-dom";
 
 export function HomePage() {
   return (
@@ -68,11 +67,18 @@ export function HomePage() {
             Savor the perfect blend of quality ingredients, crafted with love
             and expertise, and indulge in the true essence of bubble tea
             paradise.
-          </Text >
+          </Text>
           <Link to="/products">
-          <Button  sx={productButton} variant='outline' size={["sm", "sm", "md"]}> See our Drinks!</Button>
+            <Button
+              sx={productButton}
+              variant="outline"
+              size={["sm", "sm", "md"]}
+            >
+              {" "}
+              See our Drinks!
+            </Button>
           </Link>
-          
+
           <Center>
             <Image
               zIndex={20}
@@ -101,8 +107,13 @@ export function HomePage() {
         bg={"pink"}
         marginBottom={["12rem", "12rem", "10rem", "12rem"]}
       />
-      <Heading mt="1rem" color={"darkBrownText"} alignContent={"center"} textAlign={"center"}>
-        Feautured Drinks
+      <Heading
+        mt="1rem"
+        color={"darkBrownText"}
+        alignContent={"center"}
+        textAlign={"center"}
+      >
+        Featured Drinks
       </Heading>
       <FeauturedCard></FeauturedCard>
 
@@ -127,5 +138,5 @@ const bigGradient = {
 const productButton = {
   border: "2px solid #412D2D",
   borderRadius: "2rem",
-  display: ["none", "none",   "inline",   "inline"],
-}
+  display: ["none", "none", "inline", "inline"],
+};
