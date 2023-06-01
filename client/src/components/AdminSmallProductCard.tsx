@@ -1,3 +1,4 @@
+import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import {
   AlertDialog,
   AlertDialogBody,
@@ -13,7 +14,8 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useProduct } from "../contexts/ProductContext";
 import { Product } from "../data";
@@ -50,6 +52,21 @@ export function AdminSmallProductCard({ product, id }: SmallProductCardProps) {
     editProduct(product);
   };
 
+  const stockMessage = product?.inStock ?? 0 > 0 ? "In stock" : "Out of stock";
+  const stockIcon =
+    product?.inStock ?? 0 > 0 ? (
+      <CheckIcon color="green.500" />
+    ) : (
+      <CloseIcon color="red.500" />
+    );
+
+  useEffect(() => {
+    axios
+      .get("/api/products")
+      .then((res) => {})
+      .catch((error) => console.error(error));
+  }, []);
+
   return (
     <Card data-cy="product" align="center" sx={cardStyle}>
       <Box sx={roundBG}>
@@ -65,6 +82,29 @@ export function AdminSmallProductCard({ product, id }: SmallProductCardProps) {
       <Text data-cy="product-price" sx={textStyle}>
         ${product.price.toFixed(2)}
       </Text>
+      <Box>
+        <Flex
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: ".5rem",
+            fontSize: ".8rem",
+          }}
+        >
+          {stockMessage}
+          {stockIcon}
+          <Text fontSize="xs">
+            {product.inStock === 0 ? (
+              <Text></Text>
+            ) : (
+              <Text fontSize="xs" color="green.600">
+                ({product.inStock})
+              </Text>
+            )}
+          </Text>
+        </Flex>
+      </Box>
+
       <Flex alignItems="center">
         <Link to={`product/${product._id}`}>
           <Button
