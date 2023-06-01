@@ -6,7 +6,8 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
-  Input,Text
+  Input,
+  Text,
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import { Form, Link, useNavigate } from "react-router-dom";
@@ -45,27 +46,31 @@ function LoginPage() {
   };
 
   return (
-    <Center minHeight="90vh" minWidth="100vw"bg={["inherit"]}transition={"300ms ease"}>
+    <Center
+      minHeight="90vh"
+      minWidth="100vw"
+      bg={["inherit"]}
+      transition={"300ms ease"}
+    >
       <Center
         w={["35rem"]}
         h={["92vh"]}
-        bgImage={["none","url('/images/111.png')"]}
+        bgImage={["none", "url('/images/111.png')"]}
         transition={"300ms ease"}
         bgSize="contain"
         bgRepeat="no-repeat"
         bgPosition="center"
-
       >
         <Center>
           <Center
-            bg={["#54383E","#ACCDB5"]}
+            bg={["#54383E", "#ACCDB5"]}
             border={"2px"}
             borderColor={"#54383E"}
             transition={"300ms ease"}
             w={"20rem"}
             h={"20rem"}
             borderRadius={"100%"}
-            mt={[0,10]}
+            mt={[0, 10]}
             p={10}
           >
             <Form onSubmit={handleFormSubmit}>
@@ -116,8 +121,14 @@ function LoginPage() {
                 >
                   Log In
                 </Button>
-                <Text fontSize={"xs"} pt={3}  w={"50%"} color={["white", "#54383E"]}>
-                    Already have an account? <Link to="/registerPage">Register</Link>
+                <Text
+                  fontSize={"xs"}
+                  pt={3}
+                  w={"50%"}
+                  color={["white", "#54383E"]}
+                >
+                  Don't have an account?{" "}
+                  <Link to="/registerPage">Register</Link>
                 </Text>
               </Box>
             </Form>
