@@ -2,9 +2,16 @@
 
 # Boba webshop using React & Typescript, MongoDb by Mimmi, Linus, Hanna och Linus
 
-## Installation
+## Installation / Set up
+
+Denna kodbas är indelad i [client](./client/) och [server](./server/).
+
+Växla mellan mapparna. Använda exempelvis kommandot: `cd server` för att stega in i server.
+
+Använd dessa script för att starta:
 
 - `npm install` - Installerar alla NodeJS moduler & dependencies (körs en gång).
+- `npm run dev` - Startar miljön för utvecklingen.
 
 ## Beskrivning
 
@@ -13,6 +20,11 @@ Ni skall bygga en webbshops-applikation inkluderande en klient och en server. Se
 ## Inlämning
 
 Året är 1992, Waynes World och Charlie Moongår på biograferna. Janne Kemi är en finsk ultramiljonär som bestämt sig för att satsa på en ny e-handeln. Han vill investera i nya hemsidor. Han har anlitat er för att ta fram dessa sidor.Han har vissa specifika krav från sin IT avdelning som han bifogat som en kravspecifikation. Förutom det har ni fria händer att ta fram en grym idé och tjäna sjuka pengar (åt Janne).
+
+## Inloggningar
+
+ADMIN: email: admin@bobabliss.se pw: Adm1nbob@ <br>
+USER: email: user@bobabliss.se pw: Us3rbob@
 
 ## Kravspecifikation på projektet:
 
@@ -46,11 +58,11 @@ Ni skall bygga en webbshops-applikation inkluderande en klient och en server. Se
 
 [x] En besökare ska kunna beställa produkter från sidan, detta ska uppdatera lagersaldot i databasen (G)
 
-- I clientside körs ett anrop till servern när klienten klickar submit. Denna skickar med endast deliveryAdress, samt produkterna i cartens Id och kvantitet. Därefter skickas denna information till databasen, där createOrder() controller function lägger till all annan information om ordern, som userid, datum, resten av produktinformationen samt sätter issent till false. Detta skiickas sedan tillbakla som respåons, för att använda informationen i confirmationpage som använder orderid som url. 
+- I clientside körs ett anrop till servern när klienten klickar submit. Denna skickar med endast deliveryAdress, samt produkterna i cartens Id och kvantitet. Därefter skickas denna information till databasen, där createOrder() controller function lägger till all annan information om ordern, som userid, datum, resten av produktinformationen samt sätter issent till false. Detta skiickas sedan tillbakla som respåons, för att använda informationen i confirmationpage som använder orderid som url.
 
 [x] Administratörer ska kunna uppdatera antalet produkter i lager från admin delen av sidan (G)
 
-- I edit product formuläret kan Admin användare ändra inStock siffran ppå varje enskild produkt, och det uppdateras när produkten ändras. 
+- I edit product formuläret kan Admin användare ändra inStock siffran ppå varje enskild produkt, och det uppdateras när produkten ändras.
 
 [x] Administratörer ska kunna se en lista på alla gjorda beställningar (G)
 
