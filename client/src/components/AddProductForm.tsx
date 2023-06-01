@@ -49,7 +49,7 @@ export const schema = Yup.object<ProductValues>().shape({
 
   inStock: Yup.number()
     .typeError("Must be a number")
-    .positive("In Stock must be positive")
+    .min(0, "Cannot set store value to lower than 0")
     .required("Required"),
   categories: Yup.array()
     .of(Yup.string())
