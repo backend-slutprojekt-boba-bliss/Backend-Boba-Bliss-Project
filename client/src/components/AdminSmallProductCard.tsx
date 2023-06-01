@@ -95,9 +95,7 @@ export function AdminSmallProductCard({ product, id }: SmallProductCardProps) {
           {stockIcon}
           <Text fontSize="xs">
             {product.inStock === 0 ? (
-              <Text fontSize="xs" color="red">
-                (0)
-              </Text>
+              <Text></Text>
             ) : (
               <Text fontSize="xs" color="green.600">
                 ({product.inStock})
