@@ -44,8 +44,14 @@ Ni skall bygga en webbshops-applikation inkluderande en klient och en server. Se
 
 - Vi ville klara detta mål genom att hasha lösenordet direkt när det skrivs in i Client. Men Argon2 kraschar hela projektet om det ligger i Client. Så vi hashar lösenordet så fort det skickas till servern, och sparar den hashade versionen på databasen. Vi kontrollerar lösenordet genom en Verify.
 
-[] En besökare ska kunna beställa produkter från sidan, detta ska uppdatera lagersaldot i databasen (G)
-[] Administratörer ska kunna uppdatera antalet produkter i lager från admin delen av sidan (G)
+[x] En besökare ska kunna beställa produkter från sidan, detta ska uppdatera lagersaldot i databasen (G)
+
+- I clientside körs ett anrop till servern när klienten klickar submit. Denna skickar med endast deliveryAdress, samt produkterna i cartens Id och kvantitet. Därefter skickas denna information till databasen, där createOrder() controller function lägger till all annan information om ordern, som userid, datum, resten av produktinformationen samt sätter issent till false. Detta skiickas sedan tillbakla som respåons, för att använda informationen i confirmationpage som använder orderid som url. 
+
+[x] Administratörer ska kunna uppdatera antalet produkter i lager från admin delen av sidan (G)
+
+- I edit product formuläret kan Admin användare ändra inStock siffran ppå varje enskild produkt, och det uppdateras när produkten ändras. 
+
 [x] Administratörer ska kunna se en lista på alla gjorda beställningar (G)
 
 - Detta löstes genom att hämta data från databasen med ett fetchanrop och sen mappade ut alla orders.  
