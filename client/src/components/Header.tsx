@@ -176,6 +176,7 @@ export function Header() {
                 height="1.8em"
                 as={AiFillHome}
                 _hover={{ color: "#c8a59b" }}
+                onClick={handleLinkClick}
               />
             </ChakraLink>
             <ChakraLink as={RouterLink} to="/products">
@@ -185,6 +186,7 @@ export function Header() {
                 height="1.8em"
                 as={BiCoffeeTogo}
                 _hover={{ color: "#c8a59b" }}
+                onClick={handleLinkClick}
               />
             </ChakraLink>
             {isAdmin && (
@@ -195,6 +197,7 @@ export function Header() {
                   height="1.8em"
                   as={RiAdminFill}
                   _hover={{ color: "#c8a59b" }}
+                  onClick={handleLinkClick}
                 />
               </ChakraLink>
             )}
@@ -213,6 +216,7 @@ export function Header() {
                   width="1.8em"
                   height="1.8em"
                   as={IoMdCart}
+                  onClick={handleLinkClick}
                 />
                 <Text data-cy="cart-items-count-badge">({totalItems})</Text>
               </ChakraLink>

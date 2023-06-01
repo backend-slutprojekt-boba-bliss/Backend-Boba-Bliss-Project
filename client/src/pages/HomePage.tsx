@@ -1,14 +1,18 @@
 import {
   Box,
+  Button,
   Center,
   Container,
   Flex,
   Heading,
   Image,
+
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { FeauturedCard } from "../components/FeauturedCard";
 import { TimeForTeaCard } from "../components/TimeForTeaCard";
+import {  Link } from "react-router-dom";
 
 export function HomePage() {
   return (
@@ -49,12 +53,13 @@ export function HomePage() {
             Your ultimate destination for an exquisite bubble tea experience.
           </Text>
           <Text
-            fontSize={[".85rem", ".9rem", "1rem", "1rem"]}
+            fontSize={[".85rem", ".9rem", ".85rem", "1rem"]}
             color={"lightBrownText"}
             fontFamily="Comfortaa"
             marginTop="1rem"
             zIndex={"500"}
             position={"relative"}
+            mb={4}
           >
             Our wide variety of flavors, toppings, and customizable options
             ensure that every visit is a delightful journey.
@@ -63,7 +68,11 @@ export function HomePage() {
             Savor the perfect blend of quality ingredients, crafted with love
             and expertise, and indulge in the true essence of bubble tea
             paradise.
-          </Text>
+          </Text >
+          <Link to="/products">
+          <Button  sx={productButton} variant='outline' size={["sm", "sm", "md"]}> See our Drinks!</Button>
+          </Link>
+          
           <Center>
             <Image
               zIndex={20}
@@ -90,8 +99,12 @@ export function HomePage() {
         width="auto"
         height="auto"
         bg={"pink"}
-        marginBottom={["8rem", "8rem", "5rem", "8rem"]}
+        marginBottom={["12rem", "12rem", "10rem", "12rem"]}
       />
+      <Heading mt="1rem" color={"darkBrownText"} alignContent={"center"} textAlign={"center"}>
+        Feautured Drinks
+      </Heading>
+      <FeauturedCard></FeauturedCard>
 
       <TimeForTeaCard />
     </Box>
@@ -107,6 +120,12 @@ const gradientBackground = {
 };
 
 const bigGradient = {
-  backgroundImage: "linear-gradient(to bottom, transparent 90%, #FED3D4)",
+  backgroundImage: "linear-gradient(to bottom, transparent 40%, #FED3D4)",
   backgroundColor: "#fffaf4",
 };
+
+const productButton = {
+  border: "2px solid #412D2D",
+  borderRadius: "2rem",
+  display: ["none", "none",   "inline",   "inline"],
+}

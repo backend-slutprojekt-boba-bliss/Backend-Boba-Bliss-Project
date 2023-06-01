@@ -200,15 +200,15 @@ export function BigProductCard({
               ${product.price}
             </Heading>
             <Box>
-              <Text data-cy="product-description" mb={1}>
-                {product.description}
-              </Text>
-              <Text fontSize="xs">
-                {product.inStock === 0
-                  ? "Out of Stock!"
-                  : `Hurry! Only: ${product.inStock} in Stock!`}
-              </Text>
-            </Box>
+  <Text data-cy="product-description" mb={1}>
+    {product.description}
+  </Text>
+  <Text fontSize="xs">
+    {product.inStock === 0
+      ? <Text fontSize="xs" color="red">Out of stock!</Text>
+      : <Text fontSize="xs" color="green.600">`Hurry! Only {product.inStock} in Stock!`</Text>}
+  </Text>
+</Box>
             <Box>
               <Flex justify={["center", "center", "flex-start"]}>
                 <Flex justify={"space-between"} w={["50%", "50%", "30%"]}>
