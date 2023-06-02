@@ -1,21 +1,21 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-8d59dc4de5201274e310e4c54b9627a8934c3b88527886e3b421487c677d23eb.svg)](https://classroom.github.com/a/h5FXkH4A)
 
-# Boba webshop using React & Typescript, MongoDb by Mimmi, Linus, Hanna och Linus
+# Boba webshop using React & Typescript, MongoDb by Mimmi, Linus, Hanna och Linus.
+
+Denna webbshop är byggd med bl.a chakra ui i frontend och express i backend.
 
 ## Installation / Set up
 
 Denna kodbas är indelad i [client](./client/) och [server](./server/).
 
-Växla mellan mapparna. Använda exempelvis kommandot: `cd server` för att stega in i server.
+Växla mellan mapparna. Använda exempelvis kommandot: `cd server` för att stega in i server, och `cd client` för att gå in i client.
 
-Använd dessa script för att starta:
+
 
 - `npm install` - Installerar alla NodeJS moduler & dependencies (körs en gång).
 - `npm run dev` - Startar miljön för utvecklingen.
 
-## Beskrivning
 
-Ni skall bygga en webbshops-applikation inkluderande en klient och en server. Servern ska vara kopplad till en mongodb databas och vara strukturerad baserad på ett REST-API med resurser. Till er hjälp har ni en uppgiftsbeskrivning samt en kravspecifikation.
 
 ## Inlämning
 
