@@ -1,10 +1,15 @@
 import mongoose from "mongoose";
 import { app } from "./app";
+import dotenv from 'dotenv'
+dotenv.config()
 
 async function main() {
   try {
+    if(!process.env.MONGO_URI) {
+      throw new Error('missing mongoose link')
+    }
     await mongoose.connect(
-      `mongodb+srv://BobaTea:BobaTea@slutprojekt-backend.0lfqeuo.mongodb.net/`
+      process.env.MONGO_URI
     );
     console.log("Connected to Database");
 
